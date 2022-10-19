@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35f7239b-8efa-4ade-b038-2f0ed8a216cd" name="Changes" comment="primer commit para proyecto DAW de dos módulos">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Frontend/pom.xml" afterDir="false" />
+    <list default="true" id="35f7239b-8efa-4ade-b038-2f0ed8a216cd" name="Changes" comment=" módulo frontend">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +74,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666125072639</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="segundo commit para agregar el módulo frontend">
+      <created>1666127472355</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1666127472355</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -93,6 +97,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="primer commit para proyecto DAW de dos módulos" />
-    <option name="LAST_COMMIT_MESSAGE" value="primer commit para proyecto DAW de dos módulos" />
+    <MESSAGE value="segundo commit para agregar el módulo frontend" />
+    <option name="LAST_COMMIT_MESSAGE" value="segundo commit para agregar el módulo frontend" />
   </component>
 </project>
