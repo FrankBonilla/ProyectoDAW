@@ -29,9 +29,9 @@ public class EmpleadoService {
 			return repo.save(empleado);
 		}
 
-		public void delete(int id) {
+		public void delete(int idEmpleado) {
 			
-			repo.deleteById(id);
+			repo.deleteById(idEmpleado);
 		}
 		@Transactional(readOnly = true)
 		public Empleado listarId(int id) {
@@ -40,8 +40,8 @@ public class EmpleadoService {
 		}
 
 		public void updateEmployee(Empleado a) {
-			Empleado empleado = listarId(a.getId_empleado());
-			empleado.setNIF(a.getNIF());
+			Empleado empleado = listarId(a.getIdEmpleado());
+			empleado.setNif(a.getNif());
 			empleado.setNombre(a.getNombre());
 			empleado.setApellido1(a.getApellido1());
 			empleado.setApellido2(a.getApellido2());
@@ -49,7 +49,7 @@ public class EmpleadoService {
 			empleado.setTelefono1(a.getTelefono1());
 			empleado.setTelefono2(a.getTelefono2());
 			empleado.setEmail(a.getEmail());
-			empleado.setF_alta(a.getF_alta());
+			empleado.setFechaAlta(a.getFechaAlta());
 			empleado.setEdoCivil(a.getEdoCivil());
 			empleado.setSerMilitar(a.getSerMilitar());
 			repo.save(empleado);
@@ -59,7 +59,7 @@ public class EmpleadoService {
 		
 		public void darBaja(int id) {
 			
-			Empleado empleado = repo.getById(id);
+			Empleado empleado = repo.getReferenceById(id);
 			LocalDate fecha = LocalDate.now();
 			empleado.setFechaBaja(Date.valueOf(fecha));
 			repo.save(empleado);
@@ -93,9 +93,9 @@ public class EmpleadoService {
 		//metodo 5 para volver a dar de alta
 		public void volver(int id) {
 			//obtenemos el empleado y cambiamos la fecha de alta a la actual
-			Empleado empleado = repo.getById(id);
+			Empleado empleado = repo.getReferenceById(id);
 			LocalDate fecha = LocalDate.now();
-			empleado.setF_alta(Date.valueOf(fecha));
+			empleado.setFechaAlta(Date.valueOf(fecha));
 			//establecemos null en su fecha de baja para que aparezca de lata nuevamente
 			repo.volverAlta(id);
 			//guardamos el empleado con la nueva fecha de alta

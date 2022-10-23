@@ -3,16 +3,13 @@ package com.practica.backend.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.practica.backend.entities.Empleado;
 import com.practica.backend.entities.Proyecto;
@@ -23,6 +20,9 @@ import com.practica.backend.service.ProyectoService;
 @RestController
 @RequestMapping(path="proyectos")
 public class ProyectoController {
+
+	private static final Logger LOGGER = LogManager.getLogger(ProyectoController.class);
+	HttpStatus httpStatus;
 	//inyectamos el servicio
 	@Autowired
 	ProyectoService service;
@@ -93,13 +93,27 @@ public class ProyectoController {
 	}
 	
 	//Verificamos los proyectos asigandos un empleado
-	@PostMapping(path="/verificar")
-	@ResponseBody
-	public List<?> searchProjectsOfEmple(@RequestBody Map<String, String> json){
-		
-		int idEmp = Integer.parseInt(json.get("id_empleado"));
-		
-		return service.searchProjectsOfEmple(idEmp);
+	@GetMapping(path="/verificar")
+	public ResponseEntity<List<String>> searchProjectsOfEmple(@RequestParam int idEmpleado){
+		LOGGER.info("verificando asignaciones a proyectos del empleado: [{}]", idEmpleado);
+		List<String> result = null;
+
+		try{
+			result = service.searchProjectsOfEmple(idEmpleado);
+
+		}catch (DataAccessException e){
+			LOGGER.error("Error al realizar la consulta a la base de datos");
+			LOGGER.error("error {}",e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+		}
+
+		if(result == null){
+			LOGGER.info("No tiene asignaciones a proyectos empleado: [{}]",idEmpleado);
+			return new ResponseEntity<>(result,httpStatus.NOT_FOUND);
+		}else{
+			LOGGER.info("empleado con ID: [{}] tiene [{}] asignaciones",idEmpleado, result.size());
+			return new ResponseEntity<>(result, httpStatus.OK);
+		}
+
 	}
 	
 	//metodo para dar de baja al proyecto

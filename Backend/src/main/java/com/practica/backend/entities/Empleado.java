@@ -16,9 +16,9 @@ public class Empleado {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="idEmpleado")
-	private int id_empleado;
+	private int idEmpleado;
 	@Column(name="nif",nullable= false,length =9)
-	private String NIF;
+	private String nif;
 	@Column(name="nombre",nullable= false,length= 30)
 	private String nombre;
 	@Column(name="apellido1",nullable= false,length= 40)
@@ -34,7 +34,7 @@ public class Empleado {
 	@Column(name="email",nullable= false,length= 40)
     private String email;
 	@Column(name="fechaAlta",nullable= false)
-    private Date f_alta;
+    private Date fechaAlta;
 	@Column(name="fechaBaja")
     private Date fechaBaja;
 	@Column(name="edoCivil",nullable= false, length= 1)
@@ -48,9 +48,9 @@ public class Empleado {
     }
 	/**Constructor con parámetros **/
 	public Empleado(String nIF, String nombre, String apellido1, String apellido2, Date nacimiento, String telefono1,
-					String telefono2, String email, Date f_alta, String edoCivil, String serMilitar) {
+					String telefono2, String email, Date fechaAlta, String edoCivil, String serMilitar) {
 		super();
-		this.NIF = nIF;
+		this.nif = nIF;
 		this.nombre = nombre;
 		this.apellido1 = apellido1;
 		this.apellido2 = apellido2;
@@ -58,17 +58,17 @@ public class Empleado {
 		this.telefono1 = telefono1;
 		this.telefono2 = telefono2;
 		this.email = email;
-		this.f_alta = f_alta;
+		this.fechaAlta = fechaAlta;
 		this.edoCivil = edoCivil;
 		this.serMilitar = serMilitar;
 	}
 	
 	/**Getters and Setters **/
-	public int getId_empleado() {
-		return id_empleado;
+	public int getIdEmpleado() {
+		return idEmpleado;
 	}
-	public void setId_empleado(int id_empleado) {
-		this.id_empleado = id_empleado;
+	public void setIdEmpleado(int idEmpleado) {
+		this.idEmpleado = idEmpleado;
 	}
 	public String getNombre() {
 		return nombre;
@@ -76,11 +76,11 @@ public class Empleado {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getNIF() {
-		return NIF;
+	public String getNif() {
+		return nif;
 	}
-	public void setNIF(String nIF) {
-		NIF = nIF;
+	public void setNif(String nIF) {
+		nif = nIF;
 	}
 	public String getApellido1() {
 		return apellido1;
@@ -118,11 +118,11 @@ public class Empleado {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Date getF_alta() {
-		return f_alta;
+	public Date getFechaAlta() {
+		return fechaAlta;
 	}
-	public void setF_alta(Date f_alta) {
-		this.f_alta = f_alta;
+	public void setFechaAlta(Date fechaAlta) {
+		this.fechaAlta = fechaAlta;
 	}
 	public Date getFechaBaja() {
 		return fechaBaja;
@@ -149,19 +149,19 @@ public class Empleado {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Empleado empleado = (Empleado) o;
-		return id_empleado == empleado.id_empleado && Objects.equals(NIF, empleado.NIF) && Objects.equals(nombre, empleado.nombre) && Objects.equals(apellido1, empleado.apellido1) && Objects.equals(apellido2, empleado.apellido2) && Objects.equals(nacimiento, empleado.nacimiento) && Objects.equals(telefono1, empleado.telefono1) && Objects.equals(telefono2, empleado.telefono2) && Objects.equals(email, empleado.email) && Objects.equals(f_alta, empleado.f_alta) && Objects.equals(fechaBaja, empleado.fechaBaja) && Objects.equals(edoCivil, empleado.edoCivil) && Objects.equals(serMilitar, empleado.serMilitar);
+		return idEmpleado == empleado.idEmpleado && Objects.equals(nif, empleado.nif) && Objects.equals(nombre, empleado.nombre) && Objects.equals(apellido1, empleado.apellido1) && Objects.equals(apellido2, empleado.apellido2) && Objects.equals(nacimiento, empleado.nacimiento) && Objects.equals(telefono1, empleado.telefono1) && Objects.equals(telefono2, empleado.telefono2) && Objects.equals(email, empleado.email) && Objects.equals(fechaAlta, empleado.fechaAlta) && Objects.equals(fechaBaja, empleado.fechaBaja) && Objects.equals(edoCivil, empleado.edoCivil) && Objects.equals(serMilitar, empleado.serMilitar);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id_empleado, NIF, nombre, apellido1, apellido2, nacimiento, telefono1, telefono2, email, f_alta, fechaBaja, edoCivil, serMilitar);
+		return Objects.hash(idEmpleado, nif, nombre, apellido1, apellido2, nacimiento, telefono1, telefono2, email, fechaAlta, fechaBaja, edoCivil, serMilitar);
 	}
 	/**toString **/
 	@Override
 	public String toString() {
 		return "Empleado{" +
-				"id_empleado=" + id_empleado +
-				", NIF='" + NIF + '\'' +
+				"idEmpleado=" + idEmpleado +
+				", nif='" + nif + '\'' +
 				", nombre='" + nombre + '\'' +
 				", apellido1='" + apellido1 + '\'' +
 				", apellido2='" + apellido2 + '\'' +
@@ -169,7 +169,7 @@ public class Empleado {
 				", telefono1='" + telefono1 + '\'' +
 				", telefono2='" + telefono2 + '\'' +
 				", email='" + email + '\'' +
-				", f_alta=" + f_alta +
+				", fechaAlta=" + fechaAlta +
 				", fechaBaja=" + fechaBaja +
 				", edoCivil='" + edoCivil + '\'' +
 				", serMilitar='" + serMilitar + '\'' +

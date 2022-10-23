@@ -11,15 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.practica.backend.entities.Empleado;
 import com.practica.backend.service.EmpleadoService;
@@ -52,7 +44,7 @@ public class EmpleadoController {
 			LOGGER.error("Error al realizar la consulta a la base de datos");
 			response.put("mensaje","Error al realizar la consulta a la base de datos");
 			response.put("error",e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-			return new ResponseEntity<>(response,httpStatus.NOT_FOUND);
+			return new ResponseEntity<>(response,httpStatus.BAD_REQUEST);
 		}
 
 		if(result == null) {
@@ -61,7 +53,7 @@ public class EmpleadoController {
 			return new ResponseEntity<>(response,httpStatus.NOT_FOUND);
 		}
 
-		LOGGER.info("Consulta de empleados finalizada con {} resultados",result.size());
+		LOGGER.info("Consulta de empleados finalizada, resultados: [{}] resultados",result.size());
 		return new ResponseEntity<>(result,httpStatus.OK);
 	}
 
@@ -82,7 +74,7 @@ public class EmpleadoController {
 			LOGGER.error("Error al realizar la consulta a la base de datos");
 			response.put("mensaje","Error al realizar la consulta a la base de datos");
 			response.put("error",e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-			return new ResponseEntity<>(response,httpStatus.NOT_FOUND);
+			return new ResponseEntity<>(response,httpStatus.BAD_REQUEST);
 		}
 
 		if(result == null) {
@@ -91,7 +83,7 @@ public class EmpleadoController {
 			return new ResponseEntity<>(response,httpStatus.NOT_FOUND);
 		}
 
-		LOGGER.info("Consulta de empleados finalizada con {} resultados",result.size());
+		LOGGER.info("Consulta de empleados finalizada, resultados: [{}]",result.size());
 		return new ResponseEntity<>(result, httpStatus.OK);
 	}
 	
@@ -105,7 +97,7 @@ public class EmpleadoController {
 
 		}catch(DataAccessException e){
 			LOGGER.error("error: "+e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-			return new ResponseEntity<>(result,httpStatus.NO_CONTENT);
+			return new ResponseEntity<>(result,httpStatus.BAD_REQUEST);
 		}
 
 		if(result == null){
@@ -113,21 +105,41 @@ public class EmpleadoController {
 			return new ResponseEntity<>(result,httpStatus.NO_CONTENT);
 		}
 
-		LOGGER.info("Consulta de empleados finalizada con {} resultados",result.size());
+		LOGGER.info("Consulta de empleados finalizada, resultados: [{}]",result.size());
 		return new ResponseEntity<>(result,httpStatus.OK);
 	}
 	
 	@PostMapping(path="empleados/agregar")
 	@ResponseBody
-	public String guardar(@RequestBody Empleado empleado) {
-		
-		empleadoService.save(empleado);
-		return "Se ha agregado el empleado: "+empleado.getNombre();
+	public ResponseEntity<Empleado> guardar(@RequestBody Empleado empleado) {
+		LOGGER.info("Agregando al empleado: "+empleado.getNombre()+" "+empleado.getApellido1());
+
+		try{
+			empleadoService.save(empleado);
+			LOGGER.info("Agregando al empleado: "+empleado.getNombre()+" "+empleado.getApellido1());
+
+		}catch(DataAccessException e){
+			LOGGER.error("error: "+e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<>(empleado,httpStatus.OK);
+		}
+
+		LOGGER.info("Se ha agregado al empleado [{}]", empleado.toString());
+		return new ResponseEntity<>(empleado,httpStatus.OK);
 	}
 	
-	@DeleteMapping(path="/borrar/{id}")
-	public void borrar(@PathVariable(name="id") int id) {
-		empleadoService.delete(id);
+	@DeleteMapping(path="empleados/borrar")
+	public void borrar(@RequestParam int idEmpleado) {
+		LOGGER.info("Borrando al empleado con ID: [{}]", idEmpleado);
+
+		try{
+			empleadoService.delete(idEmpleado);
+			LOGGER.info("Se ha borrado correctamennte el empleado con ID: [{}]", idEmpleado);
+
+		}catch (DataAccessException e){
+			LOGGER.error("Error al realizar la operación a la base de datos");
+			LOGGER.error("error "+e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+		}
+
 	}
 	
 	@PostMapping(path="/status")
@@ -141,7 +153,7 @@ public class EmpleadoController {
 	//metodo para verificar si el proyecto tiene empleados asignados antes de darle de baja
 	@PostMapping(path="/verificar")
 	@ResponseBody
-	public List<?> bajaEmp(@RequestBody Map<String, String> json){
+	public List<?> check(@RequestBody Map<String, String> json){
 		int idPro = Integer.parseInt(json.get("id_proyecto"));
 		return empleadoService.searchEmployeesProject(idPro);
 		
@@ -156,21 +168,38 @@ public class EmpleadoController {
 	}
 	
 	//método para dar de baja directamente
-	@PostMapping(path="empleados/baja/{id}")
-	public void baja(@PathVariable(name="id") int id) {
-			empleadoService.darBaja(id);
+	@PostMapping(path="empleados/baja")
+	public void baja(@RequestParam int idEmpleado) {
+
+		LOGGER.info("Dando de baja al empleado con ID: [{}]", idEmpleado);
+
+			try{
+				empleadoService.darBaja(idEmpleado);
+				LOGGER.info("Baja realizada al empleado con ID: [{}]",idEmpleado);
+
+			}catch(DataAccessException e){
+				LOGGER.error("error {}",e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			}
+
 		}
 	
-	//método para volver a dar de alta
-	@PostMapping(path="empleados/volver-alta")
-	@ResponseBody
-	public void volver(@RequestBody Map<String, String> json){
-		
-		int idEmp = Integer.parseInt(json.get("id_empleado"));
-		
-		empleadoService.volver(idEmp);
-		
-		
+	//método para volver a dar de alta a un empleado
+	@PostMapping(path="empleados/volverAlta")
+	public ResponseEntity<String> volverAlta(@RequestParam int idEmpleado){
+		LOGGER.info("Dando de alta de nuevo al empleado con ID: [{}]", idEmpleado);
+		String result;
+
+		try{
+			empleadoService.volver(idEmpleado);
+			LOGGER.info("El empleado con ID: [{}] ha sido dado de alta nuevamente", idEmpleado);
+			result = "El empleado con ID: "+idEmpleado+" ha sido dado de alta nuevamente ";
+			return new ResponseEntity<>(result,httpStatus.OK);
+		}catch(DataAccessException e){
+
+			LOGGER.error("error {}",e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			result = "Error dando de alta: "+e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage());
+			return new ResponseEntity<>(result,httpStatus.BAD_REQUEST);
+		}
 	}
 	
 }

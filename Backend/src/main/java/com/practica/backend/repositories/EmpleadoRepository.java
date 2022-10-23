@@ -38,7 +38,7 @@ public interface EmpleadoRepository extends JpaRepository <Empleado,Integer> {
 	//método para volver a dar el alta a un empleado dado de baja, añadimos dos anotaciones para poder ejecutar este tipo de query 
 	@Modifying
 	@Transactional
-	@Query(value="UPDATE em_empleados SET fechaBaja= null WHERE id_empleado = :idEmp", nativeQuery=true)
+	@Query(value="UPDATE em_empleados SET fechaBaja= null WHERE idEmpleado = :idEmp", nativeQuery=true)
 	void volverAlta(@Param("idEmp") int id);
 	
 	
