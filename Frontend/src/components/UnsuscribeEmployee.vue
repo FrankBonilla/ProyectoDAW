@@ -24,7 +24,7 @@
             </tr>
           </thead>
           <tbody> <!--Recorremos el arreglo de autores -->
-            <tr v-for="employee in employees" :key="employee.id_empleado">
+            <tr v-for="employee in employees" :key="employee.idEmpleado">
               <td>{{ employee.nif }}</td>
               <td>{{ employee.nombre }}</td>
               <td>{{ employee.apellido1 }}</td>
@@ -104,7 +104,7 @@ export default {
                 cancelButtonText: 'Cancelar'
               }).then((result) => {
                 if (result.isConfirmed) {
-                  this.confirmeDelete(employee.id_empleado) //si es confirmado llamamos al metodo para dar de baja definitiva
+                  this.confirmeDelete(employee.idEmpleado) //si es confirmado llamamos al metodo para dar de baja definitiva
                   swal.fire(
                     'Eliminado!',
                     `${employee.nombre} ${employee.apellido1} ${employee.apellido2} ha sido dado borrado`,
@@ -114,16 +114,15 @@ export default {
               })
         },
         async confirmeDelete(id){
+          
             await employeeService.deleteEmployee(id)
             this.listar()
         },
         async darAlta(employee){
 
-          let data = {
-            id_empleado: employee.id_empleado+""
-          }
-
-          await employeeService.backEmployee(data)
+          let idEmpleado = employee.idEmpleado
+         
+          await employeeService.backEmployee(idEmpleado)
           swal.fire('Alta realizada',`${employee.nombre} ${employee.apellido1} ${employee.apellido2} ha sido dado de alta nuevamente`,'success')
           this.listar()
           this.msgAlta = true

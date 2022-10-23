@@ -36,7 +36,7 @@
               <td>{{ employee.serMilitar }}</td>
               <!-- hacemos dos ternarios, uno para establecer el color de la letra -->
               <!-- y otro que devolverá el estatus del empleado segun el valor del atributo f_baja -->
-              <td :style="employee.f_baja? 'color: red' : 'color: green'"><b>{{ employee.f_baja? 'INACTIVO' : 'ACTIVO'}}</b></td>
+              <td :style="employee.fechaBaja? 'color: red' : 'color: green'"><b>{{ employee.fechaBaja? 'INACTIVO' : 'ACTIVO'}}</b></td>
               
             </tr>
           </tbody>

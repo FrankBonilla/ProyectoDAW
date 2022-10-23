@@ -31,7 +31,7 @@
               <th class="white--text">Acciones</th>
             </tr>
           </thead>
-          <tbody> <!--Recorremos el arreglo de autores -->
+          <tbody> <!--Recorremos el arreglo de empleados -->
             <tr v-for="employee in employees" :key="employee.id_empleado">
               <td>{{ employee.nif }}</td>
               <td>{{ employee.nombre }}</td>
@@ -41,8 +41,7 @@
               <td>{{ employee.telefono1 }}</td>
               <td>{{ employee.telefono2 }}</td>
               <td>{{ employee.email }}</td>
-              <td>{{ employee.f_alta.substring(0,10) }}</td>
-              <!--<td>{{ employee.f_baja ? employee.f_baja.substring(0,10) : 'sin asignar' }}</td>-->
+              <td>{{ employee.fechaAlta.substring(0,10) }}</td>
               <td>{{ employee.edoCivil }}</td>
               <td>{{ employee.serMilitar }}</td>
               <td >
@@ -87,7 +86,7 @@
                     <v-text-field v-model="employee.telefono1" :rules="phoneRules"  label="Teléfono" required maxlength="12"></v-text-field>
                   </v-col>
                   <v-col>
-                   <v-text-field v-model="employee.telefono2" :rules="phoneRules"  label="Teléfono 2" required maxlength="12"></v-text-field>
+                   <v-text-field v-model="employee.telefono2"  label="Teléfono 2" required maxlength="12"></v-text-field>
                   </v-col>
                 </v-row>
                 <v-row>
@@ -188,7 +187,7 @@
                     <v-text-field v-model="employee.telefono1" :rules="phoneRules"  label="Teléfono" required maxlength="12"></v-text-field>
                   </v-col>
                   <v-col>
-                   <v-text-field v-model="employee.telefono2" :rules="phoneRules"  label="Teléfono 2" required maxlength="12"></v-text-field>
+                   <v-text-field v-model="employee.telefono2"  label="Teléfono 2" required maxlength="12"></v-text-field>
                   </v-col>
                 </v-row>
                 <v-row>
@@ -199,12 +198,12 @@
                  <v-row>
                   <v-col>
                   <v-menu
-                    ref="menu2"
-                    v-model="menu2"
-                    :close-on-content-click="false"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="auto"
+                      ref="menu2"
+                      v-model="menu2"
+                      :close-on-content-click="false"
+                      transition="scale-transition"
+                      offset-y
+                      min-width="auto"
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field
@@ -273,7 +272,7 @@ export default {
                 telefono1: '',
                 telefono2: '',
                 email: '',
-                f_alta: '',
+                fechaAlta: '',
                 edoCivil: '',
                 serMilitar: ''
 
@@ -333,7 +332,7 @@ export default {
               telefono1: this.employee.telefono1,
               telefono2: this.employee.telefono2,
               email: this.employee.email,
-              f_alta: new Date().toISOString(),
+              fechaAlta: new Date().toISOString(),
               edoCivil: this.employee.edoCivil,
               serMilitar: this.employee.serMilitar
             }//hacemos la inserción del nuevo empleado en la base de datos
@@ -352,11 +351,10 @@ export default {
         async bajaEmpleado(employee){
           //pasamos el id del empleado para verificar si esta asignado a algun proyecto
           //antes de darle de baja
-          let data = {
-              id_empleado: employee.id_empleado+""
-          }//consultamos si tiene projectos asignados
-          let lista = await employeeService.searchProjectOfEmp(data)
-          if(lista.length != 0){
+           let idEmpleado = employee.idEmpleado
+          //consultamos si tiene projectos asignados
+          let lista = await employeeService.searchProjectOfEmp(idEmpleado)
+          if(lista != null && lista.length != 0){
 
             let name = employee.nombre+" "+employee.apellido1+" "+employee.apellido2
             //asignamos la lista de projectos 
@@ -379,7 +377,7 @@ export default {
                 cancelButtonText: 'Cancelar'
               }).then((result) => {
                 if (result.isConfirmed) {
-                  this.darBaja(employee.id_empleado) //si es confirmado llamamos al metodo para dar de baja definitiva
+                  this.darBaja(employee.idEmpleado) //si es confirmado llamamos al metodo para dar de baja definitiva
                   swal.fire(
                     'Baja realizada!',
                     `${employee.nombre} ${employee.apellido1} ${employee.apellido2} ha sido dado de baja`,
@@ -390,9 +388,9 @@ export default {
           } 
           
         },
-        async darBaja(id){
+        async darBaja(idEmpleado){
           //damos de baja y listamos
-            await employeeService.terminateEmployee(id)
+            await employeeService.terminateEmployee(idEmpleado)
             this.listar()
 
         }, //método para el calendario
@@ -418,7 +416,7 @@ export default {
                 this.employee.telefono1 = emple.telefono1,
                 this.employee.telefono2 = emple.telefono2,
                 this.employee.email = emple.email,
-                this.employee.f_alta = emple.f_alta,
+                this.employee.fechaAlta = emple.fechaAlta,
                 this.employee.edoCivil = emple.edoCivil,
                 this.employee.serMilitar = emple.serMilitar
                 //establecemos el valor por default la fecha de nacimiento
@@ -440,7 +438,7 @@ export default {
               telefono1: this.employee.telefono1,
               telefono2: this.employee.telefono2,
               email: this.employee.email,
-              f_alta: this.employee.f_alta,
+              fechaAlta: this.employee.fechaAlta,
               edoCivil: this.employee.edoCivil,
               serMilitar: this.employee.serMilitar,
               nif: this.employee.nif.toUpperCase()

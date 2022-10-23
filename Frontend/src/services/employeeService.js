@@ -19,7 +19,6 @@ export const employeeService = {
 function getAll(){
     return axios.get(`${URL}api/empleados/lista`)
             .then( response => {
-                console.log(response.data)
                 return response.data
             })
             .catch(e => {
@@ -31,6 +30,7 @@ function getEmployeesAct(){
     
    return axios.get(`${URL}api/empleados/activos`)
         .then(response => {
+            console.log(response)
             console.log(response.data)
             return response.data
             
@@ -53,9 +53,15 @@ function getStatusEmp(idPro){
             })
 }
 
-function terminateEmployee(id){
+function terminateEmployee(idEmpleado){
     
-    return axios.post(`${URL}api/empleados/baja/${id}`)
+    return axios({
+                method: "post",
+                url: `${URL}api/empleados/baja`,
+                params: {
+                    idEmpleado: idEmpleado
+                    }
+                })
                 .then(response => {
                     response.data
                 })
@@ -64,9 +70,9 @@ function terminateEmployee(id){
                 })
 }
 
-function addEmployee(data){
+function addEmployee(empleado){
 
-    return axios.post(`${URL}api/empleados/agregar`, data)
+    return axios.post(`${URL}api/empleados/agregar`, empleado)
                 .then(response => {
                     response.data
                 })
@@ -75,9 +81,14 @@ function addEmployee(data){
                 })
 }
 
-function searchProjectOfEmp(data){
-
-    return axios.post(`${URL}proyectos/verificar`, data)
+function searchProjectOfEmp(idEmpleado){
+    return axios({
+            method: "get",
+            url: `${URL}proyectos/verificar`,
+            params: { 
+                idEmpleado : idEmpleado
+                }
+            })
             .then(response => {
                 console.log(response.data)
                 return response.data
@@ -108,8 +119,15 @@ function searchUnsuscribe(){
             })
 }
 
-function deleteEmployee(id){
-    return axios.delete(`${URL}api/empleados/borrar/${id}`)
+function deleteEmployee(idEmpleado){
+    
+    return axios({
+            method: 'delete',
+            url: `${URL}api/empleados/borrar`,
+            params: {
+                idEmpleado: idEmpleado
+             }
+            })
             .then( response => {
                 console.log(response.data)
                 return response.data
@@ -119,8 +137,14 @@ function deleteEmployee(id){
             })
 }
 
-function backEmployee(data){
-    return axios.post(`${URL}api/empleados/volver-alta`, data)
+function backEmployee(idEmpleado){
+    return axios({
+                method: "post",
+                url: `${URL}api/empleados/volverAlta`,
+                params: {
+                    idEmpleado: idEmpleado 
+                }
+             })
             .then( response => {
                 response.data
             })
