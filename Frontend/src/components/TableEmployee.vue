@@ -242,7 +242,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn @click="cancelUpdate" color="red">Cancelar</v-btn>
-            <v-btn @click="updateEmployee" type="submit" color="green acent-2">Modificar</v-btn>
+            <v-btn @click="updateEmployee(employee.idEmpleado)" type="submit" color="green acent-2">Modificar</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -263,7 +263,7 @@ export default {
             title: 'Empleados',
             employees: [],
             employee: {
-                id: '',
+                idEmpleado: '',
                 nif: '',
                 nombre: '',
                 apellido1: '',
@@ -408,7 +408,7 @@ export default {
         actualizar(emple){
           this.update = true
           
-                this.employee.id = emple.id_empleado,
+                this.employee.idEmpleado = emple.idEmpleado,
                 this.employee.nif = emple.nif,
                 this.employee.nombre = emple.nombre,
                 this.employee.apellido1 = emple.apellido1,
@@ -425,12 +425,12 @@ export default {
                 
           
         },
-        async updateEmployee(){
+        async updateEmployee(idEmpleado){
 
           if(this.$refs.form2.validate()){
 
             let datos = {
-              id_empleado: this.employee.id,
+              idEmpleado: idEmpleado,
               nombre: this.employee.nombre,
               apellido1: this.employee.apellido1,
               apellido2: this.employee.apellido2,
@@ -442,7 +442,8 @@ export default {
               edoCivil: this.employee.edoCivil,
               serMilitar: this.employee.serMilitar,
               nif: this.employee.nif.toUpperCase()
-          }
+            }
+          console.log(this.employee)
 
             await employeeService.updateEmployee(datos)
             swal.fire('Modificación realizada','Los datos del empleado han sido modificados correctamente','success')

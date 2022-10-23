@@ -141,7 +141,7 @@ public class EmpleadoController {
 		}
 
 	}
-	
+	/** Revisar para eliminar**/
 	@PostMapping(path="/status")
 	@ResponseBody
 	public List<?> status(@RequestBody Map<String, String> json) {
@@ -162,23 +162,40 @@ public class EmpleadoController {
 	
 	@PostMapping(path="empleados/update")
 	@ResponseBody
-	public void updateEmployee(@RequestBody Empleado empleado) {
+	public ResponseEntity<Empleado> updateEmployee(@RequestBody Empleado empleado) {
+
+		LOGGER.info("actualizando empleado con ID: ",empleado.getIdEmpleado());
+		try{
+			empleadoService.updateEmployee(empleado);
+			LOGGER.info("Se ha actualiza correctamente el empleado [{}]", empleado.toString());
+			return new ResponseEntity<>(empleado,httpStatus.OK);
+
+		}catch (DataAccessException e){
+			LOGGER.error("Error accediendo a la base de datos");
+			LOGGER.error("error {}",e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<>(httpStatus.BAD_REQUEST);
+
+		}
 		
-		empleadoService.updateEmployee(empleado);
+
 	}
 	
 	//método para dar de baja directamente
 	@PostMapping(path="empleados/baja")
-	public void baja(@RequestParam int idEmpleado) {
+	public ResponseEntity<Empleado> baja(@RequestParam int idEmpleado) {
 
 		LOGGER.info("Dando de baja al empleado con ID: [{}]", idEmpleado);
+		Empleado empleado = empleadoService.listarId(idEmpleado);
 
 			try{
 				empleadoService.darBaja(idEmpleado);
 				LOGGER.info("Baja realizada al empleado con ID: [{}]",idEmpleado);
+				return new ResponseEntity<>(empleado,httpStatus.OK);
 
 			}catch(DataAccessException e){
+				LOGGER.error("Error accediendo a la base de datos");
 				LOGGER.error("error {}",e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+				return new ResponseEntity<>(empleado,httpStatus.BAD_REQUEST);
 			}
 
 		}

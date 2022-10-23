@@ -40,7 +40,7 @@ public class EmpleadoService {
 		}
 
 		public void updateEmployee(Empleado a) {
-			Empleado empleado = listarId(a.getIdEmpleado());
+			Empleado empleado = repo.getReferenceById(a.getIdEmpleado());
 			empleado.setNif(a.getNif());
 			empleado.setNombre(a.getNombre());
 			empleado.setApellido1(a.getApellido1());
