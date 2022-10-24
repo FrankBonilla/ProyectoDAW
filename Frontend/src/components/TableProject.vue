@@ -439,10 +439,9 @@ export default {
         },
         async presionar(){
           console.log(`haz seleccionado el proyecto ${this.idProject}`)
-          //pasamos le id del proyecto para hacer la consulta
-          let idPro = { id_proyecto: this.idProject+"" } 
+          //pasamos le id del proyecto para hacer la consulta 
           //hacemos la conulta de los empleados
-          let datos  = await employeeService.getStatusEmp(idPro)
+          let datos  = await employeeService.getStatusEmp(this.idProject+"")
           //creamos un array donde se guardaran la lista devuelta pero con indices
           let statusEmple = []
           //con un bucle crellenamos el nuevo array

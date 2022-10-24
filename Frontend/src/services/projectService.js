@@ -63,7 +63,7 @@ function deleteProject(id){
 }
 
 function saveEmployee(datos){
-    return axios.post(`${URL}proyectos/save-employee`, datos)
+    return axios.post(`${URL}proyectos/asignarEmpleado`, datos)
             .then(response => {
                 console.log(response.data)
                 return response.data

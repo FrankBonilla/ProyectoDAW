@@ -11,7 +11,7 @@ import com.practica.backend.entities.Proyecto;
 @Repository
 public interface ProyectoRepository extends JpaRepository<Proyecto, Integer> {
 	
-	//creamos una consulta donde devolverá los empleados que no esten de baja
+	//creamos una consulta donde devolverá los proyectos que no esten de baja
 		@Query(value="SELECT l FROM Proyecto l WHERE l.f_baja = null")
 		List<Proyecto> findByF_alta();
 		

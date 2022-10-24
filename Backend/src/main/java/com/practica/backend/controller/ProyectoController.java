@@ -25,56 +25,56 @@ public class ProyectoController {
 	HttpStatus httpStatus;
 	//inyectamos el servicio
 	@Autowired
-	ProyectoService service;
+	ProyectoService proyectoService;
 	@Autowired
-	EmpleadoService serviceEmp;
+	EmpleadoService empleadoService;
 	
 	@GetMapping(path="/lista")
 	public List<Proyecto> showAll(){
 		
-		return service.listar();
+		return proyectoService.listar();
 	}
 	
 	//listar solo dados de alta
 	@GetMapping(path="/activos")
 	public List<Proyecto> showAct(){
 		
-		return service.mostrarActivos();
+		return proyectoService.mostrarActivos();
 	}
 	
 	//mostrar solo dados de baja
 	@GetMapping(path="/inactivos")
 	public List<Proyecto> showInac(){
 		
-		return service.mostrarInactivos();
+		return proyectoService.mostrarInactivos();
 	}
 	
 	@PostMapping(path="/guardar")
 	@ResponseBody
 	public String saveProject(@RequestBody Proyecto proyecto) {
 		
-		service.save(proyecto);
+		proyectoService.save(proyecto);
 		return "se guardó el proyecto "+proyecto.getDescripcion();
 		
 	}
 	
 	@DeleteMapping(path="/borrar/{id}")
 	public void borrar(@PathVariable(name="id", required=true) int id) {
-		service.delete(id);
+		proyectoService.delete(id);
 	}
 	
 	//Asiganmos los empleados al proyecto 
-	@PostMapping(path="/save-employee")
+	@PostMapping(path="/asignarEmpleado")
 	@ResponseBody
 	public void addEmp(@RequestBody Map<String, String> json) {
 		int idPro = Integer.parseInt(json.get("id_proyecto"));
 		int idEmp = Integer.parseInt(json.get("id_empleado"));
 		
-		Proyecto proyecto = service.listarId(idPro);
-		Empleado empleado = serviceEmp.listarId(idEmp);
+		Proyecto proyecto = proyectoService.listarId(idPro);
+		Empleado empleado = empleadoService.listarId(idEmp);
 		
 		proyecto.addEmployee(empleado);
-		service.save(proyecto);
+		proyectoService.save(proyecto);
 		
 	}
 	//Eliminamos el empleado del proyecto
@@ -84,11 +84,11 @@ public class ProyectoController {
 		int idPro = Integer.parseInt(json.get("id_proyecto"));
 		int idEmp = Integer.parseInt(json.get("id_empleado"));
 		
-		Proyecto proyecto = service.listarId(idPro);
-		Empleado empleado = serviceEmp.listarId(idEmp);
+		Proyecto proyecto = proyectoService.listarId(idPro);
+		Empleado empleado = empleadoService.listarId(idEmp);
 		
 		proyecto.removeEmployee(empleado);
-		service.save(proyecto);
+		proyectoService.save(proyecto);
 		
 	}
 	
@@ -99,7 +99,7 @@ public class ProyectoController {
 		List<String> result = null;
 
 		try{
-			result = service.searchProjectsOfEmple(idEmpleado);
+			result = proyectoService.searchProjectsOfEmple(idEmpleado);
 
 		}catch (DataAccessException e){
 			LOGGER.error("Error al realizar la consulta a la base de datos");
@@ -119,13 +119,13 @@ public class ProyectoController {
 	//metodo para dar de baja al proyecto
 	@PostMapping(path="/baja/{id}")
 	public void baja(@PathVariable(name="id",required= true) int id) {
-		service.darBaja(id);
+		proyectoService.darBaja(id);
 	}
 	
 	@PostMapping(path="/update")
 	@ResponseBody
 	public void updateProject(@RequestBody Proyecto proyecto) {
-		service.updateProject(proyecto);
+		proyectoService.updateProject(proyecto);
 	}
 	
 }

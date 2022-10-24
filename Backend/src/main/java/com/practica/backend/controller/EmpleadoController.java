@@ -142,12 +142,11 @@ public class EmpleadoController {
 		}
 
 	}
-	/** Revisar para eliminar**/
+	/** Revisar para mejorar, cambiar de comodin a una clase**/
 	@PostMapping(path="empleados/status")
-	@ResponseBody
-	public List<?> status(@RequestBody Map<String, String> json) {
-		int idPro = Integer.parseInt(json.get("id_proyecto"));
-		return empleadoService.showStatus(idPro);
+	public List<?> status(@RequestParam int idProyecto) {
+
+		return empleadoService.showStatus(idProyecto);
 		
 		
 	}
