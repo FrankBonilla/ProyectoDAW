@@ -6,7 +6,7 @@ export const projectService = {
     getProjectsAct,
     saveProyect,
     removeEmployee,
-    saveEmployee,
+    asignarEmpleado,
     searchEmpInProjects,
     terminateProject,
     updateProject,
@@ -62,8 +62,15 @@ function deleteProject(id){
             })
 }
 
-function saveEmployee(datos){
-    return axios.post(`${URL}proyectos/asignarEmpleado`, datos)
+function asignarEmpleado(idProyecto,idEmpleado){
+    return axios({
+                method: 'post',
+                url: `${URL}proyectos/asignarEmpleado`,
+                params: {
+                    idProyecto: idProyecto,
+                    idEmpleado: idEmpleado
+                }
+            })
             .then(response => {
                 console.log(response.data)
                 return response.data

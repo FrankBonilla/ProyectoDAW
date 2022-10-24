@@ -65,18 +65,16 @@ public class ProyectoController {
 	
 	//Asiganmos los empleados al proyecto 
 	@PostMapping(path="/asignarEmpleado")
-	@ResponseBody
-	public void addEmp(@RequestBody Map<String, String> json) {
-		int idPro = Integer.parseInt(json.get("id_proyecto"));
-		int idEmp = Integer.parseInt(json.get("id_empleado"));
-		
-		Proyecto proyecto = proyectoService.listarId(idPro);
-		Empleado empleado = empleadoService.listarId(idEmp);
+	public void addEmp(@RequestParam int idProyecto, @RequestParam int idEmpleado) {
+
+		Proyecto proyecto = proyectoService.listarId(idProyecto);
+		Empleado empleado = empleadoService.listarId(idEmpleado);
 		
 		proyecto.addEmployee(empleado);
 		proyectoService.save(proyecto);
 		
 	}
+	/** mejorar **/
 	//Eliminamos el empleado del proyecto
 	@PostMapping(path="/remove-employee")
 	@ResponseBody

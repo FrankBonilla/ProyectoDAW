@@ -480,7 +480,7 @@ export default {
             console.log(`Haz eliminado al empleado ${employee.nombre}`)
             
           }else{
-            projectService.saveEmployee(data)
+            projectService.asignarEmpleado(this.idProject,employee.id_empleado)
             console.log(`Haz agregado al empleado ${employee.nombre}`)
             
           }
