@@ -119,8 +119,9 @@ public class EmpleadoController {
 			LOGGER.info("Agregando al empleado: "+empleado.getNombre()+" "+empleado.getApellido1());
 
 		}catch(DataAccessException e){
+			LOGGER.error("Erro al realizar operación en la base de datos");
 			LOGGER.error("error: "+e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-			return new ResponseEntity<>(empleado,httpStatus.OK);
+			return new ResponseEntity<>(empleado,httpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 		LOGGER.info("Se ha agregado al empleado [{}]", empleado.toString());
@@ -164,19 +165,18 @@ public class EmpleadoController {
 	@ResponseBody
 	public ResponseEntity<Empleado> updateEmployee(@RequestBody Empleado empleado) {
 
-		LOGGER.info("actualizando empleado con ID: ",empleado.getIdEmpleado());
+		LOGGER.info("actualizando empleado con ID:[{}] ",empleado.getIdEmpleado());
 		try{
-			empleadoService.updateEmployee(empleado);
-			LOGGER.info("Se ha actualiza correctamente el empleado [{}]", empleado.toString());
-			return new ResponseEntity<>(empleado,httpStatus.OK);
+			Empleado employeeUpdated = empleadoService.updateEmployee(empleado);
+			LOGGER.info("Se ha actualiza correctamente el empleado [{}]", employeeUpdated.toString());
+			return new ResponseEntity<>(employeeUpdated,httpStatus.OK);
 
 		}catch (DataAccessException e){
 			LOGGER.error("Error accediendo a la base de datos");
 			LOGGER.error("error {}",e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-			return new ResponseEntity<>(httpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(httpStatus.INTERNAL_SERVER_ERROR);
 
 		}
-		
 
 	}
 	
@@ -185,17 +185,16 @@ public class EmpleadoController {
 	public ResponseEntity<Empleado> baja(@RequestParam int idEmpleado) {
 
 		LOGGER.info("Dando de baja al empleado con ID: [{}]", idEmpleado);
-		Empleado empleado = empleadoService.listarId(idEmpleado);
 
 			try{
-				empleadoService.darBaja(idEmpleado);
+				Empleado employeeUnsuscribed = empleadoService.darBaja(idEmpleado);
 				LOGGER.info("Baja realizada al empleado con ID: [{}]",idEmpleado);
-				return new ResponseEntity<>(empleado,httpStatus.OK);
+				return new ResponseEntity<>(employeeUnsuscribed,httpStatus.OK);
 
 			}catch(DataAccessException e){
 				LOGGER.error("Error accediendo a la base de datos");
 				LOGGER.error("error {}",e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-				return new ResponseEntity<>(empleado,httpStatus.BAD_REQUEST);
+				return new ResponseEntity<>(httpStatus.INTERNAL_SERVER_ERROR);
 			}
 
 		}
@@ -211,11 +210,12 @@ public class EmpleadoController {
 			LOGGER.info("El empleado con ID: [{}] ha sido dado de alta nuevamente", idEmpleado);
 			result = "El empleado con ID: "+idEmpleado+" ha sido dado de alta nuevamente ";
 			return new ResponseEntity<>(result,httpStatus.OK);
+
 		}catch(DataAccessException e){
 
 			LOGGER.error("error {}",e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			result = "Error dando de alta: "+e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage());
-			return new ResponseEntity<>(result,httpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(result,httpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	

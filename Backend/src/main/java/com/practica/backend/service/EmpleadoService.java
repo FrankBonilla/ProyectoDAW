@@ -23,6 +23,7 @@ public class EmpleadoService {
 			
 			return repo.findAll();
 		}
+
 		@Transactional
 		public Empleado save(Empleado empleado) {
 			
@@ -39,31 +40,44 @@ public class EmpleadoService {
 			return repo.findById(id).orElse(null);
 		}
 
-		public void updateEmployee(Empleado a) {
+		public Empleado updateEmployee(Empleado a) {
+			Empleado empleadoUpdated = null;
 			Empleado empleado = repo.getReferenceById(a.getIdEmpleado());
-			empleado.setNif(a.getNif());
-			empleado.setNombre(a.getNombre());
-			empleado.setApellido1(a.getApellido1());
-			empleado.setApellido2(a.getApellido2());
-			empleado.setNacimiento(a.getNacimiento());
-			empleado.setTelefono1(a.getTelefono1());
-			empleado.setTelefono2(a.getTelefono2());
-			empleado.setEmail(a.getEmail());
-			empleado.setFechaAlta(a.getFechaAlta());
-			empleado.setEdoCivil(a.getEdoCivil());
-			empleado.setSerMilitar(a.getSerMilitar());
-			repo.save(empleado);
-			
+
+			if(empleado != null){
+				empleado.setNif(a.getNif());
+				empleado.setNombre(a.getNombre());
+				empleado.setApellido1(a.getApellido1());
+				empleado.setApellido2(a.getApellido2());
+				empleado.setNacimiento(a.getNacimiento());
+				empleado.setTelefono1(a.getTelefono1());
+				empleado.setTelefono2(a.getTelefono2());
+				empleado.setEmail(a.getEmail());
+				empleado.setFechaAlta(a.getFechaAlta());
+				empleado.setEdoCivil(a.getEdoCivil());
+				empleado.setSerMilitar(a.getSerMilitar());
+
+				empleadoUpdated = repo.save(empleado);
+				return empleadoUpdated;
+
+			}else{
+				return null;
+			}
 		}
 		
 		
-		public void darBaja(int id) {
+		public Empleado darBaja(int id) {
 			
 			Empleado empleado = repo.getReferenceById(id);
-			LocalDate fecha = LocalDate.now();
-			empleado.setFechaBaja(Date.valueOf(fecha));
-			repo.save(empleado);
-			
+
+			if(empleado != null){
+				LocalDate fecha = LocalDate.now();
+				empleado.setFechaBaja(Date.valueOf(fecha));
+				empleado = repo.save(empleado);
+				return empleado;
+			}else{
+				return null;
+			}
 		}
 		//método 1 que define la consulta creada en el repositorio
 		public List<Empleado> mostarActivos(){
@@ -87,7 +101,7 @@ public class EmpleadoService {
 		//método 4 que busca a los empleados de baja
 		public List<Empleado> showUnsuscribe(){
 			
-			return repo.findByF_baja();
+			return repo.empleadoInactivos();
 		}
 		
 		//metodo 5 para volver a dar de alta

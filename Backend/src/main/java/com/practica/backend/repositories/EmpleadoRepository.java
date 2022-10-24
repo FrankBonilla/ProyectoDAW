@@ -32,8 +32,8 @@ public interface EmpleadoRepository extends JpaRepository <Empleado,Integer> {
 	List<?> searchEmployeesInProject(@Param("idPro") int id);
 	
 	//creamos una consulta donde devolverá los empleados que  esten de baja
-	@Query(value="SELECT l FROM Empleado l WHERE l.fechaBaja != null")
-	List<Empleado> findByF_baja();
+	@Query(value="SELECT l FROM Empleado l WHERE l.fechaBaja IS NOT NULL")
+	List<Empleado> empleadoInactivos();
 	
 	//método para volver a dar el alta a un empleado dado de baja, añadimos dos anotaciones para poder ejecutar este tipo de query 
 	@Modifying
