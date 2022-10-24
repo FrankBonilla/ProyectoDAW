@@ -143,7 +143,7 @@ public class EmpleadoController {
 
 	}
 	/** Revisar para eliminar**/
-	@PostMapping(path="/status")
+	@PostMapping(path="empleados/status")
 	@ResponseBody
 	public List<?> status(@RequestBody Map<String, String> json) {
 		int idPro = Integer.parseInt(json.get("id_proyecto"));
