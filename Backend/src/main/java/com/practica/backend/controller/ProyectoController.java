@@ -77,13 +77,27 @@ public class ProyectoController {
 	/** mejorar **/
 	//Eliminamos el empleado del proyecto
 	@PostMapping(path="/removeEmployee")
-	public void removeEmp(@RequestParam int idProyecto, @RequestParam int idEmpleado) {
+	public ResponseEntity<Boolean> removeEmp(@RequestParam int idProyecto, @RequestParam int idEmpleado) {
+		LOGGER.info("removiendo al empleado con ID: [{}] del proyecto [{}]",idEmpleado,idProyecto);
+		Boolean resultOK = false;
 
-		Proyecto proyecto = proyectoService.listarId(idProyecto);
-		Empleado empleado = empleadoService.listarId(idEmpleado);
-		
-		proyecto.removeEmployee(empleado);
-		proyectoService.save(proyecto);
+		try{
+			Proyecto proyecto = proyectoService.listarId(idProyecto);
+			Empleado empleado = empleadoService.listarId(idEmpleado);
+			proyecto.removeEmployee(empleado);
+			proyectoService.save(proyecto);
+			resultOK = true;
+		}catch(DataAccessException e){
+			LOGGER.error("Error accediendo a la base de datos");
+			LOGGER.error("error {}",e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<>(httpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		if(resultOK){
+			return new ResponseEntity<>(resultOK,httpStatus.OK);
+		}else{
+			return new ResponseEntity<>(resultOK,httpStatus.BAD_REQUEST);
+		}
 		
 	}
 	
