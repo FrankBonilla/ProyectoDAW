@@ -127,18 +127,33 @@ public class ProyectoController {
 
 	//metodo para verificar si el proyecto tiene empleados asignados antes de darle de baja
 	@GetMapping(path="/verificarPro")
-	public List<Empleado> checkProyect(@RequestParam int idProyecto){
+	public ResponseEntity<List<Empleado>> checkProyect(@RequestParam int idProyecto){
 		LOGGER.info("Verificando asignaciones del proyecto con ID:[{}] ",idProyecto);
+		List<Empleado> result = null;
 
-		Proyecto proyectoVerificado = proyectoService.listarId(idProyecto);
-		List<Empleado> result = proyectoVerificado.getEmployees();
+		try{
+			Proyecto proyectoVerificado = proyectoService.listarId(idProyecto);
+			result = proyectoVerificado.getEmployees();
+			LOGGER.info("Proyecto [{}] [{}] verificado ",proyectoVerificado.getId_proyecto(),proyectoVerificado.getDescripcion());
+		}catch(DataAccessException e){
+			LOGGER.error("Error al realizar la consulta a la base de datos");
+			LOGGER.error("error {}",e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<>(httpStatus.INTERNAL_SERVER_ERROR);
+		}
 
-		return result;
+		if(result != null && result.size() > 1){
+			LOGGER.info("El proyecto verificado tiene [{}] asignaciones ",result.size());
+			return new ResponseEntity<>(result,httpStatus.OK);
+		}else{
+			LOGGER.info("El proyecto verificado no tiene asignaciones ");
+			return new ResponseEntity<>(result,httpStatus.NO_CONTENT);
+		}
+
 	}
 	
 	//metodo para dar de baja al proyecto
 	@PostMapping(path="/baja/{id}")
-	public void baja(@PathVariable(name="id",required= true) int id) {
+	public void baja(@PathVariable(name="id") int id) {
 		proyectoService.darBaja(id);
 	}
 	
