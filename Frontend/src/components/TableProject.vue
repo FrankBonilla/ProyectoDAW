@@ -469,14 +469,9 @@ export default {
         },
         seleccionado(employee){
           console.log(`haz seleccionado un empleado ${employee.id_empleado}`)
-          //creamos el objeto con los id`s que se le pasaran para eliminar o guardar al empleado seleccionado
-          let data = {
-                        id_proyecto: this.idProject+"",
-                        id_empleado: employee.id_empleado+""
-                      }
           //evaluamos en la condicion si no esta agregado lo hacemos y de lo contrario lo removemos
           if(employee.asignado == false){
-            projectService.removeEmployee(data)
+            projectService.removeEmployee(this.idProject,employee.id_empleado)
             console.log(`Haz eliminado al empleado ${employee.nombre}`)
             
           }else{

@@ -80,8 +80,15 @@ function asignarEmpleado(idProyecto,idEmpleado){
             })
 }
 
-function removeEmployee(datos){
-    return axios.post(`${URL}proyectos/remove-employee`,datos)
+function removeEmployee(idProyecto,idEmpleado){
+    return axios({
+        method: 'post',
+        url: `${URL}proyectos/removeEmployee`,
+        params: {
+            idProyecto: idProyecto,
+            idEmpleado: idEmpleado
+                }
+            })
             .then(response => {
                 console.log(response.data)
                 return response.data
