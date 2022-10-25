@@ -124,6 +124,17 @@ public class ProyectoController {
 		}
 
 	}
+
+	//metodo para verificar si el proyecto tiene empleados asignados antes de darle de baja
+	@GetMapping(path="/verificarPro")
+	public List<Empleado> checkProyect(@RequestParam int idProyecto){
+		LOGGER.info("Verificando asignaciones del proyecto con ID:[{}] ",idProyecto);
+
+		Proyecto proyectoVerificado = proyectoService.listarId(idProyecto);
+		List<Empleado> result = proyectoVerificado.getEmployees();
+
+		return result;
+	}
 	
 	//metodo para dar de baja al proyecto
 	@PostMapping(path="/baja/{id}")

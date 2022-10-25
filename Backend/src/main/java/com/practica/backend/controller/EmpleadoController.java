@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.practica.backend.entities.Proyecto;
+import com.practica.backend.service.ProyectoService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -147,19 +149,8 @@ public class EmpleadoController {
 	public List<?> status(@RequestParam int idProyecto) {
 
 		return empleadoService.showStatus(idProyecto);
-		
-		
 	}
-	//metodo para verificar si el proyecto tiene empleados asignados antes de darle de baja
-	@PostMapping(path="/verificar")
-	@ResponseBody
-	public List<?> check(@RequestBody Map<String, String> json){
-		int idPro = Integer.parseInt(json.get("id_proyecto"));
-		return empleadoService.searchEmployeesProject(idPro);
-		
-		
-	}
-	
+
 	@PostMapping(path="empleados/update")
 	@ResponseBody
 	public ResponseEntity<Empleado> updateEmployee(@RequestBody Empleado empleado) {

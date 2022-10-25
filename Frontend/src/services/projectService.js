@@ -98,8 +98,14 @@ function removeEmployee(idProyecto,idEmpleado){
             })
 }
 
-function searchEmpInProjects(datos){
-    return axios.post(`${URL}empleados/verificar`,datos)
+function searchEmpInProjects(idProyecto){
+    return axios({
+        method: 'get',
+        url: `${URL}proyectos/verificarPro`,
+        params: {
+            idProyecto: idProyecto
+                }
+            })
             .then(response => {
                 return response.data
             })

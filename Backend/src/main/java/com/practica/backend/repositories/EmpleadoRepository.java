@@ -27,8 +27,8 @@ public interface EmpleadoRepository extends JpaRepository <Empleado,Integer> {
 	List<?> showStatus(@Param("idPro") int id);
 	
 	//definimos los empleados asignados al proyecto segun id
-	@Query(value="select tx_nombre from em_empleados a join "
-			+ "pr_empleados_proyecto b on a.id_empleado=b.id_empleado where b.id_proyecto = :idPro",nativeQuery=true)
+	@Query(value="select nombre from em_empleados a join "
+			+ "pr_empleados_proyecto b on a.idEmpleado = b.id_empleado where b.id_proyecto = :idPro",nativeQuery=true)
 	List<?> searchEmployeesInProject(@Param("idPro") int id);
 	
 	//creamos una consulta donde devolverá los empleados que  esten de baja

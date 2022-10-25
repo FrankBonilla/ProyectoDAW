@@ -345,12 +345,9 @@ export default {
         },
        async bajaProyecto(proyect){
 
-         let datos = {
-                      id_proyecto: proyect.id_proyecto+""
-                  }
-         let lista = await projectService.searchEmpInProjects(datos)
+         let lista = await projectService.searchEmpInProjects(proyect.id_proyecto)
           console.log(lista)
-          if(lista.length != 0){
+          if(lista && lista.length > 0){
             //asignamos la lista de projectos 
             this.msgAsigned = "No se puede dar de baja al proyecto: "+proyect.descripcion.toUpperCase()+" porque está asignado al menos un recurso";
             //activamos el msj que mostrará que el empleado tiene projectos asignados
