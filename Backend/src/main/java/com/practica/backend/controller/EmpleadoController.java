@@ -55,7 +55,7 @@ public class EmpleadoController {
 			return new ResponseEntity<>(response,httpStatus.NOT_FOUND);
 		}
 
-		LOGGER.info("Consulta de empleados finalizada, resultados: [{}] resultados",result.size());
+		LOGGER.info("Consulta de empleados finalizada [{}] resultados",result.size());
 		return new ResponseEntity<>(result,httpStatus.OK);
 	}
 

@@ -17,7 +17,7 @@ export const projectService = {
 }
 
 function getAll(){
-    return axios.get(`${URL}proyectos/lista`)
+    return axios.get(`${URL}api/proyectos/lista`)
             .then(response => {
                 return response.data
             })
@@ -28,7 +28,7 @@ function getAll(){
 
 function getProjectsAct(){
 
-    return axios.get(`${URL}proyectos/activos`)
+    return axios.get(`${URL}api/proyectos/activos`)
         .then(response => {
             console.table(response.data)
             return response.data
@@ -41,7 +41,7 @@ function getProjectsAct(){
 
 function saveProyect(datos){
 
-    return axios.post(`${URL}proyectos/guardar`,datos)
+    return axios.post(`${URL}api/proyectos/guardar`,datos)
     .then(response => {
         console.log(response.data)
         return response.data
@@ -52,8 +52,14 @@ function saveProyect(datos){
     })
 }
 
-function deleteProject(id){
-    return axios.delete(`${URL}proyectos/borrar/${id}`)
+function deleteProject(idProyecto){
+    return axios({
+            method: 'delete',
+            url: `${URL}api/proyectos/borrar`,
+            params: {
+                idProyecto: idProyecto
+            }
+        })
             .then( response => {
                 response.data
             })
@@ -65,7 +71,7 @@ function deleteProject(id){
 function asignarEmpleado(idProyecto,idEmpleado){
     return axios({
                 method: 'post',
-                url: `${URL}proyectos/asignarEmpleado`,
+                url: `${URL}api/proyectos/asignarEmpleado`,
                 params: {
                     idProyecto: idProyecto,
                     idEmpleado: idEmpleado
@@ -83,7 +89,7 @@ function asignarEmpleado(idProyecto,idEmpleado){
 function removeEmployee(idProyecto,idEmpleado){
     return axios({
         method: 'post',
-        url: `${URL}proyectos/removeEmployee`,
+        url: `${URL}api/proyectos/removeEmployee`,
         params: {
             idProyecto: idProyecto,
             idEmpleado: idEmpleado
@@ -101,7 +107,7 @@ function removeEmployee(idProyecto,idEmpleado){
 function searchEmpInProjects(idProyecto){
     return axios({
         method: 'get',
-        url: `${URL}proyectos/verificarPro`,
+        url: `${URL}api/proyectos/verificarPro`,
         params: {
             idProyecto: idProyecto
                 }
@@ -114,8 +120,14 @@ function searchEmpInProjects(idProyecto){
             })
 }
 
-function terminateProject(id){
-    return axios.post(`${URL}proyectos/baja/${id}`)
+function terminateProject(idProyecto){
+    return axios({
+            method: 'post',
+            url: `${URL}api/proyectos/baja`,
+            params: {
+                idProyecto: idProyecto
+                }
+            })
             .then( response => {
                 return response.data
             })
@@ -125,7 +137,7 @@ function terminateProject(id){
 }
 
 function updateProject(data){
-    return axios.post(`${URL}proyectos/update`, data)
+    return axios.post(`${URL}api/proyectos/update`, data)
             .then( response => {
                 return response.data
             })
@@ -135,7 +147,7 @@ function updateProject(data){
 }
 
 function unsuscribeProyect(){
-    return axios.get(`${URL}proyectos/inactivos`)
+    return axios.get(`${URL}api/proyectos/inactivos`)
         .then(response => {
             console.log(response.data)
             return response.data

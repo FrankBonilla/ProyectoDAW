@@ -26,9 +26,10 @@ public class ProyectoService {
 		return repo.getById(id);
 	}
 	
-	public void save(Proyecto proyecto) {
+	public Proyecto save(Proyecto proyecto) {
 		
 		repo.save(proyecto);
+		return proyecto;
 	}
 	
 	public void delete(int id) {
@@ -58,7 +59,7 @@ public class ProyectoService {
 	
 	public void updateProject(Proyecto p) {
 		
-		Proyecto proyecto = repo.getById(p.getId_proyecto());
+		Proyecto proyecto = repo.getReferenceById(p.getId_proyecto());
 		proyecto.setDescripcion(p.getDescripcion());
 		proyecto.setF_inicio(p.getF_inicio());
 		proyecto.setF_fin(p.getF_fin());

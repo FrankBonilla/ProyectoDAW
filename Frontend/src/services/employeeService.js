@@ -89,7 +89,7 @@ function addEmployee(empleado){
 function searchProjectOfEmp(idEmpleado){
     return axios({
             method: "get",
-            url: `${URL}proyectos/verificar`,
+            url: `${URL}api/proyectos/verificar`,
             params: { 
                 idEmpleado : idEmpleado
                 }
