@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.practica.backend.entities.Proyecto;
+import com.practica.backend.repositories.EmpleadoRepository;
 import com.practica.backend.service.ProyectoService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -144,18 +145,34 @@ public class EmpleadoController {
 		}
 
 	}
-	/** Revisar para mejorar, cambiar de comodin a una clase**/
-	@PostMapping(path="empleados/status")
-	public List<?> status(@RequestParam int idProyecto) {
+	/** Este método consulta si los empleados estan asignados o no a un proyecto
+	 * @Param idProyecto recibe el ID del proyecto a consultar
+	 * @Return una lista de empleados con el estado de asignado al proyecto
+	 * **/
+	@GetMapping(path="empleados/status")
+	public ResponseEntity<List<EmpleadoRepository.Asignaciones>> getAsignaciones(@RequestParam int idProyecto) {
+		LOGGER.info(">>>> Entrando al método: getAsignaciones");
+		List<EmpleadoRepository.Asignaciones> result = null;
 
-		return empleadoService.showStatus(idProyecto);
+		try{
+			LOGGER.info("Consultando el estado de asignacion de los empleados al proyecto [{}]", idProyecto);
+			result = empleadoService.showStatus(idProyecto);
+
+		}catch (DataAccessException e){
+			LOGGER.error("Error al realizar la operación a la base de datos");
+			LOGGER.error("error "+e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<>(httpStatus.BAD_REQUEST);
+		}
+
+		LOGGER.info("Consulta de asignaciones realizada: [{}] resultados",result.size());
+		return new ResponseEntity<>(result,httpStatus.OK);
 	}
 
 	@PostMapping(path="empleados/update")
 	@ResponseBody
 	public ResponseEntity<Empleado> updateEmployee(@RequestBody Empleado empleado) {
-
 		LOGGER.info("actualizando empleado con ID:[{}] ",empleado.getIdEmpleado());
+
 		try{
 			Empleado employeeUpdated = empleadoService.updateEmployee(empleado);
 			LOGGER.info("Se ha actualiza correctamente el empleado [{}]", employeeUpdated.toString());

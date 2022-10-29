@@ -438,41 +438,19 @@ export default {
           console.log(`haz seleccionado el proyecto ${this.idProject}`)
           //pasamos le id del proyecto para hacer la consulta 
           //hacemos la conulta de los empleados
-          let datos  = await employeeService.getStatusEmp(this.idProject+"")
-          //creamos un array donde se guardaran la lista devuelta pero con indices
-          let statusEmple = []
-          //con un bucle crellenamos el nuevo array
-          for(let i = 0; i < datos.length;i ++){
-              //el campo asignado devuelve un string, por eso debemos comprobar y convertirlo en boleano
-              let asignado 
-              if(datos[i][4] == 'true'){
-                asignado = true
-              }else{
-                asignado = false
-              }// asignamos los valores a cada indice de nuevo array de objetos
-              let status = {
-                  id_empleado: datos[i][0],
-                  nombre: datos[i][1],
-                  apellido1: datos[i][2],
-                  apellido2: datos[i][3],
-                  asignado: asignado
-              }
-              //agregamos el objeto al array
-              statusEmple.push(status)
-          }
-
-          this.empleados= statusEmple
+          let datos  = await employeeService.getStatusEmp(this.idProject)
+          this.empleados= datos
           
         },
         seleccionado(employee){
-          console.log(`haz seleccionado un empleado ${employee.id_empleado}`)
+          console.log(`haz seleccionado un empleado ${employee.idEmpleado}`)
           //evaluamos en la condicion si no esta agregado lo hacemos y de lo contrario lo removemos
           if(employee.asignado == false){
-            projectService.removeEmployee(this.idProject,employee.id_empleado)
+            projectService.removeEmployee(this.idProject,employee.idEmpleado)
             console.log(`Haz eliminado al empleado ${employee.nombre}`)
             
           }else{
-            projectService.asignarEmpleado(this.idProject,employee.id_empleado)
+            projectService.asignarEmpleado(this.idProject,employee.idEmpleado)
             console.log(`Haz agregado al empleado ${employee.nombre}`)
             
           }

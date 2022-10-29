@@ -205,7 +205,7 @@ public class ProyectoController {
 		
 	}
 	
-	//Verificamos los proyectos asigandos un empleado
+	//Verificamos los proyectos asignados un empleado
 	@GetMapping(path="proyectos/verificar")
 	public ResponseEntity<List<String>> searchProjectsOfEmple(@RequestParam int idEmpleado){
 		LOGGER.info(">>>> Entrando al método: searchProjectsOfEmple");
@@ -218,6 +218,7 @@ public class ProyectoController {
 		}catch (DataAccessException e){
 			LOGGER.error("Error al realizar la consulta a la base de datos");
 			LOGGER.error("error {}",e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<>(result,httpStatus.BAD_REQUEST);
 		}
 
 		if(result == null){
@@ -258,16 +259,27 @@ public class ProyectoController {
 	
 	//metodo para dar de baja al proyecto
 	@PostMapping(path="proyectos/baja")
-	public void bajaProyecto(@RequestParam int idProyecto) {
+	public ResponseEntity<Boolean> bajaProyecto(@RequestParam int idProyecto) {
 		LOGGER.info(">>>> Entrando al método: bajaProyecto");
+		Boolean resultadoOK = false;
 
 		try{
 			LOGGER.info("Dando de baja al proyecto: [{}]", idProyecto);
 			proyectoService.darBaja(idProyecto);
-
+			resultadoOK = true;
 		}catch (DataAccessException e){
 			LOGGER.error("Error al realizar la consulta a la base de datos");
 			LOGGER.error("error {}",e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<>(resultadoOK,httpStatus.BAD_REQUEST);
+		}
+
+		if(resultadoOK){
+			LOGGER.info("Se ha dado de baja el proyecto con ID=[{}]",idProyecto);
+			return new ResponseEntity<>(resultadoOK,httpStatus.OK);
+
+		}else{
+			LOGGER.info("NO se ha podido dar de baja el proyecto con ID=[{}]",idProyecto);
+			return new ResponseEntity<>(resultadoOK,httpStatus.BAD_REQUEST);
 		}
 
 	}

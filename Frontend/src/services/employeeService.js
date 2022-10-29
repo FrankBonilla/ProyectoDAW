@@ -43,7 +43,7 @@ function getEmployeesAct(){
 function getStatusEmp(idPro){
 
     return axios({
-        method: 'post',
+        method: 'get',
         url: `${URL}api/empleados/status`,
         params: {
             idProyecto: idPro
