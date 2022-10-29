@@ -5,6 +5,12 @@ import router from './router'
 
 Vue.config.productionTip = false
 
+Vue.filter('formatedDate', function (value){
+  if (!value) return null
+        let formatedDate = value.split("-").reverse().join("/")
+        return formatedDate
+})
+
 new Vue({
   vuetify,
   router,
