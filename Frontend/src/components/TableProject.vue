@@ -149,7 +149,7 @@
               <v-container v-model="empleados">
                 <!-- Seleccion de empleados -->
            
-                <v-data-table  :headers="headers" :items="empleados" item-key="id_empleado" >
+                <v-data-table  :headers="headers" :items="empleados" item-key="idEmpleado" >
                   <!-- alerta si no hay datos -->
                   <template v-slot:no-data>
                     <v-alert :value="true" color="warning" icon="mdi-cloud-alert" shaped outlined>
