@@ -156,7 +156,11 @@
               <v-container v-model="empleados">
                 <!-- Seleccion de empleados -->
            
-                <v-data-table  :headers="headers" :items="empleados" item-key="idEmpleado" >
+                <v-data-table  :headers="headers" 
+                               :items="empleados" 
+                               item-key="idEmpleado" 
+                               :footer-props="{itemsPerPageText: 'Filas por página'}"
+                               :hide-default-footer="empleados.length > 10 ? false : true">
                   <!-- alerta si no hay datos -->
                   <template v-slot:no-data>
                     <v-alert :value="true" color="warning" icon="mdi-cloud-alert" shaped outlined>
