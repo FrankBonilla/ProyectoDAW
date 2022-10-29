@@ -19,8 +19,8 @@
               <th class="white--text">NIF</th>
               <th class="white--text">Nombre</th>
               <th class="white--text">Primer Apeliido</th>
-              <th class="white--text">Segundo apellido</th>
-              <th class="white--text">Fecha nacimiento</th>
+              <th class="white--text">Segundo Apellido</th>
+              <th class="white--text">Fecha Nacimiento</th>
               <th class="white--text">Teléfono</th>
               <th class="white--text">Teléfono 2</th>
               <th class="white--text">Email</th>
@@ -37,11 +37,11 @@
               <td>{{ employee.nombre }}</td>
               <td>{{ employee.apellido1 }}</td>
               <td>{{ employee.apellido2 }}</td>
-              <td>{{ employee.nacimiento.substring(0,10)}}</td>
+              <td>{{ employee.nacimiento | formatedDate}}</td>
               <td>{{ employee.telefono1 }}</td>
               <td>{{ employee.telefono2 }}</td>
               <td>{{ employee.email }}</td>
-              <td>{{ employee.fechaAlta.substring(0,10) }}</td>
+              <td>{{ employee.fechaAlta | formatedDate}}</td>
               <td>{{ employee.edoCivil }}</td>
               <td>{{ employee.serMilitar }}</td>
               <td >
@@ -107,7 +107,7 @@
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field
                         :rules="generalRules" 
-                        v-model="date"
+                        :value="date | formatedDate"
                         label="Fecha nacimiento"
                         prepend-icon="mdi-calendar"
                         readonly
@@ -119,10 +119,12 @@
                     <v-date-picker
                       v-model="date"
                       :active-picker.sync="activePicker"
-                      :max="(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)"
+                      :max="today"
                       min="1950-01-01"
                       @change="save"
                       color="blue-grey darken-3"
+                      first-day-of-week="1"
+                      locale="es"
                     ></v-date-picker>
                   </v-menu>
                   </v-col>
@@ -207,8 +209,8 @@
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field
-                        :rules="generalRules" 
-                        v-model="date2"
+                        :rules="generalRules"
+                        :value="date2 | formatedDate"
                         label="Fecha nacimiento"
                         prepend-icon="mdi-calendar"
                         readonly
@@ -220,10 +222,12 @@
                     <v-date-picker
                       v-model="date2"
                       :active-picker.sync="activePicker2"
-                      :max="(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)"
+                      :max="today"
                       min="1950-01-01"
                       @change="save2"
                       color="blue-grey darken-3"
+                      first-day-of-week="1"
+                      locale="es"
                     ></v-date-picker>
                   </v-menu>
                   </v-col>
@@ -261,6 +265,7 @@ export default {
     data(){
         return {
             title: 'Empleados',
+            today: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
             employees: [],
             employee: {
                 idEmpleado: '',
@@ -314,7 +319,7 @@ export default {
       }
     },
     methods: {
-    
+
        async listar(){
            this.employees = await employeeService.getEmployeesAct()   
           
@@ -420,7 +425,7 @@ export default {
                 this.employee.edoCivil = emple.edoCivil,
                 this.employee.serMilitar = emple.serMilitar
                 //establecemos el valor por default la fecha de nacimiento
-                this.date = emple.nacimiento.substring(0,10)
+                this.date = emple.nacimiento
                 this.date2 = this.date
                 
           

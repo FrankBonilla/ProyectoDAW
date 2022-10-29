@@ -27,7 +27,7 @@ public class Empleado {
 	private String apellido1;
 	@Column(name="apellido2",nullable= false,length= 40)
 	private String apellido2;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+
 	@Column(name="fechaNacimiento",nullable= false)
 	private Date nacimiento;
 	@Column(name="telefono1",nullable=false,length= 12)
@@ -36,10 +36,10 @@ public class Empleado {
     private String telefono2;
 	@Column(name="email",nullable= false,length= 40)
     private String email;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+
 	@Column(name="fechaAlta",nullable= false)
     private Date fechaAlta;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+
 	@Column(name="fechaBaja")
     private Date fechaBaja;
 	@Column(name="edoCivil",nullable= false, length= 1)

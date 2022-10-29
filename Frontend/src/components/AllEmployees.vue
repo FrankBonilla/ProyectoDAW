@@ -28,7 +28,7 @@
               <td>{{ employee.nombre }}</td>
               <td>{{ employee.apellido1 }}</td>
               <td>{{ employee.apellido2 }}</td>
-              <td>{{ employee.nacimiento.substring(0,10)}}</td>
+              <td>{{ employee.nacimiento | formatedDate}}</td>
               <td>{{ employee.telefono1 }}</td>
               <td>{{ employee.telefono2 }}</td>
               <td>{{ employee.email }}</td>
