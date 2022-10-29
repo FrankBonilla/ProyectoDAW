@@ -1,5 +1,7 @@
 package com.practica.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,15 +28,18 @@ public class Proyecto {
 	private int id_proyecto;
 	@Column(name="TEXT_DESCRIPCION",nullable= false,length= 125)
 	private String descripcion;
+
 	@Column(name="F_INICIO",nullable= false)
 	private Date f_inicio;
-	@Column(name="F_FIN",nullable= true)
+
+	@Column(name="F_FIN")
 	private Date f_fin;
-	@Column(name="F_BAJA",nullable= true)
+
+	@Column(name="F_BAJA")
 	private Date f_baja;
-	@Column(name="TX_LUGAR",nullable= true,length= 30)
+	@Column(name="TX_LUGAR", length= 30)
 	private String lugar;
-	@Column(name="TEXT_OBSERVACIONES",nullable= true,length= 300)
+	@Column(name="TEXT_OBSERVACIONES",length= 300)
 	private String observaciones;
 	
 	@ManyToMany(cascade= {
@@ -45,8 +50,7 @@ public class Proyecto {
 			joinColumns=@JoinColumn(name="id_proyecto"),
 			inverseJoinColumns= @JoinColumn(name="id_empleado"))
 	private List<Empleado> empleados = new ArrayList<>();
-    
-	
+
 	/**Constructor por defecto **/
 	public Proyecto() {
 		
@@ -129,7 +133,7 @@ public class Proyecto {
 	}
 	
 	public void removeEmployee(Empleado empleado) {
-		empleados.remove(empleado);;
+		empleados.remove(empleado);
 	}
 	/**Equals and HashCode **/
 	@Override

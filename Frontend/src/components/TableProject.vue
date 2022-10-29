@@ -29,8 +29,9 @@
           <tbody> <!--Recorremos el arreglo de proyectos -->
             <tr v-for="proyect in projects" :key="proyect.id_proyecto">
               <td>{{ proyect.descripcion }}</td>
-              <td>{{ proyect.f_inicio.substring(0,10) }}</td>
-              <td>{{ proyect.f_fin? proyect.f_fin.substring(0,10) : 'Sin definir' }}</td>
+              <td>{{ proyect.f_inicio | formatedDate }}</td>
+              <td v-if="proyect.f_fin">{{ proyect.f_fin | formatedDate }}</td>
+              <td v-else>Sin definir</td>
               <td>{{ proyect.lugar? proyect.lugar : 'Sin asignar' }}</td>
               <td>{{ proyect.observaciones }}</td>
               <td>
@@ -74,7 +75,7 @@
                       <template v-slot:activator="{ on, attrs }">
                         <v-text-field
                           :rules="generalRules" 
-                          v-model="date"
+                          :value="date | formatedDate"
                           label="Fecha de inicio"
                           prepend-icon="mdi-calendar"
                           readonly
@@ -87,6 +88,9 @@
                         :active-picker.sync="activePicker"
                         min="1950-01-01"
                         @change="save"
+                        color="blue-grey darken-3"
+                        first-day-of-week="1"
+                        locale="es"
                       ></v-date-picker>
                     </v-menu>
                   </v-col>
@@ -101,7 +105,7 @@
                     >
                       <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                          v-model="date2"
+                          :value="date2 | formatedDate"
                           label="Fecha fin"
                           prepend-icon="mdi-calendar"
                           readonly
@@ -112,8 +116,11 @@
                       <v-date-picker
                         v-model="date2"
                         :active-picker.sync="activePicker2"
-                        :min="(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)"
+                        :min="today"
                         @change="save2"
+                        color="blue-grey darken-3"
+                        first-day-of-week="1"
+                        locale="es"
                       ></v-date-picker>
                     </v-menu>
                   </v-col>
@@ -217,7 +224,7 @@
                       <template v-slot:activator="{ on, attrs }">
                         <v-text-field
                           :rules="generalRules" 
-                          v-model="date3"
+                          :value="date3 | formatedDate"
                           label="Fecha de inicio"
                           prepend-icon="mdi-calendar"
                           readonly
@@ -230,6 +237,9 @@
                         :active-picker.sync="activePicker3"
                         min="1950-01-01"
                         @change="save3"
+                        color="blue-grey darken-3"
+                        first-day-of-week="1"
+                        locale="es"
                       ></v-date-picker>
                     </v-menu>
                   </v-col>
@@ -244,7 +254,7 @@
                     >
                       <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                          v-model="date4"
+                          :value="date4 | formatedDate"
                           label="Fecha fin"
                           prepend-icon="mdi-calendar"
                           readonly
@@ -255,8 +265,11 @@
                       <v-date-picker
                         v-model="date4"
                         :active-picker.sync="activePicker4"
-                        :min="(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)"
+                        :min="today"
                         @change="save4"
+                        color="blue-grey darken-3"
+                        first-day-of-week="1"
+                        locale="es"
                       ></v-date-picker>
                     </v-menu>
                   </v-col>
@@ -292,6 +305,7 @@ export default {
     data() {
         return {
             title: 'Proyectos',
+            today: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
             projects: [],
             project: {
                 id_proyecto: '',

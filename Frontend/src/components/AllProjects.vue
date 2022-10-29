@@ -22,12 +22,13 @@
           <tbody> <!--Recorremos el arreglo de proyectos -->
             <tr v-for="proyect in projects" :key="proyect.id_proyecto">
               <td>{{ proyect.descripcion }}</td>
-              <td>{{ proyect.f_inicio.substring(0,10) }}</td>
-              <td>{{ proyect.f_fin? proyect.f_fin.substring(0,10) : 'Sin definir' }}</td>
+              <td>{{ proyect.f_inicio | formatedDate }}</td>
+              <td v-if="proyect.f_fin">{{ proyect.f_fin | formatedDate }}</td>
+              <td v-else>Sin definir</td>
               <td>{{ proyect.lugar? proyect.lugar : 'Sin asignar' }}</td>
               <td>{{ proyect.observaciones }}</td>
-              <!--Si hay fecha fin del proyecto entonces la calculamos ocn la fecha de inicio -->
-              <td>{{proyect.f_fin? ((Date.parse(proyect.f_fin)- today)/(1000*60*60*24)).toFixed()+' días' : 'Indefinido'}}</td>
+              <!--Si hay fecha fin del proyecto entonces la calculamos con la fecha de inicio -->
+              <td>{{proyect.f_fin? difference(proyect.f_fin)+' días' : 'Indefinido'}}</td>
               <td :style="proyect.f_baja? 'color: red' : 'color: green'"><b>{{ proyect.f_baja? 'INACTIVO' : 'ACTIVO'}}</b></td>
             </tr>
           </tbody>
@@ -55,8 +56,10 @@ export default {
             this.projects = await projectService.getAll()
             console.table(this.projects)
         },
-        difference(fecha1, fecha2){
-            console.log(fecha1,fecha2)
+        difference(fecha){
+           
+            let diasRestantes = ((Date.parse(fecha)- this.today)/(1000*60*60*24)).toFixed()
+            return diasRestantes
         }
         
     },
