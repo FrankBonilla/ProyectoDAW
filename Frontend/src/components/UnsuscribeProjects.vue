@@ -22,12 +22,13 @@
           <tbody> <!--Recorremos el arreglo de proyectos -->
             <tr v-for="proyect in projects" :key="proyect.id_proyecto">
               <td>{{ proyect.descripcion }}</td>
-              <td>{{ proyect.f_inicio | formatedDate }}</td>
-              <td v-if="proyect.f_fin">{{ proyect.f_fin | formatedDate }}</td>
-              <td v-else>Sin definir</td>
-              <td>{{ proyect.lugar? proyect.lugar : 'Sin asignar' }}</td>
+              <td>{{ proyect.fechaInicio | formatedDate }}</td>
+              <td v-if="proyect.fechaFin">{{ proyect.fechaFin | formatedDate }}</td>
+              <td v-else style="color:orange"> <b>No definida</b> </td>
+              <td :style="proyect.lugar? 'color: black' : 'color: orange;font-weight: bold' ">
+                {{ proyect.lugar? proyect.lugar : 'Sin asignar' }}</td>
               <td>{{ proyect.observaciones }}</td>
-              <td>{{ proyect.f_baja | formatedDate }}</td>
+              <td>{{ proyect.fechaBaja | formatedDate }}</td>
               <td>
                 <v-btn class="white--text" color="red" small @click="borrar(proyect)" title="eliminar"><b>X</b></v-btn>
               </td>

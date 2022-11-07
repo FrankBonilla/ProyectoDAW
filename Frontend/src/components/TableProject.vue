@@ -29,10 +29,11 @@
           <tbody> <!--Recorremos el arreglo de proyectos -->
             <tr v-for="proyect in projects" :key="proyect.id_proyecto">
               <td>{{ proyect.descripcion }}</td>
-              <td>{{ proyect.f_inicio | formatedDate }}</td>
-              <td v-if="proyect.f_fin">{{ proyect.f_fin | formatedDate }}</td>
-              <td v-else>Sin definir</td>
-              <td>{{ proyect.lugar? proyect.lugar : 'Sin asignar' }}</td>
+              <td>{{ proyect.fechaInicio | formatedDate }}</td>
+              <td v-if="proyect.fechaFin">{{ proyect.fechaFin | formatedDate }}</td>
+              <td v-else style="color:orange"><b> No definida</b></td>
+              <td :style="proyect.lugar? 'color: black' : 'color: orange;font-weight: bold' ">
+                {{ proyect.lugar? proyect.lugar : 'Sin asignar' }}</td>
               <td>{{ proyect.observaciones }}</td>
               <td>
                 <v-btn class="mx-2" fab dark x-small color="blue-grey darken-3" @click="actualizar(proyect)" title="editar"> 
@@ -314,9 +315,9 @@ export default {
             project: {
                 id_proyecto: '',
                 descripcion: '',
-                f_inicio: '',
-                f_fin: '',
-                f_baja: '',
+                fechaInicio: '',
+                fechaFin: '',
+                fechaBaja: '',
                 lugar: '',
                 observaciones: ''
             },
@@ -405,9 +406,9 @@ export default {
             
             let data = {
                 descripcion: this.project.descripcion,
-                f_inicio: this.date,
-                f_fin: this.date2,
-                f_baja: this.project.f_baja,
+                fechaInicio: this.date,
+                fechaFin: this.date2,
+                fechaBaja: this.project.fechaBaja,
                 lugar: this.project.lugar,
                 observaciones: this.project.observaciones
             }
@@ -482,8 +483,8 @@ export default {
                 this.project.lugar = proyecto.lugar,
                 this.project.observaciones = proyecto.observaciones
                 //establecemos las fechas por default del proyecto
-                this.date = proyecto.f_inicio.substring(0,10)
-                this.date2 = proyecto.f_fin? proyecto.f_fin.substring(0,10) : null
+                this.date = proyecto.fechaInicio.substring(0,10)
+                this.date2 = proyecto.fechaFin? proyecto.fechaFin.substring(0,10) : null
                 //las fechas por default que apareceran en los calendarios serán las fechas anteriormente asignadas
                 //y trabajaremos sobre las nuevas
                 this.date4 = this.date2
@@ -497,9 +498,9 @@ export default {
             let datos = {
             id_proyecto: this.project.id_proyecto,
             descripcion: this.project.descripcion,
-            f_inicio: this.date3,
-            f_fin: this.date4,
-            f_baja: null,
+            fechaInicio: this.date3,
+            fechaFin: this.date4,
+            fechaBaja: null,
             lugar: this.project.lugar,
             observaciones: this.project.observaciones
            }

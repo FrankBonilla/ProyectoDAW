@@ -1,7 +1,5 @@
 package com.practica.backend.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +28,13 @@ public class Proyecto {
 	private String descripcion;
 
 	@Column(name="F_INICIO",nullable= false)
-	private Date f_inicio;
+	private Date fechaInicio;
 
 	@Column(name="F_FIN")
-	private Date f_fin;
+	private Date fechaFin;
 
 	@Column(name="F_BAJA")
-	private Date f_baja;
+	private Date fechaBaja;
 	@Column(name="TX_LUGAR", length= 30)
 	private String lugar;
 	@Column(name="TEXT_OBSERVACIONES",length= 300)
@@ -49,6 +47,7 @@ public class Proyecto {
 	@JoinTable(name="pr_empleados_proyecto",
 			joinColumns=@JoinColumn(name="id_proyecto"),
 			inverseJoinColumns= @JoinColumn(name="id_empleado"))
+
 	private List<Empleado> empleados = new ArrayList<>();
 
 	/**Constructor por defecto **/
@@ -56,10 +55,10 @@ public class Proyecto {
 		
 	}
 	/**Constructor con parámetros **/
-	public Proyecto(String descripcion, Date f_inicio) {
+	public Proyecto(String descripcion, Date fechaInicio) {
 		super();
 		this.descripcion = descripcion;
-		this.f_inicio = f_inicio;
+		this.fechaInicio = fechaInicio;
 	}
 
 	/**Getters and Setters **/
@@ -79,28 +78,28 @@ public class Proyecto {
 		this.descripcion = descripcion;
 	}
 
-	public Date getF_inicio() {
-		return f_inicio;
+	public Date getFechaInicio() {
+		return fechaInicio;
 	}
 
-	public void setF_inicio(Date f_inicio) {
-		this.f_inicio = f_inicio;
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
 	}
 
-	public Date getF_fin() {
-		return f_fin;
+	public Date getFechaFin() {
+		return fechaFin;
 	}
 
-	public void setF_fin(Date f_fin) {
-		this.f_fin = f_fin;
+	public void setFechaFin(Date fechaFin) {
+		this.fechaFin = fechaFin;
 	}
 
-	public Date getF_baja() {
-		return f_baja;
+	public Date getFechaBaja() {
+		return fechaBaja;
 	}
 
-	public void setF_baja(Date f_baja) {
-		this.f_baja = f_baja;
+	public void setFechaBaja(Date fechaBaja) {
+		this.fechaBaja = fechaBaja;
 	}
 
 	public String getLugar() {
@@ -141,22 +140,22 @@ public class Proyecto {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Proyecto proyecto = (Proyecto) o;
-		return id_proyecto == proyecto.id_proyecto && Objects.equals(descripcion, proyecto.descripcion) && Objects.equals(f_inicio, proyecto.f_inicio) && Objects.equals(f_fin, proyecto.f_fin) && Objects.equals(f_baja, proyecto.f_baja) && Objects.equals(lugar, proyecto.lugar) && Objects.equals(observaciones, proyecto.observaciones) && Objects.equals(empleados, proyecto.empleados);
+		return id_proyecto == proyecto.id_proyecto && Objects.equals(descripcion, proyecto.descripcion) && Objects.equals(fechaInicio, proyecto.fechaInicio) && Objects.equals(fechaFin, proyecto.fechaFin) && Objects.equals(fechaBaja, proyecto.fechaBaja) && Objects.equals(lugar, proyecto.lugar) && Objects.equals(observaciones, proyecto.observaciones) && Objects.equals(empleados, proyecto.empleados);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id_proyecto, descripcion, f_inicio, f_fin, f_baja, lugar, observaciones, empleados);
+		return Objects.hash(id_proyecto, descripcion, fechaInicio, fechaFin, fechaBaja, lugar, observaciones, empleados);
 	}
 	/**toString **/
 	@Override
 	public String toString() {
 		return "Proyecto{" +
-				"id_proyecto=" + id_proyecto +
+				"idProyecto=" + id_proyecto +
 				", descripcion='" + descripcion + '\'' +
-				", f_inicio=" + f_inicio +
-				", f_fin=" + f_fin +
-				", f_baja=" + f_baja +
+				", fechaInicio=" + fechaInicio +
+				", f_fin=" + fechaFin +
+				", f_baja=" + fechaBaja +
 				", lugar='" + lugar + '\'' +
 				", observaciones='" + observaciones + '\'' +
 				", empleados=" + empleados +

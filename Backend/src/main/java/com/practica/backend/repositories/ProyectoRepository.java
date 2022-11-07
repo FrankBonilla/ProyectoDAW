@@ -12,11 +12,11 @@ import com.practica.backend.entities.Proyecto;
 public interface ProyectoRepository extends JpaRepository<Proyecto, Integer> {
 	
 	//creamos una consulta donde devolverá los proyectos que no esten de baja
-		@Query(value="SELECT l FROM Proyecto l WHERE l.f_baja = null")
+		@Query(value="SELECT l FROM Proyecto l WHERE l.fechaBaja IS NULL")
 		List<Proyecto> findByF_alta();
 		
 	//creamos otro para buscar los metodos que estan de baja
-		@Query(value="SELECT l FROM Proyecto l WHERE l.f_baja != null")
+		@Query(value="SELECT l FROM Proyecto l WHERE l.fechaBaja IS NOT NULL")
 		List<Proyecto> findByF_baja();
 		
 	//definimos un método para saber que proyectos tiene asginado un empleado segun su id

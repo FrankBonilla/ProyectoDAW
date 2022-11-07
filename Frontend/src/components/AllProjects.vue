@@ -22,14 +22,19 @@
           <tbody> <!--Recorremos el arreglo de proyectos -->
             <tr v-for="proyect in projects" :key="proyect.id_proyecto">
               <td>{{ proyect.descripcion }}</td>
-              <td>{{ proyect.f_inicio | formatedDate }}</td>
-              <td v-if="proyect.f_fin">{{ proyect.f_fin | formatedDate }}</td>
-              <td v-else>Sin definir</td>
-              <td>{{ proyect.lugar? proyect.lugar : 'Sin asignar' }}</td>
+              <td>{{ proyect.fechaInicio | formatedDate }}</td>
+              <td v-if="proyect.fechaFin">{{ proyect.fechaFin | formatedDate }}</td>
+              <td v-else style="color: orange"><b>No definida</b></td>
+              <td :style="proyect.lugar? 'color: black' : 'color: orange;font-weight: bold' ">
+                {{ proyect.lugar? proyect.lugar : 'Sin asignar' }}</td>
               <td>{{ proyect.observaciones }}</td>
               <!--Si hay fecha fin del proyecto entonces la calculamos con la fecha de inicio -->
-              <td>{{proyect.f_fin? difference(proyect.f_fin)+' días' : 'Indefinido'}}</td>
-              <td :style="proyect.f_baja? 'color: red' : 'color: green'"><b>{{ proyect.f_baja? 'INACTIVO' : 'ACTIVO'}}</b></td>
+              <td :style="proyect.fechaFin && difference(proyect.fechaFin) < 0 ? 'color:red;font-weight: bold':'color:black' ">
+                {{proyect.fechaFin? difference(proyect.fechaFin)+' días' : 'Indefinido'}}
+              </td>
+              <td :style="proyect.fechaBaja? 'color: red;font-weight: bold' : 'color: green;font-weight: bold'">
+                {{ proyect.fechaBaja? 'INACTIVO' : 'ACTIVO'}}
+              </td>
             </tr>
           </tbody>
         </template>

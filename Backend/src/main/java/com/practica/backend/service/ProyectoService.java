@@ -23,7 +23,7 @@ public class ProyectoService {
 	
 	public Proyecto listarId(int id) {
 		
-		return repo.getById(id);
+		return repo.getReferenceById(id);
 	}
 	
 	public Proyecto save(Proyecto proyecto) {
@@ -50,9 +50,9 @@ public class ProyectoService {
 	//metodo para dar de baja el pryecto
 	public void darBaja(int id) {
 		
-		Proyecto proyecto = repo.getById(id);
+		Proyecto proyecto = repo.getReferenceById(id);
 		LocalDate fecha = LocalDate.now();
-		proyecto.setF_baja(Date.valueOf(fecha));
+		proyecto.setFechaBaja(Date.valueOf(fecha));
 		repo.save(proyecto);
 		
 	}
@@ -61,8 +61,8 @@ public class ProyectoService {
 		
 		Proyecto proyecto = repo.getReferenceById(p.getId_proyecto());
 		proyecto.setDescripcion(p.getDescripcion());
-		proyecto.setF_inicio(p.getF_inicio());
-		proyecto.setF_fin(p.getF_fin());
+		proyecto.setFechaInicio(p.getFechaInicio());
+		proyecto.setFechaFin(p.getFechaFin());
 		proyecto.setLugar(p.getLugar());
 		proyecto.setObservaciones(p.getObservaciones());
 		
@@ -73,7 +73,7 @@ public class ProyectoService {
 	public List<String> searchProjectsOfEmple(int id){
 		
 		List<String> list = repo.listProjects(id);
-		if(list != null || list.size() != 0) {
+		if(list != null && !list.isEmpty()) {
 			
 			return list;
 			
