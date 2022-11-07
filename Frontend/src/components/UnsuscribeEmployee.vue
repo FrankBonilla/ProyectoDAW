@@ -17,7 +17,7 @@
               <th class="white--text">Teléfono</th>
               <th class="white--text">Teléfono 2</th>
               <th class="white--text">Email</th>
-              <th class="white--text">Fecha de baja</th>
+              <th class="white--text">Fecha baja</th>
               <th class="white--text">Estado Civil</th>
               <th class="white--text">Servicio Militar</th>
               <th class="white--text">Acciones</th>
@@ -29,11 +29,11 @@
               <td>{{ employee.nombre }}</td>
               <td>{{ employee.apellido1 }}</td>
               <td>{{ employee.apellido2 }}</td>
-              <td>{{ employee.nacimiento.substring(0,10)}}</td>
+              <td>{{ employee.nacimiento | formatedDate }}</td>
               <td>{{ employee.telefono1 }}</td>
               <td>{{ employee.telefono2 }}</td>
               <td>{{ employee.email }}</td>
-              <td>{{ employee.fechaBaja.substring(0,10)}}</td>
+              <td>{{ employee.fechaBaja | formatedDate }}</td>
               <td>{{ employee.edoCivil }}</td>
               <td>{{ employee.serMilitar }}</td>
               <td >

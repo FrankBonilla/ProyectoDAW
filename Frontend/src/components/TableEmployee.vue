@@ -18,13 +18,12 @@
             <tr>
               <th class="white--text">NIF</th>
               <th class="white--text">Nombre</th>
-              <th class="white--text">Primer Apeliido</th>
-              <th class="white--text">Segundo Apellido</th>
+              <th class="white--text">Apellidos</th>
               <th class="white--text">Fecha Nacimiento</th>
               <th class="white--text">Teléfono</th>
               <th class="white--text">Teléfono 2</th>
               <th class="white--text">Email</th>
-              <th class="white--text">Fecha de alta</th>
+              <th class="white--text">Fecha Alta</th>
               <!--<th class="">Fecha de baja</th>-->
               <th class="white--text">Estado Civil</th>
               <th class="white--text">Servicio Militar</th>
@@ -35,8 +34,7 @@
             <tr v-for="employee in employees" :key="employee.id_empleado">
               <td>{{ employee.nif }}</td>
               <td>{{ employee.nombre }}</td>
-              <td>{{ employee.apellido1 }}</td>
-              <td>{{ employee.apellido2 }}</td>
+              <td>{{ employee.apellido1 }} {{ employee.apellido2 }}</td>
               <td>{{ employee.nacimiento | formatedDate}}</td>
               <td>{{ employee.telefono1 }}</td>
               <td>{{ employee.telefono2 }}</td>
@@ -142,7 +140,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn @click="cancelar" color="red">Cancelar</v-btn>
+            <v-btn @click="cancelar" color="amber accent-4">Cancelar</v-btn>
             <v-btn @click="addNew" type="submit" color="green acent-2">Aceptar</v-btn>
           </v-card-actions>
         </v-card>
@@ -154,11 +152,11 @@
                    <v-col class="grow">
                       {{this.msgAsigned}}
                    </v-col>
-              <v-col class="shrink">
-              <v-btn @click="msgAsignedProject=false">OK</v-btn>
-              </v-col>
-            </v-row>
-           </v-alert>
+                   <v-col class="shrink">
+                      <v-btn @click="msgAsignedProject=false">OK</v-btn>
+                   </v-col>
+                </v-row>
+              </v-alert>
           </v-dialog>
         <!-- Formulario para actualizar empleado -->
       <v-dialog v-model="update" max-width="500">
@@ -245,7 +243,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn @click="cancelUpdate" color="red">Cancelar</v-btn>
+            <v-btn @click="cancelUpdate" color="amber accent-4">Cancelar</v-btn>
             <v-btn @click="updateEmployee(employee.idEmpleado)" type="submit" color="green acent-2">Modificar</v-btn>
           </v-card-actions>
         </v-card>
@@ -356,15 +354,14 @@ export default {
         async bajaEmpleado(employee){
           //pasamos el id del empleado para verificar si esta asignado a algun proyecto
           //antes de darle de baja
-           let idEmpleado = employee.idEmpleado
           //consultamos si tiene projectos asignados
-          let lista = await employeeService.searchProjectOfEmp(idEmpleado)
+          let lista = await employeeService.searchProjectOfEmp(employee.idEmpleado)
           if(lista != null && lista.length != 0){
 
             let name = employee.nombre+" "+employee.apellido1+" "+employee.apellido2
             //asignamos la lista de projectos 
             this.msgAsigned = "No se puede dar de baja al empleado: "+name.toUpperCase()+" porque está asignado a el/los proyecto/s: "
-                              +lista.toString().toUpperCase();
+                              +lista.join(", ").toUpperCase();
             //activamos el msj que mostrará que el empleado tiene projectos asignados
             this.msgAsignedProject = true
             //console.log(lista.length)

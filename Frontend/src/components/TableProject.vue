@@ -19,8 +19,8 @@
           <thead class="blue-grey darken-3">
             <tr>
               <th class="white--text">Descripción</th>
-              <th class="white--text">Fecha de inicio</th>
-              <th class="white--text">Fecha fin</th>
+              <th class="white--text">Fecha Inicio</th>
+              <th class="white--text">Fecha Fin</th>
               <th class="white--text">Lugar</th>
               <th class="white--text">Observaciones</th>
               <th class="white--text">Acciones</th>
@@ -136,7 +136,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn @click="cancelAddPro" color="red">Cancelar</v-btn>
+            <v-btn @click="cancelAddPro" color="amber accent-4">Cancelar</v-btn>
             <v-btn @click="addNew" type="submit" color="green acent-2">Aceptar</v-btn>
           </v-card-actions>
         </v-card>

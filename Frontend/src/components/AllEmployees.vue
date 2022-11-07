@@ -11,9 +11,9 @@
             <tr>
               <th class="white--text">NIF</th>
               <th class="white--text">Nombre</th>
-              <th class="white--text">Primer Apeliido</th>
-              <th class="white--text">Segundo apellido</th>
-              <th class="white--text">Fecha nacimiento</th>
+              <th class="white--text">Apellidos</th>
+              <th class="white--text">Fecha alta</th>
+              <th class="white--text">Fecha baja</th>
               <th class="white--text">Teléfono</th>
               <th class="white--text">Teléfono 2</th>
               <th class="white--text">Email</th>
@@ -26,9 +26,9 @@
             <tr v-for="employee in employees" :key="employee.id_empleado">
               <td>{{ employee.nif }}</td>
               <td>{{ employee.nombre }}</td>
-              <td>{{ employee.apellido1 }}</td>
-              <td>{{ employee.apellido2 }}</td>
-              <td>{{ employee.nacimiento | formatedDate}}</td>
+              <td>{{ employee.apellido1 }} {{employee.apellido2}}</td>
+              <td>{{ employee.fechaAlta | formatedDate}}</td>
+              <td>{{ employee.fechaBaja | formatedDate}}</td>
               <td>{{ employee.telefono1 }}</td>
               <td>{{ employee.telefono2 }}</td>
               <td>{{ employee.email }}</td>
