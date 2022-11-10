@@ -1,10 +1,60 @@
 <template>
-<v-main class="indigo lighten-5 fill-height pl-2 pr-2 pt-3" >
+<v-main class="indigo lighten-5 fill-height pl-2 pr-2 pt-4" >
       <v-card class="">
         <!--tabla de empleados -->
         <v-card-title class="justify-center blue-grey darken-3 white--text py-1">
             {{title}}
-        </v-card-title>
+       <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Buscar por nombre"
+          dark
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-card-title>
+      <v-data-table
+                :headers="headers"
+                :items="employees"
+                :search="search"
+                :hide-default-footer="employees.length < 10 ? true : false"
+                :footer-props="{itemsPerPageText: 'Filas por página'}"
+                >
+
+        <template v-slot:[`item.apellidos`]="{item}">
+          {{ item.apellido1 }} {{ item.apellido2 }}
+        </template>
+
+        <template v-slot:[`item.nacimiento`]="{item}">
+          {{ item.nacimiento | formatedDate }}
+        </template>
+
+        <template v-slot:[`item.fechaBaja`]="{item}">
+          {{ item.fechaAlta | formatedDate }}
+        </template>
+
+        <template v-slot:[`item.actions`]="{ item }">
+        <v-icon
+          medium
+          class="mr-2"
+          @click="darAlta(item)"  
+          title="dar alta nuevamente"
+          color="amber accent-4"
+          >
+          mdi-arrow-left
+        </v-icon>
+        <v-icon
+          medium
+          @click="deleteEmp(item)" 
+          title="eliminar"
+          color="red"
+          >
+          mdi-delete
+        </v-icon>
+    </template>
+      </v-data-table>
+
       <v-simple-table class="text-left">
         <template v-slot:default>
           <thead class="blue-grey darken-3">
@@ -82,7 +132,20 @@ export default {
             title: 'Empleados dados de baja',
             employees: [],
             msgAlta: false,
-            msgAsigned: ''
+            msgAsigned: '',
+            search: '',
+             //cabeceras de la tabla
+            headers: [{text: 'NIF', align: 'center', filtrable: false, value: 'nif', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Nombre', align: 'start', value: 'nombre', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Apellidos', align: 'start', value: 'apellidos', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Fecha Nacimiento', align: 'center', value: 'nacimiento', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Teléfono', align: 'start', value: 'telefono1', sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Teléfono 2', align: 'start', value: 'telefono2', sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Email', align: 'start', value: 'email', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Fecha Baja', align: 'center', value: 'fechaBaja', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Estado Civil', align: 'center', value: 'edoCivil', sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Carnet Conducir', align: 'center', value: 'serMilitar', sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Acciones', align: 'center', value: 'actions', sortable: false, class:"blue-grey darken-3 ; white--text"},]
         }
     },
     methods: {
@@ -121,10 +184,10 @@ export default {
           let idEmpleado = employee.idEmpleado
          
           await employeeService.backEmployee(idEmpleado)
-          swal.fire('Alta realizada',`${employee.nombre} ${employee.apellido1} ${employee.apellido2} ha sido dado de alta nuevamente`,'success')
+          swal.fire('Alta realizada',`${employee.nombre} ${employee.apellido1} ha sido dado de alta nuevamente`,'success')
           this.listar()
           this.msgAlta = true
-          this.msgAsigned = `${employee.nombre} ${employee.apellido1} ${employee.apellido2} ha sido dado de alta nuevamente, puede modificar sus datos en el listado empleados de alta`
+          this.msgAsigned = `${employee.nombre} ${employee.apellido1} ha sido dado de alta nuevamente, puede modificar sus datos en el listado empleados de alta`
         }
     },
     created(){

@@ -46,6 +46,7 @@
           class="mr-2"
           @click="actualizar(item)" 
           title="editar"
+          color="amber accent-4"
           >
           mdi-pencil
         </v-icon>
@@ -53,6 +54,7 @@
           medium
           @click="bajaEmpleado(item)" 
           title="dar de baja"
+          color="red"
           >
           mdi-delete
         </v-icon>
