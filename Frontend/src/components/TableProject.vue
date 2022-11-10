@@ -289,7 +289,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn @click="cancelUpdate" color="red">Cancelar</v-btn>
+            <v-btn @click="cancelUpdate" color="amber accent-4">Cancelar</v-btn>
             <v-btn @click="updateProject" type="submit" color="green acent-2">Modificar</v-btn>
           </v-card-actions>
         </v-card>

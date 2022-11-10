@@ -26,7 +26,7 @@
               <th class="white--text">Fecha Alta</th>
               <!--<th class="">Fecha de baja</th>-->
               <th class="white--text">Estado Civil</th>
-              <th class="white--text">Servicio Militar</th>
+              <th class="white--text">Carnet Conducir</th>
               <th class="white--text">Acciones</th>
             </tr>
           </thead>
@@ -179,7 +179,7 @@
                     <v-text-field v-model="employee.apellido1" :rules="generalRules" label="Primer apellido" required maxlength="40"></v-text-field>
                   </v-col>
                   <v-col>
-                    <v-text-field v-model="employee.apellido2" :rules="generalRules"  label="Segundo apellido" required maxlength="40"></v-text-field>
+                    <v-text-field v-model="employee.apellido2"  label="Segundo apellido" required maxlength="40"></v-text-field>
                   </v-col>
                 </v-row>
                 <v-row>

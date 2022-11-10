@@ -29,9 +29,9 @@
                 {{ proyect.lugar? proyect.lugar : 'Sin asignar' }}</td>
               <td>{{ proyect.observaciones }}</td>
               <!--Si hay fecha fin del proyecto entonces la calculamos con la fecha de inicio -->
-              <td :style="proyect.fechaFin && difference(proyect.fechaFin) < 0 ? 'color:red;font-weight: bold':'color:black' ">
-                {{proyect.fechaFin? difference(proyect.fechaFin)+' días' : 'Indefinido'}}
-              </td>
+              <td v-if="proyect.fechaFin"> {{difference(proyect.fechaFin)+' días' }}</td>
+              <td v-else style="color: orange;font-weight: bold">Indefinido</td>
+              
               <td :style="proyect.fechaBaja? 'color: red;font-weight: bold' : 'color: green;font-weight: bold'">
                 {{ proyect.fechaBaja? 'INACTIVO' : 'ACTIVO'}}
               </td>

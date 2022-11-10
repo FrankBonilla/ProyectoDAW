@@ -11,8 +11,7 @@
             <tr>
               <th class="white--text">NIF</th>
               <th class="white--text">Nombre</th>
-              <th class="white--text">Primer Apeliido</th>
-              <th class="white--text">Segundo apellido</th>
+              <th class="white--text">Apellidos</th>
               <th class="white--text">Fecha nacimiento</th>
               <th class="white--text">Teléfono</th>
               <th class="white--text">Teléfono 2</th>
@@ -27,8 +26,7 @@
             <tr v-for="employee in employees" :key="employee.idEmpleado">
               <td>{{ employee.nif }}</td>
               <td>{{ employee.nombre }}</td>
-              <td>{{ employee.apellido1 }}</td>
-              <td>{{ employee.apellido2 }}</td>
+              <td>{{ employee.apellido1 }} {{ employee.apellido2 }}</td>
               <td>{{ employee.nacimiento | formatedDate }}</td>
               <td>{{ employee.telefono1 }}</td>
               <td>{{ employee.telefono2 }}</td>
@@ -126,7 +124,7 @@ export default {
           swal.fire('Alta realizada',`${employee.nombre} ${employee.apellido1} ${employee.apellido2} ha sido dado de alta nuevamente`,'success')
           this.listar()
           this.msgAlta = true
-          this.msgAsigned = `${employee.nombre} ${employee.apellido1} ${employee.apellido2} ha sido dado de alta nuevamente, puede moficar sus datos en el listado empleados de alta`
+          this.msgAsigned = `${employee.nombre} ${employee.apellido1} ${employee.apellido2} ha sido dado de alta nuevamente, puede modificar sus datos en el listado empleados de alta`
         }
     },
     created(){
