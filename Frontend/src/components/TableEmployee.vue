@@ -11,50 +11,54 @@
         <!--tabla de empleados -->
         <v-card-title class="justify-center blue-grey darken-3 white--text py-1">
             {{title}}
-        </v-card-title>
-      <v-simple-table class="text-left">
-        <template v-slot:default>
-          <thead class="blue-grey darken-3">
-            <tr>
-              <th class="white--text">NIF</th>
-              <th class="white--text">Nombre</th>
-              <th class="white--text">Apellidos</th>
-              <th class="white--text">Fecha Nacimiento</th>
-              <th class="white--text">Teléfono</th>
-              <th class="white--text">Teléfono 2</th>
-              <th class="white--text">Email</th>
-              <th class="white--text">Fecha Alta</th>
-              <!--<th class="">Fecha de baja</th>-->
-              <th class="white--text">Estado Civil</th>
-              <th class="white--text">Carnet Conducir</th>
-              <th class="white--text">Acciones</th>
-            </tr>
-          </thead>
-          <tbody> <!--Recorremos el arreglo de empleados -->
-            <tr v-for="employee in employees" :key="employee.id_empleado">
-              <td>{{ employee.nif }}</td>
-              <td>{{ employee.nombre }}</td>
-              <td>{{ employee.apellido1 }} {{ employee.apellido2 }}</td>
-              <td>{{ employee.nacimiento | formatedDate}}</td>
-              <td>{{ employee.telefono1 }}</td>
-              <td>{{ employee.telefono2 }}</td>
-              <td>{{ employee.email }}</td>
-              <td>{{ employee.fechaAlta | formatedDate}}</td>
-              <td>{{ employee.edoCivil }}</td>
-              <td>{{ employee.serMilitar }}</td>
-              <td >
-                <v-row align="center" justify="space-around">
-                <v-btn  fab dark x-small color="blue-grey darken-3" @click="actualizar(employee)" title="editar"> 
-                  <v-icon dark x-small>mdi-pencil</v-icon>
-                </v-btn> 
-                <v-btn class="white--text" color="blue-grey darken-3" x-small @click="bajaEmpleado(employee)" title="dar de baja"><b>X</b></v-btn>
-                </v-row>
-              </td>
-            </tr>
-          </tbody>
-        </template>
-      </v-simple-table>
-      
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Buscar por nombre"
+          dark
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-card-title>
+      <v-data-table
+                :headers="headers"
+                :items="employees"
+                :search="search"
+                :hide-default-footer="employees.length < 10 ? true : false"
+                :footer-props="{itemsPerPageText: 'Filas por página'}"
+                >
+      <template v-slot:[`item.apellidos`]="{item}">
+        {{ item.apellido1 }} {{ item.apellido2 }}
+      </template>
+
+      <template v-slot:[`item.nacimiento`]="{item}">
+        {{ item.nacimiento | formatedDate }}
+      </template>
+
+      <template v-slot:[`item.fechaAlta`]="{item}">
+        {{ item.fechaAlta | formatedDate }}
+      </template>
+
+      <template v-slot:[`item.actions`]="{ item }">
+        <v-icon
+          medium
+          class="mr-2"
+          @click="actualizar(item)" 
+          title="editar"
+          >
+          mdi-pencil
+        </v-icon>
+        <v-icon
+          medium
+          @click="bajaEmpleado(item)" 
+          title="dar de baja"
+          >
+          mdi-delete
+        </v-icon>
+    </template>
+
+  </v-data-table>
       <!--Formulario para agregar empleado -->
       <v-dialog v-model="addEmployee" max-width="500">
         <v-card color="dark">
@@ -76,7 +80,7 @@
                     <v-text-field v-model="employee.apellido1" :rules="generalRules" label="Primer apellido" required maxlength="40"></v-text-field>
                   </v-col>
                   <v-col>
-                    <v-text-field v-model="employee.apellido2" :rules="generalRules"  label="Segundo apellido" required maxlength="40"></v-text-field>
+                    <v-text-field v-model="employee.apellido2"  label="Segundo apellido" required maxlength="40"></v-text-field>
                   </v-col>
                 </v-row>
                 <v-row>
@@ -132,7 +136,7 @@
                     <v-select v-model="employee.edoCivil" :rules="generalRules" :items="civil" item-text="state" label="Estado civil" dense outlined required></v-select>
                   </v-col>
                   <v-col>
-                    <v-select v-model="employee.serMilitar" :rules="generalRules"  :items="militar" item-text="state"  label="Servicio Militar" dense outlined required></v-select>
+                    <v-select v-model="employee.serMilitar" :rules="generalRules"  :items="canertConducir" item-text="state"  label="Carnet de Conducir" dense outlined required></v-select>
                   </v-col>
                 </v-row>
               </v-container>
@@ -235,7 +239,7 @@
                     <v-select v-model="employee.edoCivil" :rules="generalRules"  :items="civil" item-text="state" item-value="value" label="Estado civil" dense outlined required></v-select>
                   </v-col>
                   <v-col>
-                    <v-select v-model="employee.serMilitar" :rules="generalRules"  :items="militar" item-text="state" item-value="value" label="Servicio Militar" dense outlined required></v-select>
+                    <v-select v-model="employee.serMilitar" :rules="generalRules"  :items="canertConducir" item-text="state" item-value="value" label="Carnet de Conducir" dense outlined required></v-select>
                   </v-col>
                 </v-row>
               </v-container>
@@ -262,9 +266,10 @@ export default {
     name: 'TableEmployee',
     data(){
         return {
-            title: 'Empleados',
+            title: 'Empleados activos en la empresa',
             today: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
             employees: [],
+            search: '',
             employee: {
                 idEmpleado: '',
                 nif: '',
@@ -281,10 +286,8 @@ export default {
 
             },
             addEmployee: false,
-            civil: [ {state: 'Soltero', value:'S'},
-                      {state: 'Casado', value: 'C'}],
-            militar: [{state: 'Si', value:'S'},
-                      {state: 'No', value: 'N'}],
+            civil: [ {state: 'Soltero', value:'S'},{state: 'Casado', value: 'C'}],
+            canertConducir: [{state: 'Si', value:'S'},{state: 'No', value: 'N'}],
             update: false,
             //datos del calendario agregar
             activePicker: null,
@@ -305,7 +308,19 @@ export default {
             generalRules: [v => !!v || 'este campo es obligatorio'], 
             //datos de verificación de projectos asignados a empleado
             msgAsigned: '',
-            msgAsignedProject: false
+            msgAsignedProject: false,
+            //cabeceras de la tabla
+            headers: [{text: 'NIF', align: 'center', filtrable: false, value: 'nif', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Nombre', align: 'start', value: 'nombre', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Apellidos', align: 'start', value: 'apellidos', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Fecha Nacimiento', align: 'center', value: 'nacimiento', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Teléfono', align: 'start', value: 'telefono1', sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Teléfono 2', align: 'start', value: 'telefono2', sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Email', align: 'start', value: 'email', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Fecha Alta', align: 'center', value: 'fechaAlta', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Estado Civil', align: 'center', value: 'edoCivil', sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Carnet Conducir', align: 'center', value: 'serMilitar', sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Acciones', align: 'center', value: 'actions', sortable: false, class:"blue-grey darken-3 ; white--text"},]
         }
     },
     watch: {

@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35f7239b-8efa-4ade-b038-2f0ed8a216cd" name="Changes" comment=" módulo frontend">
+    <list default="true" id="35f7239b-8efa-4ade-b038-2f0ed8a216cd" name="Changes" comment="#2 [Empleado] Frontend: mejoras en las tablas.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/entities/Empleado.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/entities/Empleado.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/components/TableEmployee.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/TableEmployee.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,15 +26,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "jdk.selected.JAVA_MODULE": "1.8"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;1.8&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;
   }
-}]]></component>
-  <component name="RunManager">
-    <configuration name="multi [sprint-boot:run]" type="MavenRunConfiguration" factoryName="Maven">
+}</component>
+  <component name="RunManager" selected="Maven.DawMultimodulo">
+    <configuration name="DEBUG" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.practica.backend.BackEndApplication" />
+      <module name="Backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.practica.backend.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DawMultimodulo" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings" />
         <option name="myRunnerSettings" />
@@ -57,6 +73,10 @@
       </MavenSettings>
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Application.DEBUG" />
+      <item itemvalue="Maven.DawMultimodulo" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -81,7 +101,105 @@
       <option name="project" value="LOCAL" />
       <updated>1666127472355</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary=" #2 [Proyectos] - Backend/Frontend: modificaciones para remover empleados de proyectos">
+      <created>1666728155435</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1666728155435</updated>
+    </task>
+    <task id="LOCAL-00004" summary=" #2 [Proyectos] - Backend: implantación de responseEntity para remover empleados de proyectos">
+      <created>1666729468840</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1666729468840</updated>
+    </task>
+    <task id="LOCAL-00005" summary=" #2 [Proyectos] - Backend: se mueve el método verificar las asignaciones de un proyecto">
+      <created>1666732369642</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1666732369642</updated>
+    </task>
+    <task id="LOCAL-00006" summary=" #2 [Proyectos] - Backend: implantación del ResponseEntity método verificar las asignaciones de un proyecto">
+      <created>1666732966046</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1666732966046</updated>
+    </task>
+    <task id="LOCAL-00007" summary=" #2 [Proyectos] - Backend: mejoras en el controller">
+      <created>1666907935018</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1666907935019</updated>
+    </task>
+    <task id="LOCAL-00008" summary=" #2 [Proyectos] - Backend/Frontend: se ha cambiado la lista de estatus de empleados asignados a un proyecto por una interfce que recoge los valores necesarios y se elimina el comodin">
+      <created>1667048139866</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1667048139866</updated>
+    </task>
+    <task id="LOCAL-00009" summary=" #1 [Empleados] - Backend: formato de fechas desde la entidad">
+      <created>1667049917474</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1667049917475</updated>
+    </task>
+    <task id="LOCAL-00010" summary=" #2 [Proyectos] - Backend/Frontend: formato de fechas y datepickers">
+      <created>1667067369027</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1667067369028</updated>
+    </task>
+    <task id="LOCAL-00011" summary=" #1 [Empleados] - Backend/Frontend: formato de fechas y datepickers">
+      <created>1667067393300</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1667067393300</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Nuevo filtro global para formato de fechas">
+      <created>1667067410964</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1667067410964</updated>
+    </task>
+    <task id="LOCAL-00013" summary="#2 [Proyecto] Frontend: mejoras en las tablas.">
+      <created>1667068467858</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1667068467858</updated>
+    </task>
+    <task id="LOCAL-00014" summary="#2 [Proyecto] Frontend: mejoras en las tablas.">
+      <created>1667845236422</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1667845236422</updated>
+    </task>
+    <task id="LOCAL-00015" summary="#2 [Empleado] Frontend: mejoras en las tablas.">
+      <created>1667847606724</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1667847606724</updated>
+    </task>
+    <task id="LOCAL-00016" summary="#2 [Empleado] Frontend: mejoras en las tablas.">
+      <created>1668102780445</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1668102780445</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -98,6 +216,40 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="primer commit para proyecto DAW de dos módulos" />
     <MESSAGE value="segundo commit para agregar el módulo frontend" />
-    <option name="LAST_COMMIT_MESSAGE" value="segundo commit para agregar el módulo frontend" />
+    <MESSAGE value=" #2 [Proyectos] - Backend/Frontend: modificaciones para remover empleados de proyectos" />
+    <MESSAGE value=" #2 [Proyectos] - Backend: implantación de responseEntity para remover empleados de proyectos" />
+    <MESSAGE value=" #2 [Proyectos] - Backend: se mueve el método verificar las asignaciones de un proyecto" />
+    <MESSAGE value=" #2 [Proyectos] - Backend: se implantación del ResponseEntity método verificar las asignaciones de un proyecto" />
+    <MESSAGE value=" #2 [Proyectos] - Backend: implantación del ResponseEntity método verificar las asignaciones de un proyecto" />
+    <MESSAGE value=" #2 [Proyectos] - Backend: mejoras en el controller" />
+    <MESSAGE value=" #2 [Proyectos] - Backend/Frontend: se ha cambiado la lista de estatus de empleados asignados a un proyecto por una interfce que recoge los valores necesarios y se elimina el comodin" />
+    <MESSAGE value=" #1 [Empleados] - Backend: formato de fechas desde la entidad" />
+    <MESSAGE value=" #2 [Proyectos] - Backend/Frontend: formato de fechas y datepickers" />
+    <MESSAGE value=" #1 [Empleados] - Backend/Frontend: formato de fechas y datepickers" />
+    <MESSAGE value="Nuevo filtro global para formato de fechas" />
+    <MESSAGE value="#2 [Proyecto] Frontend: mejoras en las tablas." />
+    <MESSAGE value="#2 [Empleado] Frontend: mejoras en las tablas." />
+    <option name="LAST_COMMIT_MESSAGE" value="#2 [Empleado] Frontend: mejoras en las tablas." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/service/EmpleadoService.java</url>
+          <line>96</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/service/EmpleadoService.java</url>
+          <line>91</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/service/EmpleadoService.java</url>
+          <line>90</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

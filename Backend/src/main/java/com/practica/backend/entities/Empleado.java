@@ -25,7 +25,7 @@ public class Empleado {
 	private String nombre;
 	@Column(name="apellido1",nullable= false,length= 40)
 	private String apellido1;
-	@Column(name="apellido2",nullable= false,length= 40)
+	@Column(name="apellido2",length= 40)
 	private String apellido2;
 
 	@Column(name="fechaNacimiento",nullable= false)
