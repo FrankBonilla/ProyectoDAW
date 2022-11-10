@@ -12,39 +12,69 @@
         <!--tabla de empleados -->
         <v-card-title class="justify-center blue-grey darken-3 white--text py-1">
             {{title}}
-        </v-card-title>
-      <v-simple-table class="text-left" >
-        <template v-slot:default>
-          
-          <thead class="blue-grey darken-3">
-            <tr>
-              <th class="white--text">Descripción</th>
-              <th class="white--text">Fecha Inicio</th>
-              <th class="white--text">Fecha Fin</th>
-              <th class="white--text">Lugar</th>
-              <th class="white--text">Observaciones</th>
-              <th class="white--text">Acciones</th>
-            </tr>
-          </thead>
-          <tbody> <!--Recorremos el arreglo de proyectos -->
-            <tr v-for="proyect in projects" :key="proyect.id_proyecto">
-              <td>{{ proyect.descripcion }}</td>
-              <td>{{ proyect.fechaInicio | formatedDate }}</td>
-              <td v-if="proyect.fechaFin">{{ proyect.fechaFin | formatedDate }}</td>
-              <td v-else style="color:orange"><b> No definida</b></td>
-              <td :style="proyect.lugar? 'color: black' : 'color: orange;font-weight: bold' ">
-                {{ proyect.lugar? proyect.lugar : 'Sin asignar' }}</td>
-              <td>{{ proyect.observaciones }}</td>
-              <td>
-                <v-btn class="mx-2" fab dark x-small color="blue-grey darken-3" @click="actualizar(proyect)" title="editar"> 
-                  <v-icon dark>mdi-pencil</v-icon>
-                </v-btn> 
-                <v-btn class="white--text" color="blue-grey darken-3" small @click="bajaProyecto(proyect)" title="dar de baja"><b>X</b></v-btn>
-              </td>
-            </tr>
-          </tbody>
+       <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Buscar por nombre"
+          dark
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-card-title>
+      <v-data-table
+                :headers="headers"
+                :items="projects"
+                :search="search"
+                :hide-default-footer="projects.length < 10 ? true : false"
+                :footer-props="{itemsPerPageText: 'Filas por página'}"
+                >
+         <template v-slot:[`item.fechaInicio`]="{item}">
+            {{ item.fechaInicio | formatedDate }}
+         </template>
+
+         <template v-slot:[`item.fechaFin`]="{item}">
+          <td v-if="item.fechaFin">
+              {{ item.fechaFin | formatedDate }}
+          </td>
+          <td v-else
+              style="color:orange ; font-weight: bold"
+          >No definida
+          </td>
+         </template>
+
+        <template v-slot:[`item.lugar`]="{item}">
+          <td v-if="item.lugar">
+              {{ item.lugar }}
+          </td>
+          <td v-else
+              style="color:orange ; font-weight: bold"
+          >Sin asignar
+          </td>
         </template>
-      </v-simple-table>
+
+        <template v-slot:[`item.actions`]="{ item }">
+        <v-icon
+          medium
+          class="mr-2"
+          @click="actualizar(item)" 
+          title="editar"
+          color="amber accent-4"
+          >
+          mdi-pencil
+        </v-icon>
+        <v-icon
+          medium
+          @click="bajaProyecto(item)"
+          title="dar de baja"
+          color="red"
+          >
+          mdi-delete
+        </v-icon>
+    </template>
+
+  </v-data-table>
+      
       <!-- Formulario para dar de alta proyectos-->
        <v-dialog v-model="addProject" max-width="500">
         <v-card color="dark">
@@ -157,7 +187,7 @@
               <v-container v-model="empleados">
                 <!-- Seleccion de empleados -->
            
-                <v-data-table  :headers="headers" 
+                <v-data-table  :headers="headers2" 
                                :items="empleados" 
                                item-key="idEmpleado" 
                                :footer-props="{itemsPerPageText: 'Filas por página'}"
@@ -309,7 +339,7 @@ export default {
     name: 'TableProject',
     data() {
         return {
-            title: 'Proyectos',
+            title: 'Proyectos activos',
             today: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
             projects: [],
             project: {
@@ -344,7 +374,17 @@ export default {
             menu4: false,
             //propiedades checkbox
             singleSelect: false,
-            headers: [{text: 'Nombre', align: 'start', sortable: false,value: 'nombre'},
+            //cabeceras de la tabla principal
+            search: '',
+            headers: [{text: 'Descripción', align: 'start', filtrable: false, value: 'descripcion', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Fecha Inicio', align: 'start', value: 'fechaInicio', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Fecha Fin', align: 'start', value: 'fechaFin', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Lugar', align: 'start', value: 'lugar', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Observaciones', align: 'start', value: 'observaciones', sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Acciones', align: 'center', value: 'actions', sortable: false, class:"blue-grey darken-3 ; white--text"},],
+            //cabeceras de la tabla de selección de empleados
+            search2: '',
+            headers2: [{text: 'Nombre', align: 'start', sortable: false,value: 'nombre'},
                       {text: 'Primer apellido', align: 'start', sortable: false,value: 'apellido1'},
                       {text: 'Segundo apellido', align: 'start', sortable: false,value: 'apellido2'},
                       { text: 'Asignado', value: 'asignado' }],
