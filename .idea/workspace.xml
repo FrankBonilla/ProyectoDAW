@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35f7239b-8efa-4ade-b038-2f0ed8a216cd" name="Changes" comment="#2 [Empleado] Frontend: mejoras en las tablas.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/entities/Empleado.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/entities/Empleado.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/components/TableEmployee.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/TableEmployee.vue" afterDir="false" />
-    </list>
+    <list default="true" id="35f7239b-8efa-4ade-b038-2f0ed8a216cd" name="Changes" comment="#2 [Empleado] Frontend: implementación de la barra de búsqueda en la tabla empleados dados de baja." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -199,7 +195,21 @@
       <option name="project" value="LOCAL" />
       <updated>1668102780445</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="#2 [Empleado] Frontend: implementación de la barra de búsqueda en la tabla empleados activos.">
+      <created>1668108375315</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1668108375316</updated>
+    </task>
+    <task id="LOCAL-00018" summary="#2 [Empleado] Frontend: implementación de la barra de búsqueda en la tabla empleados dados de baja.">
+      <created>1668108955371</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1668108955371</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -229,7 +239,9 @@
     <MESSAGE value="Nuevo filtro global para formato de fechas" />
     <MESSAGE value="#2 [Proyecto] Frontend: mejoras en las tablas." />
     <MESSAGE value="#2 [Empleado] Frontend: mejoras en las tablas." />
-    <option name="LAST_COMMIT_MESSAGE" value="#2 [Empleado] Frontend: mejoras en las tablas." />
+    <MESSAGE value="#2 [Empleado] Frontend: implementación de la barra de búsqueda en la tabla empleados activos." />
+    <MESSAGE value="#2 [Empleado] Frontend: implementación de la barra de búsqueda en la tabla empleados dados de baja." />
+    <option name="LAST_COMMIT_MESSAGE" value="#2 [Empleado] Frontend: implementación de la barra de búsqueda en la tabla empleados dados de baja." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

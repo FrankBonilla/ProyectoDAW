@@ -288,7 +288,7 @@ export default {
 
             },
             addEmployee: false,
-            civil: [ {state: 'Soltero', value:'S'},{state: 'Casado', value: 'C'}],
+            civil: [ {state: 'Soltero/a', value:'S'},{state: 'Casado/a', value: 'C'}],
             canertConducir: [{state: 'Si', value:'S'},{state: 'No', value: 'N'}],
             update: false,
             //datos del calendario agregar

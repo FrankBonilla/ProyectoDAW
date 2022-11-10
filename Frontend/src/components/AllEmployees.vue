@@ -4,45 +4,53 @@
         <!--tabla de empleados -->
         <v-card-title class="justify-center blue-grey darken-3 white--text py-1">
             {{title}}
-        </v-card-title>
-      <v-simple-table class="text-left">
-        <template v-slot:default>
-          <thead class="blue-grey darken-3">
-            <tr>
-              <th class="white--text">NIF</th>
-              <th class="white--text">Nombre</th>
-              <th class="white--text">Apellidos</th>
-              <th class="white--text">Fecha alta</th>
-              <th class="white--text">Fecha baja</th>
-              <th class="white--text">Teléfono</th>
-              <th class="white--text">Teléfono 2</th>
-              <th class="white--text">Email</th>
-              <th class="white--text">Estado Civil</th>
-              <th class="white--text">Servicio Militar</th>
-              <th class="white--text">Estatus</th>
-            </tr>
-          </thead>
-          <tbody> <!--Recorremos el arreglo de empleados -->
-            <tr v-for="employee in employees" :key="employee.id_empleado">
-              <td>{{ employee.nif }}</td>
-              <td>{{ employee.nombre }}</td>
-              <td>{{ employee.apellido1 }} {{employee.apellido2}}</td>
-              <td>{{ employee.fechaAlta | formatedDate}}</td>
-              <td>{{ employee.fechaBaja | formatedDate}}</td>
-              <td>{{ employee.telefono1 }}</td>
-              <td>{{ employee.telefono2 }}</td>
-              <td>{{ employee.email }}</td>
-              <td>{{ employee.edoCivil }}</td>
-              <td>{{ employee.serMilitar }}</td>
-              <!-- hacemos dos ternarios, uno para establecer el color de la letra -->
-              <!-- y otro que devolverá el estatus del empleado segun el valor del atributo f_baja -->
-              <td :style="employee.fechaBaja? 'color: red' : 'color: green'"><b>{{ employee.fechaBaja? 'INACTIVO' : 'ACTIVO'}}</b></td>
-              
-            </tr>
-          </tbody>
-        </template>
-      </v-simple-table>
-       </v-card>
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Buscar por nombre"
+          dark
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-card-title>
+      <v-data-table
+                :headers="headers"
+                :items="employees"
+                :search="search"
+                :hide-default-footer="employees.length < 10 ? true : false"
+                :footer-props="{itemsPerPageText: 'Filas por página'}"
+                >
+      <template v-slot:[`item.apellidos`]="{item}">
+        {{ item.apellido1 }} {{ item.apellido2 }}
+      </template>
+
+      <template v-slot:[`item.nacimiento`]="{item}">
+        {{ item.nacimiento | formatedDate }}
+      </template>
+
+      <template v-slot:[`item.fechaAlta`]="{item}">
+        {{ item.fechaAlta | formatedDate }}
+      </template>
+
+      <template v-slot:[`item.fechaBaja`]="{item}">
+        {{ item.fechaBaja | formatedDate }}
+      </template>
+
+      <template v-slot:[`item.status`]="{item}">
+        <td v-if="item.fechaBaja"
+            style="color:red ; font-weight: bold"
+          >INACTIVO
+        </td>
+        <td v-else
+            style="color:green ; font-weight: bold"
+            >ACTIVO
+        </td>
+      </template>
+
+      </v-data-table>
+     
+    </v-card>
     </v-main>
     
 </template>
@@ -54,8 +62,21 @@ export default {
     name: 'AllEmployees',
     data(){
         return {
-            title: 'Todos los Empleados',
+            title: 'Todos los empleados',
             employees: [],
+            search: '',
+            //cabeceras de la tabla
+            headers: [{text: 'NIF', align: 'center', filtrable: false, value: 'nif', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Nombre', align: 'start', value: 'nombre', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Apellidos', align: 'start', value: 'apellidos', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Teléfono', align: 'start', value: 'telefono1', sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Teléfono 2', align: 'start', value: 'telefono2', sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Email', align: 'start', value: 'email', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Estado Civil', align: 'center', value: 'edoCivil', sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Carnet Conducir', align: 'center', value: 'serMilitar', sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Fecha Alta', align: 'center', value: 'fechaAlta', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Fecha Baja', align: 'center', value: 'fechaBaja', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Estatus', align: 'center', value: 'status', class:"blue-grey darken-3 ; white--text"},]
             
         }
     },

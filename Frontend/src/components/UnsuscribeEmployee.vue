@@ -30,8 +30,12 @@
           {{ item.nacimiento | formatedDate }}
         </template>
 
-        <template v-slot:[`item.fechaBaja`]="{item}">
+        <template v-slot:[`item.fechaAlta`]="{item}">
           {{ item.fechaAlta | formatedDate }}
+        </template>
+
+        <template v-slot:[`item.fechaBaja`]="{item}">
+          {{ item.fechaBaja | formatedDate }}
         </template>
 
         <template v-slot:[`item.actions`]="{ item }">
@@ -53,50 +57,9 @@
           mdi-delete
         </v-icon>
     </template>
-      </v-data-table>
-
-      <v-simple-table class="text-left">
-        <template v-slot:default>
-          <thead class="blue-grey darken-3">
-            <tr>
-              <th class="white--text">NIF</th>
-              <th class="white--text">Nombre</th>
-              <th class="white--text">Apellidos</th>
-              <th class="white--text">Fecha nacimiento</th>
-              <th class="white--text">Teléfono</th>
-              <th class="white--text">Teléfono 2</th>
-              <th class="white--text">Email</th>
-              <th class="white--text">Fecha baja</th>
-              <th class="white--text">Estado Civil</th>
-              <th class="white--text">Servicio Militar</th>
-              <th class="white--text">Acciones</th>
-            </tr>
-          </thead>
-          <tbody> <!--Recorremos el arreglo de autores -->
-            <tr v-for="employee in employees" :key="employee.idEmpleado">
-              <td>{{ employee.nif }}</td>
-              <td>{{ employee.nombre }}</td>
-              <td>{{ employee.apellido1 }} {{ employee.apellido2 }}</td>
-              <td>{{ employee.nacimiento | formatedDate }}</td>
-              <td>{{ employee.telefono1 }}</td>
-              <td>{{ employee.telefono2 }}</td>
-              <td>{{ employee.email }}</td>
-              <td>{{ employee.fechaBaja | formatedDate }}</td>
-              <td>{{ employee.edoCivil }}</td>
-              <td>{{ employee.serMilitar }}</td>
-              <td >
-                <v-row align="center" justify="space-around">
-                <v-btn  fab dark x-small color="blue-grey darken-3" @click="darAlta(employee)"  title="dar alta nuevamente"> 
-                  <v-icon dark small>mdi-arrow-left</v-icon>
-                </v-btn> 
-                <v-btn class="white--text" color="red" @click="deleteEmp(employee)" x-small title="eliminar"><b>X</b></v-btn>
-                </v-row>
-              </td>
-            </tr>
-          </tbody>
-        </template>
-      </v-simple-table>
-       </v-card>
+  </v-data-table>
+     
+</v-card>
 
        <v-dialog v-model="msgAlta" max-width="700">
               <v-alert prominent type="warning">
@@ -134,7 +97,7 @@ export default {
             msgAlta: false,
             msgAsigned: '',
             search: '',
-             //cabeceras de la tabla
+            //cabeceras de la tabla
             headers: [{text: 'NIF', align: 'center', filtrable: false, value: 'nif', class:"blue-grey darken-3 ; white--text"},
                       {text: 'Nombre', align: 'start', value: 'nombre', class:"blue-grey darken-3 ; white--text"},
                       {text: 'Apellidos', align: 'start', value: 'apellidos', class:"blue-grey darken-3 ; white--text"},
@@ -142,6 +105,7 @@ export default {
                       {text: 'Teléfono', align: 'start', value: 'telefono1', sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Teléfono 2', align: 'start', value: 'telefono2', sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Email', align: 'start', value: 'email', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Fecha Alta', align: 'center', value: 'fechaAlta', class:"blue-grey darken-3 ; white--text"},
                       {text: 'Fecha Baja', align: 'center', value: 'fechaBaja', class:"blue-grey darken-3 ; white--text"},
                       {text: 'Estado Civil', align: 'center', value: 'edoCivil', sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Carnet Conducir', align: 'center', value: 'serMilitar', sortable: false, class:"blue-grey darken-3 ; white--text"},
