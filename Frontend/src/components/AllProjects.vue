@@ -4,43 +4,72 @@
         <!--tabla de proyectos dados de baja -->
         <v-card-title class="justify-center blue-grey darken-3 white--text py-1">
             {{title}}
-        </v-card-title>
-      <v-simple-table class="text-left" >
-        <template v-slot:default>
-          
-          <thead class="blue-grey darken-3">
-            <tr>
-              <th class="white--text">Descripción</th>
-              <th class="white--text">Fecha de inicio</th>
-              <th class="white--text">Fecha fin</th>
-              <th class="white--text">Lugar</th>
-              <th class="white--text">Observaciones</th>
-              <th class="white--text">Timpo Restante</th>
-              <th class="white--text">Estatus</th>
-            </tr>
-          </thead>
-          <tbody> <!--Recorremos el arreglo de proyectos -->
-            <tr v-for="proyect in projects" :key="proyect.id_proyecto">
-              <td>{{ proyect.descripcion }}</td>
-              <td>{{ proyect.fechaInicio | formatedDate }}</td>
-              <td v-if="proyect.fechaFin">{{ proyect.fechaFin | formatedDate }}</td>
-              <td v-else style="color: orange"><b>No definida</b></td>
-              <td :style="proyect.lugar? 'color: black' : 'color: orange;font-weight: bold' ">
-                {{ proyect.lugar? proyect.lugar : 'Sin asignar' }}</td>
-              <td>{{ proyect.observaciones }}</td>
-              <!--Si hay fecha fin del proyecto entonces la calculamos con la fecha de inicio -->
-              <td v-if="proyect.fechaFin"> {{difference(proyect.fechaFin)+' días' }}</td>
-              <td v-else style="color: orange;font-weight: bold">Indefinido</td>
-              
-              <td :style="proyect.fechaBaja? 'color: red;font-weight: bold' : 'color: green;font-weight: bold'">
-                {{ proyect.fechaBaja? 'INACTIVO' : 'ACTIVO'}}
-              </td>
-            </tr>
-          </tbody>
+        <v-spacer></v-spacer>
+        <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Buscar por nombre"
+            dark
+            single-line
+            hide-details
+          ></v-text-field>
+      </v-card-title>
+       <v-data-table
+                :headers="headers"
+                :items="projects"
+                :search="search"
+                :hide-default-footer="projects.length < 10 ? true : false"
+                :footer-props="{itemsPerPageText: 'Filas por página'}"
+                >
+         <template v-slot:[`item.fechaInicio`]="{item}">
+            {{ item.fechaInicio | formatedDate }}
+         </template>
+
+         <template v-slot:[`item.fechaFin`]="{item}">
+          <td v-if="item.fechaFin">
+              {{ item.fechaFin | formatedDate }}
+          </td>
+          <td v-else
+              style="color:orange ; font-weight: bold"
+          >No definida
+          </td>
+         </template>
+
+        <template v-slot:[`item.lugar`]="{item}">
+          <td v-if="item.lugar">
+              {{ item.lugar }}
+          </td>
+          <td v-else
+              style="color:orange ; font-weight: bold"
+          >Sin asignar
+          </td>
         </template>
-      </v-simple-table>
-       </v-card>
-    </v-main>
+        <template v-slot:[`item.fechaBaja`]="{item}">
+            {{ item.fechaBaja | formatedDate }}
+        </template>
+
+        <template  v-slot:[`item.tiempo`]="{item}">
+          <td v-if="item.fechaFin"
+              :style="difference(item.fechaFin) > 0 ? 'color: green ; font-weight: bold' : 'color: red ; font-weight: bold'">
+            {{ difference(item.fechaFin)+' días' }} 
+          </td>
+          <td v-else style="color: orange ; font-weight: bold">
+              Indefinido
+          </td>
+        </template>
+
+        <template v-slot:[`item.status`]="{item}">
+        <td v-if="item.fechaBaja"
+          > <v-icon color="red" title="Inactivo">mdi-thumb-down</v-icon>
+        </td>
+        <td v-else
+            ><v-icon color="green" title="Activo">mdi-thumb-up</v-icon>
+        </td>
+      </template>
+    </v-data-table>
+
+    </v-card>
+  </v-main>
     
 </template>
 
@@ -53,7 +82,17 @@ export default {
         return {
             title: 'Todos los Proyectos',
             projects: [],
-            today: new Date()
+            today: new Date(),
+            //cabeceras de la tabla principal
+            search: '',
+            headers: [{text: 'Descripción', align: 'start', filtrable: false, value: 'descripcion', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Fecha Inicio', align: 'start', value: 'fechaInicio', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Fecha Fin', align: 'start', value: 'fechaFin', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Lugar', align: 'start', value: 'lugar', sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Observaciones', align: 'start', value: 'observaciones', sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Fecha Baja', align: 'start', value: 'fechaBaja', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Tiempo Restante', align: 'start', value: 'tiempo', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Estatus', align: 'center', value: 'status', sortable: false, class:"blue-grey darken-3 ; white--text"},],
         }
     },
     methods: {

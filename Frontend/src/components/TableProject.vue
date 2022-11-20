@@ -9,7 +9,7 @@
             <v-icon right>mdi-account-circle</v-icon>
           </v-btn>
         </v-card>
-        <!--tabla de empleados -->
+        <!--tabla de proyectos -->
         <v-card-title class="justify-center blue-grey darken-3 white--text py-1">
             {{title}}
        <v-spacer></v-spacer>
@@ -178,40 +178,45 @@
           <v-card-text>
             <v-form ref="form3">
               <v-container>
-                <v-card-text class="red--text"><b>{{errorForm? 'Es obligatorio introducir todos los datos para dar de alta un nuevo empleado' : ''}}</b></v-card-text>
+                
                 <v-row> <!--  cuando en los items trabajamos con objetos agregamos item-text para el valor a mostar e item-value para el valor del campo-->
                 <!--usamos el v-on:change para  -->
                   <v-select v-model="idProject" v-on:change="presionar"  :items="projects" item-text="descripcion" item-value="id_proyecto" label="Proyectos" dense outlined ></v-select>
                 </v-row>
               </v-container>
-              <v-container v-model="empleados">
+            <v-card v-model="empleados">
                 <!-- Seleccion de empleados -->
-           
+            
                 <v-data-table  :headers="headers2" 
-                               :items="empleados" 
+                               :items="empleados"
                                item-key="idEmpleado" 
                                :footer-props="{itemsPerPageText: 'Filas por página'}"
                                :hide-default-footer="empleados.length > 10 ? false : true">
+                  
                   <!-- alerta si no hay datos -->
                   <template v-slot:no-data>
                     <v-alert :value="true" color="warning" icon="mdi-cloud-alert" shaped outlined>
-                      Seleccione un proyecto
+                      <b>Seleccione un proyecto</b>
                     </v-alert>
                   </template>
 
                   <template v-slot:[`item.asignado`]="{item}" >
-                    <v-simple-checkbox v-model="item.asignado" :ripple="false" color="success" @click="seleccionado(item)">
-
+                    <v-simple-checkbox v-model="item.asignado" 
+                                      :ripple="false" 
+                                      color="success" 
+                                      @click="seleccionado(item)">
                     </v-simple-checkbox>
                   </template>
                 </v-data-table> 
 
-              </v-container>
+              </v-card>
             </v-form>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn @click="asigNew" type="submit" color="green acent-2">Aceptar</v-btn>
+            <v-btn @click="asigNew" type="submit" 
+                    color="green acent-2" class="white--text" 
+                    style="font-weight: bold">Aceptar</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -384,10 +389,10 @@ export default {
                       {text: 'Acciones', align: 'center', value: 'actions', sortable: false, class:"blue-grey darken-3 ; white--text"},],
             //cabeceras de la tabla de selección de empleados
             search2: '',
-            headers2: [{text: 'Nombre', align: 'start', sortable: false,value: 'nombre'},
-                      {text: 'Primer apellido', align: 'start', sortable: false,value: 'apellido1'},
-                      {text: 'Segundo apellido', align: 'start', sortable: false,value: 'apellido2'},
-                      { text: 'Asignado', value: 'asignado' }],
+            headers2: [{text: 'Nombre', align: 'start', sortable: true,value: 'nombre', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Primer apellido', align: 'start', sortable: true,value: 'apellido1', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Segundo apellido', align: 'start', sortable: true,value: 'apellido2', class:"blue-grey darken-3 ; white--text"},
+                      { text: 'Asignado',  align: 'center',value: 'asignado',sortable: false, class:"blue-grey darken-3 ; white--text" }],
             idProject: '',
             selected: [],
              //datos de verificación de projectos asignados a empleado
@@ -398,6 +403,9 @@ export default {
         }
     },
     methods: { //METODOS DEL PROYECTO
+    filterSearch(val) {
+        this.filters = this.$MultiFilters.updateFilters(this.filters, {search: val});
+      },
         async listar(){
             this.projects = await projectService.getProjectsAct()
             
