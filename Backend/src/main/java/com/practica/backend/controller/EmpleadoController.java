@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.practica.backend.entities.Empleado;
@@ -34,6 +35,7 @@ public class EmpleadoController {
 	 * Este método devuelve una lista con todos los empleados
 	 * o en su defecto los errores que se puedan producir en la consulta
 	 * **/
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping(path="empleados/lista")
 	public ResponseEntity<?> mostarTodos(){
 		LOGGER.info("Consultando todos empleados");

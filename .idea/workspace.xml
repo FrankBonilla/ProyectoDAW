@@ -4,11 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35f7239b-8efa-4ade-b038-2f0ed8a216cd" name="Changes" comment="#2 [Empleado] Frontend: implementación de la barra de búsqueda en la tabla empleados dados de baja." />
+    <list default="true" id="35f7239b-8efa-4ade-b038-2f0ed8a216cd" name="Changes" comment="#2 [Empleado] Frontend: implementación de la barra de búsqueda en la tabla empleados dados de baja.">
+      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/auth/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/controller/EmpleadoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/controller/EmpleadoController.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
