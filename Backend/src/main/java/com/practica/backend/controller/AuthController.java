@@ -1,5 +1,7 @@
 package com.practica.backend.controller;
 
+import com.practica.backend.auth.JwtAuthResponseDTO;
+import com.practica.backend.auth.JwtTokenProvider;
 import com.practica.backend.entities.Usuario;
 import com.practica.backend.repositories.RoleRepository;
 import com.practica.backend.repositories.UsuarioRepository;
@@ -21,6 +23,9 @@ public class AuthController {
 
     private static final Logger LOGGER = LogManager.getLogger(AuthController.class);
     @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
@@ -33,14 +38,16 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/iniciarSesion")
-    public ResponseEntity<String> authenticateUser(@RequestParam String username, @RequestParam String password){
+    public ResponseEntity<JwtAuthResponseDTO> authenticateUser(@RequestParam String username, @RequestParam String password){
         LOGGER.info(">>>> Entrando al método de inicio de sesión: authenticateUser");
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username,password));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        //obtenemos el token
+        String token = jwtTokenProvider.generatorToken(authentication);
         LOGGER.info("Inicio de Sesión realizado por [{}]",authentication.getName());
 
-        return new ResponseEntity<>("Ha iniciado sesión con exito", HttpStatus.OK);
+        return ResponseEntity.ok(new JwtAuthResponseDTO(token));
     }
     /** POR PROBAR **/
     @PostMapping("/registrar")
