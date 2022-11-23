@@ -15,6 +15,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import com.practica.backend.entities.Empleado;
@@ -39,6 +42,10 @@ public class EmpleadoController {
 	@GetMapping(path="empleados/lista")
 	public ResponseEntity<?> mostarTodos(){
 		LOGGER.info("Consultando todos empleados");
+		//Esto recupera datos de la sesión del usuario
+		//Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		//String usuario = authentication.getName();
+
 		List<Empleado> result;
 		Map<String, Object> response = new HashMap<>();
 
@@ -66,6 +73,7 @@ public class EmpleadoController {
 	 * Este método devuelve una lista con todos los empleados que están activos
 	 * o en su defecto los errores que se puedan producir en la consulta
 	 * **/
+	@PreAuthorize("hasRole('USER')")
 	@GetMapping(path="empleados/activos")
 	public ResponseEntity<?> showAct(){
 		LOGGER.info("Consultando todos empleados de alta");
@@ -91,7 +99,8 @@ public class EmpleadoController {
 		LOGGER.info("Consulta de empleados finalizada, resultados: [{}]",result.size());
 		return new ResponseEntity<>(result, httpStatus.OK);
 	}
-	
+
+	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 	@GetMapping(path="empleados/inactivos")
 	public ResponseEntity<List<Empleado>> showUnsuscribe(){
 		LOGGER.info("Consultando todos empleados de baja");
@@ -113,7 +122,7 @@ public class EmpleadoController {
 		LOGGER.info("Consulta de empleados finalizada, resultados: [{}]",result.size());
 		return new ResponseEntity<>(result,httpStatus.OK);
 	}
-	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping(path="empleados/agregar")
 	@ResponseBody
 	public ResponseEntity<Empleado> guardar(@RequestBody Empleado empleado) {
@@ -132,7 +141,8 @@ public class EmpleadoController {
 		LOGGER.info("Se ha agregado al empleado [{}]", empleado.toString());
 		return new ResponseEntity<>(empleado,httpStatus.OK);
 	}
-	
+
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping(path="empleados/borrar")
 	public void borrar(@RequestParam int idEmpleado) {
 		LOGGER.info("Borrando al empleado con ID: [{}]", idEmpleado);
@@ -151,6 +161,7 @@ public class EmpleadoController {
 	 * @Param idProyecto recibe el ID del proyecto a consultar
 	 * @Return una lista de empleados con el estado de asignado al proyecto
 	 * **/
+	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 	@GetMapping(path="empleados/status")
 	public ResponseEntity<List<EmpleadoRepository.Asignaciones>> getAsignaciones(@RequestParam int idProyecto) {
 		LOGGER.info(">>>> Entrando al método: getAsignaciones");
@@ -169,7 +180,7 @@ public class EmpleadoController {
 		LOGGER.info("Consulta de asignaciones realizada: [{}] resultados",result.size());
 		return new ResponseEntity<>(result,httpStatus.OK);
 	}
-
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping(path="empleados/update")
 	@ResponseBody
 	public ResponseEntity<Empleado> updateEmployee(@RequestBody Empleado empleado) {
@@ -190,6 +201,7 @@ public class EmpleadoController {
 	}
 	
 	//método para dar de baja directamente
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping(path="empleados/baja")
 	public ResponseEntity<Empleado> baja(@RequestParam int idEmpleado) {
 
@@ -209,6 +221,7 @@ public class EmpleadoController {
 		}
 	
 	//método para volver a dar de alta a un empleado
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping(path="empleados/volverAlta")
 	public ResponseEntity<String> volverAlta(@RequestParam int idEmpleado){
 		LOGGER.info("Dando de alta de nuevo al empleado con ID: [{}]", idEmpleado);
