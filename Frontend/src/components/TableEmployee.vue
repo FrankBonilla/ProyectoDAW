@@ -336,8 +336,9 @@ export default {
     methods: {
 
        async listar(){
-           this.employees = await employeeService.getEmployeesAct()   
-          
+         
+          this.employees = await employeeService.getEmployeesAct()
+            
         },
       async  addNew(){
         //validamos si el formulario cumple con los campos requeridos

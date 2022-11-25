@@ -28,7 +28,8 @@ function getAll(){
 
 function getEmployeesAct(){
     
-   return axios.get(`${URL}api/empleados/activos`)
+
+   return  axios.get(`${URL}api/empleados/activos`)
         .then(response => {
             console.log(response.data)
             return response.data

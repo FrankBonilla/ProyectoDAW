@@ -4,17 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35f7239b-8efa-4ade-b038-2f0ed8a216cd" name="Changes" comment="BACKEND - autenticación basica - 2">
-      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/auth/JwtAuthResponseDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/auth/JwtAuthenticationEntryPoint.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/auth/JwtAuthenticationFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/auth/JwtTokenProvider.java" afterDir="false" />
+    <list default="true" id="35f7239b-8efa-4ade-b038-2f0ed8a216cd" name="Changes" comment="BACKEND - ya protegido y con TOKEN - 2.1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/BackEndApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/BackEndApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/auth/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/auth/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/controller/EmpleadoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/controller/EmpleadoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/components/TableEmployee.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/TableEmployee.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/services/employeeService.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/services/employeeService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/vue.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +32,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -49,7 +56,7 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.DEBUG">
+  <component name="RunManager" selected="Maven.DawMultimodulo">
     <configuration name="DEBUG" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.practica.backend.BackEndApplication" />
       <module name="Backend" />
@@ -242,7 +249,21 @@
       <option name="project" value="LOCAL" />
       <updated>1669211690002</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="BACKEND - ya protegido y con TOKEN - 2">
+      <created>1669233654750</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1669233654750</updated>
+    </task>
+    <task id="LOCAL-00022" summary="BACKEND - ya protegido y con TOKEN - 2.1">
+      <created>1669233679713</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1669233679713</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -276,7 +297,9 @@
     <MESSAGE value="#2 [Empleado] Frontend: implementación de la barra de búsqueda en la tabla empleados dados de baja." />
     <MESSAGE value="BACKEND - autenticación basica - 1" />
     <MESSAGE value="BACKEND - autenticación basica - 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="BACKEND - autenticación basica - 2" />
+    <MESSAGE value="BACKEND - ya protegido y con TOKEN - 2" />
+    <MESSAGE value="BACKEND - ya protegido y con TOKEN - 2.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="BACKEND - ya protegido y con TOKEN - 2.1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -302,24 +325,9 @@
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/auth/JwtAuthenticationFilter.java</url>
-          <line>46</line>
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/auth/JwtTokenProvider.java</url>
           <line>41</line>
           <option name="timeStamp" value="21" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/auth/JwtAuthenticationFilter.java</url>
-          <line>29</line>
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/auth/JwtAuthenticationFilter.java</url>
-          <line>34</line>
-          <option name="timeStamp" value="27" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
