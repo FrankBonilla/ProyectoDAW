@@ -8,7 +8,7 @@
         <v-text-field
           v-model="search"
           append-icon="mdi-magnify"
-          label="Buscar por nombre"
+          label="Buscar por nombre, apellidos, email o NIF"
           dark
           single-line
           hide-details
@@ -21,9 +21,6 @@
                 :hide-default-footer="employees.length < 10 ? true : false"
                 :footer-props="{itemsPerPageText: 'Filas por página'}"
                 >
-      <template v-slot:[`item.apellidos`]="{item}">
-        {{ item.apellido1 }} {{ item.apellido2 }}
-      </template>
 
       <template v-slot:[`item.nacimiento`]="{item}">
         {{ item.nacimiento | formatedDate }}
@@ -67,16 +64,17 @@ export default {
             search: '',
             //cabeceras de la tabla
             headers: [{text: 'NIF', align: 'center', filtrable: false, value: 'nif', class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Nombre', align: 'start', value: 'nombre', class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Apellidos', align: 'start', value: 'apellidos', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Nombre', align: 'start', value: 'nombre',sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Primer Apellido', align: 'start', value: 'apellido1',sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Segundo Apellido', align: 'start', value: 'apellido2',sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Teléfono', align: 'start', value: 'telefono1', sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Teléfono 2', align: 'start', value: 'telefono2', sortable: false, class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Email', align: 'start', value: 'email', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Email', align: 'start', value: 'email', sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Estado Civil', align: 'center', value: 'edoCivil', sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Carnet Conducir', align: 'center', value: 'serMilitar', sortable: false, class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Fecha Alta', align: 'center', value: 'fechaAlta', class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Fecha Baja', align: 'center', value: 'fechaBaja', class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Estatus', align: 'center', value: 'status', class:"blue-grey darken-3 ; white--text"},]
+                      {text: 'Fecha Alta', align: 'center', value: 'fechaAlta',sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Fecha Baja', align: 'center', value: 'fechaBaja',sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Estatus', align: 'center', value: 'status',sortable: false, class:"blue-grey darken-3 ; white--text"},]
             
         }
     },

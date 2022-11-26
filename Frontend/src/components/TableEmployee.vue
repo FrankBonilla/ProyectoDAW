@@ -15,7 +15,7 @@
         <v-text-field
           v-model="search"
           append-icon="mdi-magnify"
-          label="Buscar por nombre"
+          label="Buscar por nombre, apellidos, email o NIF"
           dark
           single-line
           hide-details
@@ -28,9 +28,6 @@
                 :hide-default-footer="employees.length < 10 ? true : false"
                 :footer-props="{itemsPerPageText: 'Filas por página'}"
                 >
-      <template v-slot:[`item.apellidos`]="{item}">
-        {{ item.apellido1 }} {{ item.apellido2 }}
-      </template>
 
       <template v-slot:[`item.nacimiento`]="{item}">
         {{ item.nacimiento | formatedDate }}
@@ -62,7 +59,7 @@
 
   </v-data-table>
       <!--Formulario para agregar empleado -->
-      <v-dialog v-model="addEmployee" max-width="500">
+      <v-dialog v-model="addEmployee" max-width="500" persistent>
         <v-card color="dark">
           <v-card-title class="text--center">Nuevo Empleado</v-card-title>
           <v-card-text>
@@ -87,10 +84,10 @@
                 </v-row>
                 <v-row>
                   <v-col>
-                    <v-text-field v-model="employee.telefono1" :rules="phoneRules"  label="Teléfono" required maxlength="12"></v-text-field>
+                    <v-text-field v-model="employee.telefono1" :rules="phoneRules"  label="Teléfono" required maxlength="9"></v-text-field>
                   </v-col>
                   <v-col>
-                   <v-text-field v-model="employee.telefono2"  label="Teléfono 2" required maxlength="12"></v-text-field>
+                   <v-text-field v-model="employee.telefono2"  label="Teléfono 2" required maxlength="9"></v-text-field>
                   </v-col>
                 </v-row>
                 <v-row>
@@ -165,7 +162,7 @@
               </v-alert>
           </v-dialog>
         <!-- Formulario para actualizar empleado -->
-      <v-dialog v-model="update" max-width="500">
+      <v-dialog v-model="update" max-width="500" persistent>
         <v-card color="dark">
           <v-card-title class="text--center">Modificación de empleado</v-card-title>
           <v-card-text>
@@ -190,10 +187,10 @@
                 </v-row>
                 <v-row>
                   <v-col>
-                    <v-text-field v-model="employee.telefono1" :rules="phoneRules"  label="Teléfono" required maxlength="12"></v-text-field>
+                    <v-text-field v-model="employee.telefono1" :rules="phoneRules"  label="Teléfono" required maxlength="9"></v-text-field>
                   </v-col>
                   <v-col>
-                   <v-text-field v-model="employee.telefono2"  label="Teléfono 2" required maxlength="12"></v-text-field>
+                   <v-text-field v-model="employee.telefono2"  label="Teléfono 2" required maxlength="9"></v-text-field>
                   </v-col>
                 </v-row>
                 <v-row>
@@ -312,14 +309,15 @@ export default {
             msgAsigned: '',
             msgAsignedProject: false,
             //cabeceras de la tabla
-            headers: [{text: 'NIF', align: 'center', filtrable: false, value: 'nif', class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Nombre', align: 'start', value: 'nombre', class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Apellidos', align: 'start', value: 'apellidos', class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Fecha Nacimiento', align: 'center', value: 'nacimiento', class:"blue-grey darken-3 ; white--text"},
+            headers: [{text: 'NIF', align: 'center', value: 'nif', filtrable: false, sortable:false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Nombre', align: 'start', value: 'nombre', sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Primer Apellido', align: 'start', value: 'apellido1', sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Segundo Apellido', align: 'start', value: 'apellido2', sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Fecha Nacimiento', align: 'center', value: 'nacimiento', sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Teléfono', align: 'start', value: 'telefono1', sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Teléfono 2', align: 'start', value: 'telefono2', sortable: false, class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Email', align: 'start', value: 'email', class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Fecha Alta', align: 'center', value: 'fechaAlta', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Email', align: 'start', value: 'email',sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Fecha Alta', align: 'center', value: 'fechaAlta', sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Estado Civil', align: 'center', value: 'edoCivil', sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Carnet Conducir', align: 'center', value: 'serMilitar', sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Acciones', align: 'center', value: 'actions', sortable: false, class:"blue-grey darken-3 ; white--text"},]
