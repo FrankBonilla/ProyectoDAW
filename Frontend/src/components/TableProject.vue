@@ -16,10 +16,11 @@
         <v-text-field
           v-model="search"
           append-icon="mdi-magnify"
-          label="Buscar por nombre"
+          label="Buscar..."
           dark
           single-line
           hide-details
+          clearable
         ></v-text-field>
       </v-card-title>
       <v-data-table
@@ -55,8 +56,17 @@
 
         <template v-slot:[`item.actions`]="{ item }">
         <v-icon
+            medium
+            title="empleados asignados"
+            :disabled="item.employees.length == 0"
+            @click="showEmployesOfProject(item)"
+            >
+            mdi-account-group-outline
+        </v-icon>
+
+        <v-icon
           medium
-          class="mr-2"
+          class="ma-2"
           @click="actualizar(item)" 
           title="editar"
           color="amber accent-4"
@@ -76,9 +86,9 @@
   </v-data-table>
       
       <!-- Formulario para dar de alta proyectos-->
-       <v-dialog v-model="addProject" max-width="500">
+       <v-dialog v-model="addProject" max-width="500" persistent>
         <v-card color="dark">
-          <v-card-title >Nuevo Proyecto</v-card-title>
+          <v-card-title class="white--text blue-grey darken-3" >Nuevo Proyecto</v-card-title>
           <v-card-text>
             <v-form ref="form">
               <v-container>
@@ -234,9 +244,9 @@
            </v-alert>
           </v-dialog>
       <!-- Formulario para actualizar proyecto -->
-      <v-dialog v-model="update" max-width="500">
+      <v-dialog v-model="update" max-width="500" persistent>
         <v-card color="dark">
-          <v-card-title >Proyecto a modificar</v-card-title>
+          <v-card-title class="white--text blue-grey darken-3">Proyecto a modificar</v-card-title>
           <v-card-text>
             <v-form ref="form2">
               <v-container>
@@ -330,6 +340,19 @@
         </v-card>
       </v-dialog>
       </v-card>
+      <!--Tabla empleados de un proyecto -->
+      <v-dialog v-model="seeEmployees" max-width="50%" persistent>
+      <v-card>
+      <asigned-employees
+              :project="projectToShow.descripcion"
+              :employees="projectEmployees"/>
+      <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn @click="seeEmployees = false" color="success">OK</v-btn>
+          </v-card-actions>
+      </v-card>
+      </v-dialog>
+
     </v-main>
 </template>
 
@@ -338,10 +361,14 @@
 import {projectService} from '../services/projectService'
 import {employeeService} from '../services/employeeService'
 import swal from 'sweetalert2'
+import AsignedEmployees from './AsignedEmployees.vue'
 
 
 export default {
     name: 'TableProject',
+    components: {
+      AsignedEmployees
+    },
     data() {
         return {
             title: 'Proyectos activos',
@@ -381,10 +408,10 @@ export default {
             singleSelect: false,
             //cabeceras de la tabla principal
             search: '',
-            headers: [{text: 'Descripción', align: 'start', filtrable: false, value: 'descripcion', class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Fecha Inicio', align: 'start', value: 'fechaInicio', class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Fecha Fin', align: 'start', value: 'fechaFin', class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Lugar', align: 'start', value: 'lugar', class:"blue-grey darken-3 ; white--text"},
+            headers: [{text: 'Descripción', align: 'start', filtrable: false,sortable: false, value: 'descripcion', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Fecha Inicio', align: 'start', value: 'fechaInicio',sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Fecha Fin', align: 'start', value: 'fechaFin', sortable: false,class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Lugar', align: 'start', value: 'lugar',sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Observaciones', align: 'start', value: 'observaciones', sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Acciones', align: 'center', value: 'actions', sortable: false, class:"blue-grey darken-3 ; white--text"},],
             //cabeceras de la tabla de selección de empleados
@@ -397,9 +424,12 @@ export default {
             selected: [],
              //datos de verificación de projectos asignados a empleado
             msgAsigned: '',
-            msgAsignedEmp: false
+            msgAsignedEmp: false,
+            //ver empleados de un proyecto
+            seeEmployees: false,
+            projectEmployees: [],
+            projectToShow: {},
       
-
         }
     },
     methods: { //METODOS DEL PROYECTO
@@ -576,6 +606,11 @@ export default {
          this.errorForm = false
          this.$refs.form2.reset()
          this.update = false
+       },
+       showEmployesOfProject(project){
+          this.projectToShow = project
+          this.projectEmployees = project.employees
+          this.seeEmployees = true
        }
     },
     created(){

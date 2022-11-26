@@ -8,10 +8,11 @@
         <v-text-field
           v-model="search"
           append-icon="mdi-magnify"
-          label="Buscar por nombre"
+          label="Buscar..."
           dark
           single-line
           hide-details
+          clearable
         ></v-text-field>
       </v-card-title>
       <v-data-table
@@ -79,12 +80,12 @@ export default {
             projects: [],
              //cabeceras de la tabla principal
             search: '',
-            headers: [{text: 'Descripción', align: 'start', filtrable: false, value: 'descripcion', class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Fecha Inicio', align: 'start', value: 'fechaInicio', class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Fecha Fin', align: 'start', value: 'fechaFin', class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Lugar', align: 'start', value: 'lugar', class:"blue-grey darken-3 ; white--text"},
+            headers: [{text: 'Descripción', align: 'start', filtrable: false, sortable: false, value: 'descripcion', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Fecha Inicio', align: 'start', value: 'fechaInicio',sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Fecha Fin', align: 'start', value: 'fechaFin', sortable: false,class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Lugar', align: 'start', value: 'lugar',sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Observaciones', align: 'start', value: 'observaciones', sortable: false, class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Fecha Baja', align: 'start', value: 'fechaBaja', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Fecha Baja', align: 'start', value: 'fechaBaja',sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Acciones', align: 'center', value: 'actions', sortable: false, class:"blue-grey darken-3 ; white--text"},],
         }
         

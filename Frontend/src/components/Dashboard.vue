@@ -52,7 +52,7 @@
         <v-card-title class="text-h5">
          ¿ Desea cerrar sesión ?
         </v-card-title>
-        <v-card-text>Se perderán los datos o procesos que no se han confirma</v-card-text>
+        <v-card-text>Se perderán los datos y/o procesos no confirmados</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn

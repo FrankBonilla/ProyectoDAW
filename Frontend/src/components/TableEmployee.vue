@@ -19,6 +19,7 @@
           dark
           single-line
           hide-details
+          clearable
         ></v-text-field>
       </v-card-title>
       <v-data-table
@@ -61,7 +62,7 @@
       <!--Formulario para agregar empleado -->
       <v-dialog v-model="addEmployee" max-width="500" persistent>
         <v-card color="dark">
-          <v-card-title class="text--center">Nuevo Empleado</v-card-title>
+          <v-card-title class="white--text blue-grey darken-3">Nuevo Empleado</v-card-title>
           <v-card-text>
             <v-form ref="form">
               <v-container>
@@ -164,7 +165,7 @@
         <!-- Formulario para actualizar empleado -->
       <v-dialog v-model="update" max-width="500" persistent>
         <v-card color="dark">
-          <v-card-title class="text--center">Modificación de empleado</v-card-title>
+          <v-card-title class="white--text blue-grey darken-3">Modificación de empleado</v-card-title>
           <v-card-text>
             <v-form ref="form2">
               <v-container>

@@ -17,7 +17,11 @@ export const projectService = {
 }
 
 function getAll(){
-    return axios.get(`${URL}api/proyectos/lista`)
+    return axios.get(`${URL}api/proyectos/lista`, {
+        headers: {
+            'Authorization': 'Bearer '+localStorage.getItem('token')
+                }
+            })
             .then(response => {
                 return response.data
             })
@@ -45,7 +49,11 @@ function getProjectsAct(){
 
 function saveProyect(datos){
 
-    return axios.post(`${URL}api/proyectos/guardar`,datos)
+    return axios.post(`${URL}api/proyectos/guardar`,datos, {
+        headers: {
+            'Authorization': 'Bearer '+localStorage.getItem('token')
+            }
+    })
     .then(response => {
         console.log(response.data)
         return response.data
@@ -62,8 +70,11 @@ function deleteProject(idProyecto){
             url: `${URL}api/proyectos/borrar`,
             params: {
                 idProyecto: idProyecto
-            }
-        })
+            },
+            headers: {
+                'Authorization': 'Bearer '+localStorage.getItem('token')
+                }
+            })
             .then( response => {
                 response.data
             })
@@ -79,7 +90,10 @@ function asignarEmpleado(idProyecto,idEmpleado){
                 params: {
                     idProyecto: idProyecto,
                     idEmpleado: idEmpleado
-                }
+                },
+                headers: {
+                    'Authorization': 'Bearer '+localStorage.getItem('token')
+                    }
             })
             .then(response => {
                 console.log(response.data)
@@ -97,7 +111,10 @@ function removeEmployee(idProyecto,idEmpleado){
         params: {
             idProyecto: idProyecto,
             idEmpleado: idEmpleado
-                }
+                },
+            headers: {
+                    'Authorization': 'Bearer '+localStorage.getItem('token')
+                    }
             })
             .then(response => {
                 console.log(response.data)
@@ -114,7 +131,10 @@ function searchEmpInProjects(idProyecto){
         url: `${URL}api/proyectos/verificarPro`,
         params: {
             idProyecto: idProyecto
-                }
+                },
+        headers: {
+            'Authorization': 'Bearer '+localStorage.getItem('token')
+                    }
             })
             .then(response => {
                 return response.data
@@ -130,6 +150,9 @@ function terminateProject(idProyecto){
             url: `${URL}api/proyectos/baja`,
             params: {
                 idProyecto: idProyecto
+                },
+            headers: {
+                    'Authorization': 'Bearer '+localStorage.getItem('token')
                 }
             })
             .then( response => {
@@ -141,7 +164,11 @@ function terminateProject(idProyecto){
 }
 
 function updateProject(data){
-    return axios.post(`${URL}api/proyectos/update`, data)
+    return axios.post(`${URL}api/proyectos/update`, data, {
+        headers: {
+            'Authorization': 'Bearer '+localStorage.getItem('token')
+             }
+            })
             .then( response => {
                 return response.data
             })
@@ -151,7 +178,11 @@ function updateProject(data){
 }
 
 function unsuscribeProyect(){
-    return axios.get(`${URL}api/proyectos/inactivos`)
+    return axios.get(`${URL}api/proyectos/inactivos`, {
+        headers: {
+            'Authorization': 'Bearer '+localStorage.getItem('token')
+            }
+        })
         .then(response => {
             console.log(response.data)
             return response.data

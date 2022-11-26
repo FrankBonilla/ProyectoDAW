@@ -4,16 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35f7239b-8efa-4ade-b038-2f0ed8a216cd" name="Changes" comment="BACKEND - ya protegido y con TOKEN - 2.1">
+    <list default="true" id="35f7239b-8efa-4ade-b038-2f0ed8a216cd" name="Changes" comment="[FRONTEND]- inclusión del token en las cabcerceras de las peticiones, mejoras en los estilos de login, enrutamiento.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/assets/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/assets/styles.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/components/AllEmployees.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/AllEmployees.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/components/AllProjects.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/AllProjects.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/components/Dashboard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/Dashboard.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/components/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/Login.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/components/TableEmployee.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/TableEmployee.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/components/TableProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/TableProject.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/components/UnsuscribeEmployee.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/UnsuscribeEmployee.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/services/employeeService.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/services/employeeService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/components/UnsuscribeProjects.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/UnsuscribeProjects.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/services/projectService.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/services/projectService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -260,7 +260,21 @@
       <option name="project" value="LOCAL" />
       <updated>1669233679713</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="[FRONTEND]- mejoras en las tablas de empleados, filtros, columnas etc.">
+      <created>1669485939233</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1669485939234</updated>
+    </task>
+    <task id="LOCAL-00024" summary="[FRONTEND]- inclusión del token en las cabcerceras de las peticiones, mejoras en los estilos de login, enrutamiento.">
+      <created>1669486004770</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1669486004770</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -296,7 +310,9 @@
     <MESSAGE value="BACKEND - autenticación basica - 2" />
     <MESSAGE value="BACKEND - ya protegido y con TOKEN - 2" />
     <MESSAGE value="BACKEND - ya protegido y con TOKEN - 2.1" />
-    <option name="LAST_COMMIT_MESSAGE" value="BACKEND - ya protegido y con TOKEN - 2.1" />
+    <MESSAGE value="[FRONTEND]- mejoras en las tablas de empleados, filtros, columnas etc." />
+    <MESSAGE value="[FRONTEND]- inclusión del token en las cabcerceras de las peticiones, mejoras en los estilos de login, enrutamiento." />
+    <option name="LAST_COMMIT_MESSAGE" value="[FRONTEND]- inclusión del token en las cabcerceras de las peticiones, mejoras en los estilos de login, enrutamiento." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
