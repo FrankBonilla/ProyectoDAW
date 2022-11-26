@@ -4,16 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35f7239b-8efa-4ade-b038-2f0ed8a216cd" name="Changes" comment="[FRONTEND]- inclusión del token en las cabcerceras de las peticiones, mejoras en los estilos de login, enrutamiento.">
+    <list default="true" id="35f7239b-8efa-4ade-b038-2f0ed8a216cd" name="Changes" comment="[FRONTEND]- inclusión del token en las cabcerceras de las peticiones de proyectos, mejoras en las tablas, nuevo componente de empleados de de un proyecto">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/components/AllEmployees.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/AllEmployees.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/components/AllProjects.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/AllProjects.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/components/Dashboard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/Dashboard.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/components/TableEmployee.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/TableEmployee.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/components/TableProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/TableProject.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/components/UnsuscribeEmployee.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/UnsuscribeEmployee.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/components/UnsuscribeProjects.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/UnsuscribeProjects.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/services/projectService.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/services/projectService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -274,7 +267,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669486004770</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="[FRONTEND]- inclusión del token en las cabcerceras de las peticiones de proyectos, mejoras en las tablas, nuevo componente de empleados de de un proyecto">
+      <created>1669496377851</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1669496377852</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -312,7 +312,8 @@
     <MESSAGE value="BACKEND - ya protegido y con TOKEN - 2.1" />
     <MESSAGE value="[FRONTEND]- mejoras en las tablas de empleados, filtros, columnas etc." />
     <MESSAGE value="[FRONTEND]- inclusión del token en las cabcerceras de las peticiones, mejoras en los estilos de login, enrutamiento." />
-    <option name="LAST_COMMIT_MESSAGE" value="[FRONTEND]- inclusión del token en las cabcerceras de las peticiones, mejoras en los estilos de login, enrutamiento." />
+    <MESSAGE value="[FRONTEND]- inclusión del token en las cabcerceras de las peticiones de proyectos, mejoras en las tablas, nuevo componente de empleados de de un proyecto" />
+    <option name="LAST_COMMIT_MESSAGE" value="[FRONTEND]- inclusión del token en las cabcerceras de las peticiones de proyectos, mejoras en las tablas, nuevo componente de empleados de de un proyecto" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

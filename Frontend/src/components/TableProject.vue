@@ -173,12 +173,13 @@
                 </v-row>
               </v-container>
             </v-form>
-          </v-card-text>
-          <v-card-actions>
+            <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn @click="cancelAddPro" color="amber accent-4">Cancelar</v-btn>
             <v-btn @click="addNew" type="submit" color="green acent-2">Aceptar</v-btn>
           </v-card-actions>
+          </v-card-text>
+          
         </v-card>
       </v-dialog>
       <!-- Formulario para asignar empleados-->
@@ -245,7 +246,7 @@
           </v-dialog>
       <!-- Formulario para actualizar proyecto -->
       <v-dialog v-model="update" max-width="500" persistent>
-        <v-card color="dark">
+        <v-card >
           <v-card-title class="white--text blue-grey darken-3">Proyecto a modificar</v-card-title>
           <v-card-text>
             <v-form ref="form2">
@@ -331,12 +332,13 @@
                 </v-row>
               </v-container>
             </v-form>
-          </v-card-text>
-          <v-card-actions>
+            <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn @click="cancelUpdate" color="amber accent-4">Cancelar</v-btn>
             <v-btn @click="updateProject" type="submit" color="green acent-2">Modificar</v-btn>
           </v-card-actions>
+          </v-card-text>
+          
         </v-card>
       </v-dialog>
       </v-card>

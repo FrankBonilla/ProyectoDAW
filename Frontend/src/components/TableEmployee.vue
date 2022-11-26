@@ -141,12 +141,13 @@
                 </v-row>
               </v-container>
             </v-form>
-          </v-card-text>
-          <v-card-actions>
+            <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn @click="cancelar" color="amber accent-4">Cancelar</v-btn>
             <v-btn @click="addNew" type="submit" color="green acent-2">Aceptar</v-btn>
           </v-card-actions>
+          </v-card-text>
+          
         </v-card>
       </v-dialog>
        <!-- Mensaje de alerta de empelado asignado a projectos-->
@@ -244,12 +245,13 @@
                 </v-row>
               </v-container>
             </v-form>
-          </v-card-text>
-          <v-card-actions>
+            <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn @click="cancelUpdate" color="amber accent-4">Cancelar</v-btn>
             <v-btn @click="updateEmployee(employee.idEmpleado)" type="submit" color="green acent-2">Modificar</v-btn>
           </v-card-actions>
+          </v-card-text>
+          
         </v-card>
       </v-dialog>
 
