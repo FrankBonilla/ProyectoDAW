@@ -5,8 +5,8 @@
           <v-btn class="my-4" color="amber accent-4" elevation="4" @click="addProject=true">Alta Proyecto
             <v-icon right>mdi-cloud-upload</v-icon>
           </v-btn>
-          <v-btn class="my-4" color="amber accent-4" elevation="4" @click="asigEmp=true">Asignar Empleado
-            <v-icon right>mdi-account-circle</v-icon>
+          <v-btn class="my-4" color="amber accent-4" elevation="4" >Generar reporte 
+            <v-icon right> mdi-call-split</v-icon>
           </v-btn>
         </v-card>
         <!--tabla de proyectos -->
@@ -55,6 +55,14 @@
         </template>
 
         <template v-slot:[`item.actions`]="{ item }">
+        <v-icon 
+            medium
+            class="ma-2"
+            title="generar reporte"
+            > 
+            mdi-arrow-up-bold-box-outline
+        </v-icon>
+
         <v-icon
             medium
             title="empleados asignados"
@@ -182,55 +190,7 @@
           
         </v-card>
       </v-dialog>
-      <!-- Formulario para asignar empleados-->
-      <v-dialog v-model="asigEmp" max-width="600">
-        <v-card color="dark">
-          <v-card-title class="text--center">Asignación de Empleados</v-card-title>
-          <v-card-text>
-            <v-form ref="form3">
-              <v-container>
-                
-                <v-row> <!--  cuando en los items trabajamos con objetos agregamos item-text para el valor a mostar e item-value para el valor del campo-->
-                <!--usamos el v-on:change para  -->
-                  <v-select v-model="idProject" v-on:change="presionar"  :items="projects" item-text="descripcion" item-value="id_proyecto" label="Proyectos" dense outlined ></v-select>
-                </v-row>
-              </v-container>
-            <v-card v-model="empleados">
-                <!-- Seleccion de empleados -->
-            
-                <v-data-table  :headers="headers2" 
-                               :items="empleados"
-                               item-key="idEmpleado" 
-                               :footer-props="{itemsPerPageText: 'Filas por página'}"
-                               :hide-default-footer="empleados.length > 10 ? false : true">
-                  
-                  <!-- alerta si no hay datos -->
-                  <template v-slot:no-data>
-                    <v-alert :value="true" color="warning" icon="mdi-cloud-alert" shaped outlined>
-                      <b>Seleccione un proyecto</b>
-                    </v-alert>
-                  </template>
-
-                  <template v-slot:[`item.asignado`]="{item}" >
-                    <v-simple-checkbox v-model="item.asignado" 
-                                      :ripple="false" 
-                                      color="success" 
-                                      @click="seleccionado(item)">
-                    </v-simple-checkbox>
-                  </template>
-                </v-data-table> 
-
-              </v-card>
-            </v-form>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn @click="asigNew" type="submit" 
-                    color="green acent-2" class="white--text" 
-                    style="font-weight: bold">Aceptar</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+      
       <!-- Mensaje de alerta de projecto con empleados asignados-->
           <v-dialog v-model="msgAsignedEmp" max-width="700">
               <v-alert prominent type="warning">
@@ -245,10 +205,14 @@
            </v-alert>
           </v-dialog>
       <!-- Formulario para actualizar proyecto -->
-      <v-dialog v-model="update" max-width="500" persistent>
+      <v-dialog v-model="update" max-width="1000" persistent>
         <v-card >
           <v-card-title class="white--text blue-grey darken-3">Proyecto a modificar</v-card-title>
-          <v-card-text>
+          <v-tabs centered background-color="amber accent-4">
+            
+            <v-tab> Datos principales <v-icon right>mdi-folder</v-icon></v-tab>
+              <v-tab-item>
+                <v-card-text>
             <v-form ref="form2">
               <v-container>
                   <v-card-text class="red--text"><b>{{errorForm? 'Debe introducir todos los campos obligatorios' : ''}}</b></v-card-text>
@@ -337,9 +301,51 @@
             <v-btn @click="cancelUpdate" color="amber accent-4">Cancelar</v-btn>
             <v-btn @click="updateProject" type="submit" color="green acent-2">Modificar</v-btn>
           </v-card-actions>
-          </v-card-text>
-          
-        </v-card>
+        </v-card-text>
+        </v-tab-item>
+        <v-tab> Asignacion de empleados <v-icon right>mdi-account-circle</v-icon></v-tab>
+        <v-tab-item>
+          <v-card>
+            <v-card-title class="white--text blue-grey darken-3">Empleados activos
+            <v-spacer></v-spacer>
+                  <v-text-field
+                    v-model="search2"
+                    append-icon="mdi-magnify"
+                    label="Buscar por nombre, apellidos, email o NIF"
+                    single-line
+                    hide-details
+                    clearable
+                    dark
+                  ></v-text-field>
+          </v-card-title>
+          <v-data-table  
+                         :headers="headers2" 
+                         :items="empleados"
+                         :search="search2"
+                         item-key="idEmpleado" 
+                         :footer-props="{itemsPerPageText: 'Filas por página'}"
+                         :hide-default-footer="empleados.length > 10 ? false : true">
+                  
+                  <!-- alerta si no hay datos 
+                  <template v-slot:no-data>
+                    <v-alert :value="true" color="warning" icon="mdi-cloud-alert" shaped outlined>
+                      <b>Seleccione un proyecto</b>
+                    </v-alert>
+                  </template>
+                  -->
+                  <template v-slot:[`item.asignado`]="{item}" >
+                    <v-simple-checkbox v-model="item.asignado" 
+                                      :ripple="false" 
+                                      color="success" 
+                                      @click="seleccionado(item)">
+                    </v-simple-checkbox>
+                  </template>
+                </v-data-table> 
+          </v-card>
+        </v-tab-item>
+                
+      </v-tabs> 
+      </v-card>
       </v-dialog>
       </v-card>
       <!--Tabla empleados de un proyecto -->
@@ -418,9 +424,9 @@ export default {
                       {text: 'Acciones', align: 'center', value: 'actions', sortable: false, class:"blue-grey darken-3 ; white--text"},],
             //cabeceras de la tabla de selección de empleados
             search2: '',
-            headers2: [{text: 'Nombre', align: 'start', sortable: true,value: 'nombre', class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Primer apellido', align: 'start', sortable: true,value: 'apellido1', class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Segundo apellido', align: 'start', sortable: true,value: 'apellido2', class:"blue-grey darken-3 ; white--text"},
+            headers2: [{text: 'Nombre', align: 'start', sortable: false,value: 'nombre', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Primer apellido', align: 'start', sortable: false,value: 'apellido1', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Segundo apellido', align: 'start', sortable: false,value: 'apellido2', class:"blue-grey darken-3 ; white--text"},
                       { text: 'Asignado',  align: 'center',value: 'asignado',sortable: false, class:"blue-grey darken-3 ; white--text" }],
             idProject: '',
             selected: [],
@@ -431,6 +437,8 @@ export default {
             seeEmployees: false,
             projectEmployees: [],
             projectToShow: {},
+            //tabs
+            tab:null,
       
         }
     },
@@ -530,31 +538,28 @@ export default {
         },//metodos del calendario actualizar
         save3 (date3){
           this.$refs.menu3.save(date3)
-        },save4 (date4){
-            this.$refs.menu4.save(date4)
         },
-        async presionar(){
-          console.log(`haz seleccionado el proyecto ${this.idProject}`)
-          //pasamos le id del proyecto para hacer la consulta 
-          //hacemos la conulta de los empleados
-          let datos  = await employeeService.getStatusEmp(this.idProject)
-          this.empleados= datos
-          
+        save4 (date4){
+            this.$refs.menu4.save(date4)
         },
         seleccionado(employee){
           console.log(`haz seleccionado un empleado ${employee.idEmpleado}`)
           //evaluamos en la condicion si no esta agregado lo hacemos y de lo contrario lo removemos
           if(employee.asignado == false){
-            projectService.removeEmployee(this.idProject,employee.idEmpleado)
+            projectService.removeEmployee(this.project.id_proyecto,employee.idEmpleado)
             console.log(`Haz eliminado al empleado ${employee.nombre}`)
             
           }else{
-            projectService.asignarEmpleado(this.idProject,employee.idEmpleado)
+            projectService.asignarEmpleado(this.project.id_proyecto,employee.idEmpleado)
             console.log(`Haz agregado al empleado ${employee.nombre}`)
             
           }
         },
-        actualizar(proyecto){
+        async actualizar(proyecto){
+
+          let empleados = await employeeService.getStatusEmp(proyecto.id_proyecto)
+          this.empleados = empleados
+          console.log(this.empleados)
 
           this.update = true
           
@@ -570,6 +575,7 @@ export default {
                 this.date4 = this.date2
                 this.date3 = this.date
 
+          
         },
        async updateProject(){
 

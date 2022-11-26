@@ -40,7 +40,10 @@
                   elevation="9"
                   title="Cerrar Sesión"
                   @click="confirmLogOut = true"
-                  exact>Logout</v-btn>
+                  exact>
+                  <v-icon left color="blue-grey darken-4">mdi-clock-start</v-icon>
+                  Logout
+                  </v-btn>
       </v-app-bar>
       
       <v-main>
