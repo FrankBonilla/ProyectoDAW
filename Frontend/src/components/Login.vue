@@ -1,18 +1,18 @@
 <template>
-  <v-container class="section-container">
+<v-app class="section-container">
+
     <v-row class="signin">
-      <v-col cols="8" class="left">
-        <h1>Bienvenidos al Proyecto</h1>
-      </v-col>
       <v-col cols="4" class="right">
-        <h2>LOGIN</h2>
-          <v-form>
-            
+        <h2 >LOGIN</h2>
+
+          <v-form ref="form" class="pa-8 mt-15">
+            <v-card-text v-if="error" class="red--text" style="color:red ; font-weight: bold">
+              <h3>La contraseña o el usuario no son correctos</h3>
+              </v-card-text>
               <v-text-field
                 v-model="username"
-                :error-messages="errors"
                 label="Nombre de usuario"
-                required
+                :rules="generalRules"
                 outlined
                 dark
                 filled
@@ -21,11 +21,10 @@
             
               <v-text-field
                 v-model="password"
-                :error-messages="errors"
                 label="Contraseña"
                 :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
                 @click:append="showPass = !showPass"
-                required
+                :rules="generalRules"
                 outlined
                 dense
                 dark
@@ -33,16 +32,21 @@
                 :type="showPass ? 'text' : 'password'"
               ></v-text-field>
             
-            <div class="text-center">
-              <v-btn class="signin-btn" @click="getAutenticated()" rounded color="white" dark>
-                Iniciar Sesión
+            <div class="text-center" >
+              <v-btn class="signin-btn" @click="getAutenticated()" rounded color="success" dark>
+                <b>Iniciar Sesión</b>
               </v-btn>
             </div>
           </v-form>
-    
+
       </v-col>
+      <v-col cols="8" class="left">
+        <h1>Bienvenidos al Proyecto</h1>
+      </v-col>
+
     </v-row>
-  </v-container>
+
+</v-app>
 </template>
 
 <script>
@@ -50,19 +54,23 @@
 import axios from 'axios'
 
 export default {
+
   name: 'Login',
   data(){
     return{
         username: '',
         password: null,
-        showPass: false
+        showPass: false,
+        generalRules: [v => !!v || 'este campo es obligatorio'],
+        error: false,
     }
   },
   methods: {
 
     getAutenticated(){
 
-        axios({
+        if(this.$refs.form.validate()){
+          axios({
             method: 'post',
             url: 'http://localhost:8080/api/auth/iniciarSesion',
             params:{
@@ -72,6 +80,7 @@ export default {
         })
         .then(response => {
             console.log(response.data)
+            //guardamos el token recibido por el backend
             localStorage.setItem('token', response.data.tokenAcceso)
             axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.tokenAcceso
             //axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
@@ -80,7 +89,12 @@ export default {
         })
         .catch(e => {
             console.log(e)
-        })     
+            //console.log(e.response.status)
+            if(e.response.status == 401){
+              this.error = true
+            }
+        })
+        }
     }
   },
   computed: {

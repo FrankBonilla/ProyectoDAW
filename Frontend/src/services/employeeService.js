@@ -17,7 +17,11 @@ export const employeeService = {
 }
 
 function getAll(){
-    return axios.get(`${URL}api/empleados/lista`)
+    return axios.get(`${URL}api/empleados/lista`,{
+        headers: {
+                    'Authorization': 'Bearer '+localStorage.getItem('token')
+                 }
+            })
             .then( response => {
                 return response.data
             })
@@ -28,15 +32,17 @@ function getAll(){
 
 function getEmployeesAct(){
     
-
-   return  axios.get(`${URL}api/empleados/activos`)
+   return  axios.get(`${URL}api/empleados/activos`,{
+        headers: {
+                'Authorization': 'Bearer '+localStorage.getItem('token')
+                }
+        })
         .then(response => {
             console.log(response.data)
-            return response.data
-            
+            return response.data     
         })
         .catch(e => {
-            console.log(e)
+            console.log(e)    
         })
     
 }
@@ -48,6 +54,9 @@ function getStatusEmp(idPro){
         url: `${URL}api/empleados/status`,
         params: {
             idProyecto: idPro
+                },
+        headers: {
+            'Authorization': 'Bearer '+localStorage.getItem('token')
                 }
             })
             .then(response => {
@@ -66,7 +75,10 @@ function terminateEmployee(idEmpleado){
                 url: `${URL}api/empleados/baja`,
                 params: {
                     idEmpleado: idEmpleado
-                    }
+                    },
+                headers: {
+                    'Authorization': 'Bearer '+localStorage.getItem('token')
+                }
                 })
                 .then(response => {
                     response.data
@@ -78,13 +90,17 @@ function terminateEmployee(idEmpleado){
 
 function addEmployee(empleado){
 
-    return axios.post(`${URL}api/empleados/agregar`, empleado)
-                .then(response => {
+    return axios.post(`${URL}api/empleados/agregar`, empleado, {
+            headers: {
+                'Authorization': 'Bearer '+localStorage.getItem('token')
+                }
+            })
+            .then(response => {
                     response.data
-                })
-                .catch(e => {
+            })
+            .catch(e => {
                     console.log(e)
-                })
+            })
 }
 
 function searchProjectOfEmp(idEmpleado){
@@ -93,7 +109,10 @@ function searchProjectOfEmp(idEmpleado){
             url: `${URL}api/proyectos/verificar`,
             params: { 
                 idEmpleado : idEmpleado
-                }
+                },
+            headers: {
+                'Authorization': 'Bearer '+localStorage.getItem('token')
+            }
             })
             .then(response => {
                 console.log(response.data)
@@ -105,7 +124,11 @@ function searchProjectOfEmp(idEmpleado){
 }
 
 function updateEmployee(data){
-    return axios.post(`${URL}api/empleados/update`, data)
+    return axios.post(`${URL}api/empleados/update`, data, {
+        headers: {
+            'Authorization': 'Bearer '+localStorage.getItem('token')
+         }
+        })
         .then(response => {
             return response.data
         })
@@ -115,7 +138,11 @@ function updateEmployee(data){
 }
 
 function searchUnsuscribe(){
-    return axios.get(`${URL}api/empleados/inactivos`)
+    return axios.get(`${URL}api/empleados/inactivos`, {
+            headers: { 
+                'Authorization': 'Bearer '+localStorage.getItem('token')
+                }
+            })
             .then( response => {
                 console.log(response.data)
                 return response.data
@@ -132,6 +159,9 @@ function deleteEmployee(idEmpleado){
             url: `${URL}api/empleados/borrar`,
             params: {
                 idEmpleado: idEmpleado
+             },
+             headers: {
+                'Authorization': 'Bearer '+localStorage.getItem('token')
              }
             })
             .then( response => {
@@ -149,6 +179,9 @@ function backEmployee(idEmpleado){
                 url: `${URL}api/empleados/volverAlta`,
                 params: {
                     idEmpleado: idEmpleado 
+                },
+                headers: {
+                    'Authorization': 'Bearer '+localStorage.getItem('token')
                 }
              })
             .then( response => {

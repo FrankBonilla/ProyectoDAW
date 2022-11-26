@@ -14,7 +14,11 @@
 
 export default {
   name: 'App',
-     
+
+  mounted(){
+    //si no estamos logeados nos devuelve a la pagina de login
+    if(!localStorage.getItem('token')) this.$router.push({path: '/login'})
+  }
 }
 </script>
 

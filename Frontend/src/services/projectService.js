@@ -28,7 +28,11 @@ function getAll(){
 
 function getProjectsAct(){
 
-    return axios.get(`${URL}api/proyectos/activos`)
+    return axios.get(`${URL}api/proyectos/activos`, {
+        headers: {
+            'Authorization': 'Bearer '+localStorage.getItem('token')
+            }
+        })
         .then(response => {
             console.table(response.data)
             return response.data
