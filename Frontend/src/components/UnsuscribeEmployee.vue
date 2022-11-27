@@ -1,6 +1,13 @@
 <template>
 <v-main class="indigo lighten-5 fill-height pl-2 pr-2 pt-4" >
       <v-card class="">
+        <v-card class="d-flex justify-space-around blue-grey lighten-2">
+          <v-btn class="my-4" color="amber accent-4" elevation="4" title="exportar a excel" 
+                 @click="confirmReport= true"
+                 :disabled="!employees">Generar reporte 
+            <v-icon right> mdi-inbox-arrow-down</v-icon>
+          </v-btn>
+        </v-card>
         <!--tabla de empleados -->
         <v-card-title class="justify-center blue-grey darken-3 white--text py-1">
             {{title}}
@@ -77,9 +84,35 @@
             </v-row>
            </v-alert>
         </v-dialog>
+         <!-- Confirmación de generar reporte de todos los proyectos -->
+        <v-dialog v-model="confirmReport"
+                  persistent
+                  max-width="500">
+        <v-card>
+        <v-card-title class="text-h5">
+         Confirme operación
+        </v-card-title>
+        <v-card-text>Se descargará un archivo excel con los datos de esta tabla</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+              color="amber accent-4"
+              text
+              @click="confirmReport = false"
+            >
+            Cancelar
+          </v-btn>
+          <v-btn
+              color="green darken-1"
+              text
+              @click="exportar"
+           >
+            Confirmar
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     </v-main>
-    
-    
 </template>
 
 <script>
@@ -96,6 +129,8 @@ export default {
             msgAlta: false,
             msgAsigned: '',
             search: '',
+            //exportacion a excel
+            confirmReport: false,
             //cabeceras de la tabla
             headers: [{text: 'NIF', align: 'center', filtrable: false, value: 'nif', class:"blue-grey darken-3 ; white--text"},
                       {text: 'Nombre', align: 'start', value: 'nombre',sortable: false, class:"blue-grey darken-3 ; white--text"},
@@ -151,6 +186,10 @@ export default {
           this.listar()
           this.msgAlta = true
           this.msgAsigned = `${employee.nombre} ${employee.apellido1} ha sido dado de alta nuevamente, puede modificar sus datos en el listado empleados de alta`
+        },
+        async exportar(){
+          this.confirmReport = false
+          await employeeService.exportUnsuscribeEmployeesToExcell()
         }
     },
     created(){

@@ -364,7 +364,7 @@
       <!-- Confirmación de generar reporte de todos los proyectos -->
         <v-dialog v-model="confirmReport"
                   persistent
-                  max-width="300">
+                  max-width="500">
         <v-card>
         <v-card-title class="text-h5">
          Confirme operación
@@ -392,7 +392,7 @@
     <!-- Confirmación de generar reporte de un proyecto en específico -->
         <v-dialog v-model="confirmReportOfProject"
                   persistent
-                  max-width="300">
+                  max-width="500">
         <v-card>
         <v-card-title class="text-h5">
          Confirme operación

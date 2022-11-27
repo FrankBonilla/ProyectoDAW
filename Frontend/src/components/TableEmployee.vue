@@ -8,8 +8,8 @@
             <v-icon right>mdi-cloud-upload</v-icon>
           </v-btn>
           <v-btn class="my-4" color="amber accent-4" elevation="4" title="exportar a excel" 
-                @click="confirmReport= true"
-                :disabled="!employees">Generar reporte 
+                 @click="confirmReport= true"
+                 :disabled="!employees">Generar reporte 
             <v-icon right> mdi-inbox-arrow-down</v-icon>
           </v-btn>
         </v-card>

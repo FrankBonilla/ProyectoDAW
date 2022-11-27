@@ -13,6 +13,8 @@ import com.lowagie.text.DocumentException;
 import com.practica.backend.entities.Proyecto;
 import com.practica.backend.reports.ActivesEmployeesReportExcel;
 import com.practica.backend.reports.ActivesProjectsReportExcel;
+import com.practica.backend.reports.UnsuscribeEmployyesReportExcel;
+import com.practica.backend.reports.UnsuscribedProjectsReportExcel;
 import com.practica.backend.repositories.EmpleadoRepository;
 import com.practica.backend.service.ProyectoService;
 import org.apache.logging.log4j.LogManager;
@@ -267,5 +269,22 @@ public class EmpleadoController {
 
 		ActivesEmployeesReportExcel activesEmployeesReportExcel = new ActivesEmployeesReportExcel(empleadoList);
 		activesEmployeesReportExcel.export(response);
+	}
+
+	/**Exportación a excell de los empleados de baja**/
+	@GetMapping(path = "empleados/exportar/excel/inactivos")
+	public void exportUnsuscribesEmployeesReportExcel(HttpServletResponse response) throws DocumentException, IOException {
+		response.setContentType("application/octect-stream");
+
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		String today = dateFormat.format(new Date());
+
+		String cabecera = "Content-Disposition";
+		String valor = "attachment; filename=Proyectos_"+today+".xlsx";
+
+		List<Empleado> empleadoList = empleadoService.showUnsuscribe();
+
+		UnsuscribeEmployyesReportExcel unsuscribeEmployyesReportExcel = new UnsuscribeEmployyesReportExcel(empleadoList);
+		unsuscribeEmployyesReportExcel.export(response);
 	}
 }
