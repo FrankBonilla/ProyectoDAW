@@ -61,6 +61,8 @@
             medium
             class="ma-2"
             title="generar reporte"
+            :disabled="item.employees.length == 0"
+            @click="confirmReportOfProject=true;excelProject = item.id_proyecto"
             > 
             mdi-arrow-down-bold-box-outline
         </v-icon>
@@ -201,7 +203,7 @@
                       {{this.msgAsigned}}
                    </v-col>
               <v-col class="shrink">
-              <v-btn @click="msgAsignedEmp=false">OK</v-btn>
+              <v-btn @click="msgAsignedEmp=false"><b>OK</b></v-btn>
               </v-col>
             </v-row>
            </v-alert>
@@ -354,12 +356,12 @@
               :employees="projectEmployees"/>
       <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn @click="seeEmployees = false" color="white--text blue-grey darken-3">OK</v-btn>
+            <v-btn @click="seeEmployees = false" color="white--text blue-grey darken-3"><b>OK</b></v-btn>
           </v-card-actions>
       </v-card>
       </v-dialog>
 
-      <!-- Confirmación de generar reporte  -->
+      <!-- Confirmación de generar reporte de todos los proyectos -->
         <v-dialog v-model="confirmReport"
                   persistent
                   max-width="300">
@@ -387,7 +389,35 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    
+    <!-- Confirmación de generar reporte de un proyecto en específico -->
+        <v-dialog v-model="confirmReportOfProject"
+                  persistent
+                  max-width="300">
+        <v-card>
+        <v-card-title class="text-h5">
+         Confirme operación
+        </v-card-title>
+        <v-card-text>Se descargará un archivo excel con los datos del proyecto</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+              color="amber accent-4"
+              text
+              @click="confirmReportOfProject = false"
+            >
+            Cancelar
+          </v-btn>
+          <v-btn
+              color="green darken-1"
+              text
+              @click="exportProjecToExcell"
+           >
+            Confirmar
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     </v-main>
 </template>
 
@@ -470,6 +500,8 @@ export default {
             tab:null,
             //confirmacion de generar reporte
             confirmReport: false,
+            confirmReportOfProject: false,
+            excelProject:'',
       
         }
     },
@@ -654,6 +686,11 @@ export default {
        async exportar(){
         this.confirmReport = false
         await projectService.exportToExcell()
+       },
+        async exportProjecToExcell(){
+            this.confirmReportOfProject = false
+            await projectService.exportProjectToExcell(this.excelProject)
+            
        }
     },
     created(){

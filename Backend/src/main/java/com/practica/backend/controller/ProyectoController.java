@@ -5,14 +5,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import com.lowagie.text.DocumentException;
-import com.practica.backend.reports.ProyectoReportExcel;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import com.practica.backend.reports.AllProjectsReportExcel;
+import com.practica.backend.reports.ProjectReportExcell;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.omg.CORBA.DATA_CONVERSION;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -323,8 +321,8 @@ public class ProyectoController {
 
 	}
 
-	/**Exportación a excell de proyectos**/
-	@GetMapping(path = "proyectos/exportar/excel")
+	/**Exportación a excell de los proyectos activos**/
+	@GetMapping(path = "proyectos/exportar/excel/proyectos/activos")
 	public void exportReportExcel(HttpServletResponse response) throws DocumentException, IOException {
 		response.setContentType("application/octect-stream");
 
@@ -336,8 +334,26 @@ public class ProyectoController {
 
 		List<Proyecto> proyectoList = proyectoService.mostrarActivos();
 
-		ProyectoReportExcel reportExcel = new ProyectoReportExcel(proyectoList);
+		AllProjectsReportExcel reportExcel = new AllProjectsReportExcel(proyectoList);
 		reportExcel.export(response);
+	}
+
+	/**Exportación a excell de un proyecto**/
+	@GetMapping(path = "proyectos/exportar/excel/proyecto")
+	public void exportReportExcel(HttpServletResponse response, @RequestParam Integer idProyecto) throws DocumentException, IOException {
+		response.setContentType("application/octect-stream");
+
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		String today = dateFormat.format(new Date());
+
+		String cabecera = "Content-Disposition";
+		String valor = "attachment; filename=Proyectos_"+today+".xlsx";
+
+		Proyecto proyecto = proyectoService.listarId(idProyecto);
+
+		ProjectReportExcell projectReportExcell = new ProjectReportExcell(proyecto);
+		projectReportExcell.export(response);
+
 	}
 	
 }

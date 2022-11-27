@@ -14,7 +14,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class ProyectoReportExcel {
+public class AllProjectsReportExcel {
 
     private XSSFWorkbook libro;
     private XSSFSheet hoja;
@@ -162,7 +162,7 @@ public class ProyectoReportExcel {
         return  finalDate;
     }
     /**Constructor con parámetros**/
-    public ProyectoReportExcel(List<Proyecto> proyectoList) {
+    public AllProjectsReportExcel(List<Proyecto> proyectoList) {
         this.proyectoList = proyectoList;
         libro = new XSSFWorkbook();
         hoja = libro.createSheet("Proyectos");

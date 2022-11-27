@@ -1,6 +1,12 @@
 <template>
 <v-card>
-<v-card-title class="amber accent-4">{{ project.id_proyecto }} - {{project.descripcion}}
+<v-card-title class="amber accent-4 pb-7">{{ project.id_proyecto }} - {{project.descripcion}}
+    
+</v-card-title>
+<v-card-subtitle class="pt-4 white--text text-start blue-grey darken-3">
+    <v-row>
+      <v-col><div class="mt-6"><b>Empleados asignados</b></div></v-col>
+      <v-col>
     <v-spacer></v-spacer>
         <v-text-field
           v-model="search"
@@ -9,18 +15,19 @@
           single-line
           hide-details
           clearable
+          dark
         ></v-text-field>
-</v-card-title>
-<v-card-subtitle class="pt-4 white--text text-start blue-grey darken-3"
-                 >
-    <b>Empleados asigandos</b></v-card-subtitle>
+      </v-col>
+    </v-row>
+</v-card-subtitle>
  <v-data-table
             :headers="headers"
             :items="employees"
             :search="search"
             :hide-default-footer="employees.length < 10 ? true : false"
             :footer-props="{itemsPerPageText: 'Filas por página'}"
-                >
+            no-data-text="No hay datos que mostrar" 
+            no-results-text="No hay concidencias">
 
   </v-data-table>
 </v-card>
