@@ -14,12 +14,26 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class AllProjectsReportExcel {
+public class UnsuscribedProjectsReportExcel {
 
     private XSSFWorkbook libro;
     private XSSFSheet hoja;
     private List<Proyecto> proyectoList;
 
+    public String dateFormater(Date date){
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String finalDate = format.format(date);
+
+        return  finalDate;
+    }
+    /**Constructor con parámetros**/
+    public UnsuscribedProjectsReportExcel(List<Proyecto> proyectoList) {
+        this.proyectoList = proyectoList;
+        libro = new XSSFWorkbook();
+        hoja = libro.createSheet("Proyectos finalizados");
+    }
+
+    /**Método**/
     private void createHeaders(){
         /**Estilos y fuentes**/
         //estilo cabecera
@@ -51,10 +65,10 @@ public class AllProjectsReportExcel {
         //titulo en excell
         Row titulo = hoja.createRow(0);
         //fusión de celdas para el titulo
-        hoja.addMergedRegion(new CellRangeAddress(0,0,0,5));
+        hoja.addMergedRegion(new CellRangeAddress(0,0,0,6));
 
         Cell tituloCell = titulo.createCell(0);
-        tituloCell.setCellValue("Lista de Proyectos");
+        tituloCell.setCellValue("Lista de Proyectos Finalizados");
         tituloCell.setCellStyle(estiloTitulo);
         //se crea la fila
         Row fila = hoja.createRow(1);
@@ -83,6 +97,10 @@ public class AllProjectsReportExcel {
         celda.setCellValue("OBSERVACIONES");
         celda.setCellStyle(estiloCabecera);
 
+        celda = fila.createCell(6);
+        celda.setCellValue("FECHA BAJA");
+        celda.setCellStyle(estiloCabecera);
+
         //ancho de columnas
         hoja.setColumnWidth(0,1000);
         hoja.setColumnWidth(1,8000);
@@ -90,16 +108,7 @@ public class AllProjectsReportExcel {
         hoja.setColumnWidth(3,5000);
         hoja.setColumnWidth(4,8000);
         hoja.setColumnWidth(5,14000);
-
-        /**
-         //se ajusta autmaticomente las columnas al tamaño de los headers
-        hoja.autoSizeColumn(0);
-        hoja.autoSizeColumn(1);
-        hoja.autoSizeColumn(2);
-        hoja.autoSizeColumn(3);
-        hoja.autoSizeColumn(4);
-        hoja.autoSizeColumn(5);
-        **/
+        hoja.setColumnWidth(6,5000);
     }
 
     private void writeDataOnTable(){
@@ -139,7 +148,12 @@ public class AllProjectsReportExcel {
             celda.setCellStyle(estilo);
 
             celda = fila.createCell(5);
-            celda.setCellValue(proyecto.getObservaciones());
+            celda.setCellValue(proyecto.getObservaciones() != null ? proyecto.getObservaciones() : "*");
+            hoja.autoSizeColumn(0);
+            celda.setCellStyle(estilo);
+
+            celda = fila.createCell(6);
+            celda.setCellValue(dateFormater(proyecto.getFechaBaja()));
             hoja.autoSizeColumn(0);
             celda.setCellStyle(estilo);
         }
@@ -154,18 +168,4 @@ public class AllProjectsReportExcel {
         libro.close();
         outputStream.close();
     }
-
-    public String dateFormater(Date date){
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        String finalDate = format.format(date);
-
-        return  finalDate;
-    }
-    /**Constructor con parámetros**/
-    public AllProjectsReportExcel(List<Proyecto> proyectoList) {
-        this.proyectoList = proyectoList;
-        libro = new XSSFWorkbook();
-        hoja = libro.createSheet("Proyectos");
-    }
-
 }

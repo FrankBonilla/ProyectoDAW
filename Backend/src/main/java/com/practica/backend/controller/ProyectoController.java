@@ -7,8 +7,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.lowagie.text.DocumentException;
-import com.practica.backend.reports.AllProjectsReportExcel;
+import com.practica.backend.reports.ActivesProjectsReportExcel;
 import com.practica.backend.reports.ProjectReportExcell;
+import com.practica.backend.reports.UnsuscribedProjectsReportExcel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -320,10 +321,10 @@ public class ProyectoController {
 		}
 
 	}
-
+	///////////////////////////////////// EXPORTACIONES A EXCEL ///////////////////////////////////////////////////////////////
 	/**Exportación a excell de los proyectos activos**/
 	@GetMapping(path = "proyectos/exportar/excel/proyectos/activos")
-	public void exportReportExcel(HttpServletResponse response) throws DocumentException, IOException {
+	public void exportActivesProjectsReportExcel(HttpServletResponse response) throws DocumentException, IOException {
 		response.setContentType("application/octect-stream");
 
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -334,13 +335,13 @@ public class ProyectoController {
 
 		List<Proyecto> proyectoList = proyectoService.mostrarActivos();
 
-		AllProjectsReportExcel reportExcel = new AllProjectsReportExcel(proyectoList);
+		ActivesProjectsReportExcel reportExcel = new ActivesProjectsReportExcel(proyectoList);
 		reportExcel.export(response);
 	}
 
 	/**Exportación a excell de un proyecto**/
 	@GetMapping(path = "proyectos/exportar/excel/proyecto")
-	public void exportReportExcel(HttpServletResponse response, @RequestParam Integer idProyecto) throws DocumentException, IOException {
+	public void exportProjectReportToExcel(HttpServletResponse response, @RequestParam Integer idProyecto) throws DocumentException, IOException {
 		response.setContentType("application/octect-stream");
 
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -355,5 +356,22 @@ public class ProyectoController {
 		projectReportExcell.export(response);
 
 	}
-	
+
+	/**Exportación a excell de los proyectos de baja**/
+	@GetMapping(path = "proyectos/exportar/excel/inactivos")
+	public void exportUnsuscribesProjectsReportExcel(HttpServletResponse response) throws DocumentException, IOException {
+		response.setContentType("application/octect-stream");
+
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		String today = dateFormat.format(new Date());
+
+		String cabecera = "Content-Disposition";
+		String valor = "attachment; filename=Proyectos_"+today+".xlsx";
+
+		List<Proyecto> proyectoList = proyectoService.mostrarInactivos();
+
+		UnsuscribedProjectsReportExcel unsuscribedProjectsReportExcel = new UnsuscribedProjectsReportExcel(proyectoList);
+		unsuscribedProjectsReportExcel.export(response);
+
+	}
 }
