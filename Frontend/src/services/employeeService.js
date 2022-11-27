@@ -12,7 +12,8 @@ export const employeeService = {
     searchUnsuscribe,
     deleteEmployee,
     getAll,
-    backEmployee
+    backEmployee,
+    exportToExcell
 
 }
 
@@ -190,4 +191,29 @@ function backEmployee(idEmpleado){
             .catch(e => {
                 console.log(e)
             })
+}
+
+//////////////////////////// EXPORTACIONES A EXCEL ////////////////////////////////////////////
+function exportToExcell(){
+    return axios({
+        method: 'get',
+        url: `${URL}api/empleados/exportar/excel/activos`,
+        headers: {
+            'Authorization': 'Bearer '+localStorage.getItem('token')
+        },
+        responseType: 'blob'
+    })
+    .then(response => {
+        const today = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)
+        console.log(response.data)
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download',`Informe de empleados ${today.split("-").join("_")}.xlsx`)
+        document.body.appendChild(link)
+        link.click()
+    })
+    .catch(e => {
+        console.log(e)
+    })
 }

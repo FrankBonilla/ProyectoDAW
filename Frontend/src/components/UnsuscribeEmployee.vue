@@ -103,12 +103,11 @@ export default {
                       {text: 'Segundo Apellido', align: 'start', value: 'apellido2',sortable: false,class:"blue-grey darken-3 ; white--text"},
                       {text: 'Fecha Nacimiento', align: 'center', value: 'nacimiento', sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Teléfono', align: 'start', value: 'telefono1', sortable: false, class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Teléfono 2', align: 'start', value: 'telefono2', sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Email', align: 'start', value: 'email',sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Fecha Alta', align: 'center', value: 'fechaAlta',sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Fecha Baja', align: 'center', value: 'fechaBaja', sortable: false,class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Estado Civil', align: 'center', value: 'edoCivil', sortable: false, class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Carnet Conducir', align: 'center', value: 'serMilitar', sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Estado Civil', align: 'center', value: 'edoCivil', width:'5%',sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Carnet Conducir', align: 'center', value: 'serMilitar', width:'5%',sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Acciones', align: 'center', value: 'actions', sortable: false, class:"blue-grey darken-3 ; white--text"},]
         }
     },

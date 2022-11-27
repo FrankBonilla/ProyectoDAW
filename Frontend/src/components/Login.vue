@@ -7,7 +7,7 @@
 
           <v-form ref="form" class="pa-8 mt-15">
               <v-alert type="error" v-if="error" class="mb-7" style="font-weight: bold">
-                La contraseña o usuario incorrecto
+                Contraseña o usuario incorrecto
               </v-alert>
               <v-text-field
                 v-model="username"

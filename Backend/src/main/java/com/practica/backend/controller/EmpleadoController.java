@@ -1,11 +1,18 @@
 package com.practica.backend.controller;
 
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.lowagie.text.DocumentException;
 import com.practica.backend.entities.Proyecto;
+import com.practica.backend.reports.ActivesEmployeesReportExcel;
+import com.practica.backend.reports.ActivesProjectsReportExcel;
 import com.practica.backend.repositories.EmpleadoRepository;
 import com.practica.backend.service.ProyectoService;
 import org.apache.logging.log4j.LogManager;
@@ -23,6 +30,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.practica.backend.entities.Empleado;
 import com.practica.backend.service.EmpleadoService;
+
+import javax.servlet.http.HttpServletResponse;
 
 @CrossOrigin(origins = {"http://localhost:8081"})
 @RestController
@@ -241,5 +250,22 @@ public class EmpleadoController {
 			return new ResponseEntity<>(result,httpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
+	///////////////////////////////////// EXPORTACIONES A EXCEL ///////////////////////////////////////////////////////////////
+	/**Exportación a excell de los empleados activos**/
+	@GetMapping(path = "empleados/exportar/excel/activos")
+	public void exportActivesEmployeesReportExcel(HttpServletResponse response) throws DocumentException, IOException {
+		response.setContentType("application/octect-stream");
+
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		String today = dateFormat.format(new Date());
+
+		String cabecera = "Content-Disposition";
+		String valor = "attachment; filename=Proyectos_"+today+".xlsx";
+
+		List<Empleado> empleadoList = empleadoService.mostarActivos();
+
+		ActivesEmployeesReportExcel activesEmployeesReportExcel = new ActivesEmployeesReportExcel(empleadoList);
+		activesEmployeesReportExcel.export(response);
+	}
 }

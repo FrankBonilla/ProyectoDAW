@@ -7,6 +7,11 @@
           <v-btn class="my-4" color="amber accent-4" elevation="4" @click="addEmployee=true">Alta Empleado
             <v-icon right>mdi-cloud-upload</v-icon>
           </v-btn>
+          <v-btn class="my-4" color="amber accent-4" elevation="4" title="exportar a excel" 
+                @click="confirmReport= true"
+                :disabled="!employees">Generar reporte 
+            <v-icon right> mdi-inbox-arrow-down</v-icon>
+          </v-btn>
         </v-card>
         <!--tabla de empleados -->
         <v-card-title class="justify-center blue-grey darken-3 white--text py-1">
@@ -152,19 +157,26 @@
           
         </v-card>
       </v-dialog>
+      
        <!-- Mensaje de alerta de empelado asignado a projectos-->
-          <v-dialog v-model="msgAsignedProject" max-width="700">
-              <v-alert prominent type="warning">
-                <v-row align="center">
-                   <v-col class="grow">
-                      {{this.msgAsigned}}
-                   </v-col>
-                   <v-col class="shrink">
-                      <v-btn @click="msgAsignedProject=false">OK</v-btn>
-                   </v-col>
-                </v-row>
-              </v-alert>
-          </v-dialog>
+       <v-dialog v-model="msgAsignedProject"
+                  persistent
+                  max-width="700">
+        <v-card>
+        <v-card-title class="text-h5 pb-5">
+         El empleado tiene asignaciones
+        </v-card-title>
+        <v-card-text><b>{{this.msgAsigned}}</b></v-card-text>
+        <v-card-actions class="justify-center">
+          <v-btn
+              color="green darken-1 white--text"
+              @click="msgAsignedProject=false"
+           >
+            <b>OK</b>
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
         <!-- Formulario para actualizar empleado -->
       <v-dialog v-model="update" max-width="500" persistent>
         <v-card color="dark">
@@ -258,6 +270,34 @@
       </v-dialog>
 
       </v-card>
+      <!-- Confirmación de generar reporte de todos los proyectos -->
+        <v-dialog v-model="confirmReport"
+                  persistent
+                  max-width="500">
+        <v-card>
+        <v-card-title class="text-h5">
+         Confirme operación
+        </v-card-title>
+        <v-card-text>Se descargará un archivo excel con los datos de esta tabla</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+              color="amber accent-4"
+              text
+              @click="confirmReport = false"
+            >
+            Cancelar
+          </v-btn>
+          <v-btn
+              color="green darken-1"
+              text
+              @click="exportar"
+           >
+            Confirmar
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     </v-main>
 </template>
 
@@ -313,6 +353,8 @@ export default {
             //datos de verificación de projectos asignados a empleado
             msgAsigned: '',
             msgAsignedProject: false,
+            //confirmacion de excel
+            confirmReport: false,
             //cabeceras de la tabla
             headers: [{text: 'NIF', align: 'center', value: 'nif', filtrable: false, sortable:false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Nombre', align: 'start', value: 'nombre', sortable: false, class:"blue-grey darken-3 ; white--text"},
@@ -320,11 +362,10 @@ export default {
                       {text: 'Segundo Apellido', align: 'start', value: 'apellido2', sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Fecha Nacimiento', align: 'center', value: 'nacimiento', sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Teléfono', align: 'start', value: 'telefono1', sortable: false, class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Teléfono 2', align: 'start', value: 'telefono2', sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Email', align: 'start', value: 'email',sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Fecha Alta', align: 'center', value: 'fechaAlta', sortable: false, class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Estado Civil', align: 'center', value: 'edoCivil', sortable: false, class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Carnet Conducir', align: 'center', value: 'serMilitar', sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Estado Civil', align: 'center', width:'5%', value: 'edoCivil', sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Carnet Conducir', align: 'center',width:'5%', value: 'serMilitar', sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Acciones', align: 'center', value: 'actions', sortable: false, class:"blue-grey darken-3 ; white--text"},]
         }
     },
@@ -490,6 +531,10 @@ export default {
           this.$refs.form2.reset()
           this.update = false
         },
+        async exportar(){
+          this.confirmReport = false
+          await employeeService.exportToExcell()
+        }
         
     },
     created(){
