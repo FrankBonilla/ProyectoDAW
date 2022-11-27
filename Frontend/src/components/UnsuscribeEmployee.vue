@@ -21,6 +21,8 @@
                 :search="search"
                 :hide-default-footer="employees.length < 10 ? true : false"
                 :footer-props="{itemsPerPageText: 'Filas por página'}"
+                no-data-text="No hay datos que mostrar" 
+                no-results-text="No hay concidencias"
                 >
 
         <template v-slot:[`item.nacimiento`]="{item}">

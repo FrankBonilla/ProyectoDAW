@@ -21,7 +21,9 @@
                 :search="search"
                 :hide-default-footer="projects.length < 10 ? true : false"
                 :footer-props="{itemsPerPageText: 'Filas por página'}"
-                >
+                no-data-text="No hay datos que mostrar" 
+                no-results-text="No hay concidencias">
+                
          <template v-slot:[`item.fechaInicio`]="{item}">
             {{ item.fechaInicio | formatedDate }}
          </template>
@@ -80,7 +82,8 @@ export default {
             projects: [],
              //cabeceras de la tabla principal
             search: '',
-            headers: [{text: 'Descripción', align: 'start', filtrable: false, sortable: false, value: 'descripcion', class:"blue-grey darken-3 ; white--text"},
+            headers: [{text: 'Código',value: 'id_proyecto', width: '5%', align: 'center', filtrable: false,sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Descripción', align: 'start', filtrable: false, sortable: false, value: 'descripcion', class:"blue-grey darken-3 ; white--text"},
                       {text: 'Fecha Inicio', align: 'start', value: 'fechaInicio',sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Fecha Fin', align: 'start', value: 'fechaFin', sortable: false,class:"blue-grey darken-3 ; white--text"},
                       {text: 'Lugar', align: 'start', value: 'lugar',sortable: false, class:"blue-grey darken-3 ; white--text"},

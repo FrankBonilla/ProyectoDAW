@@ -23,12 +23,13 @@ public interface EmpleadoRepository extends JpaRepository <Empleado,Integer> {
 	/** Creamos una interface para solo recoger los valores que deseamos de la consulta **/
 	interface Asignaciones{
 		Integer getIdEmpleado();
+		String getNif();
 		String getNombre();
 		String getApellido1();
 		String getApellido2();
 		Boolean getAsignado();
 	}
-	@Query(value="SELECT l.idEmpleado AS idEmpleado, l.nombre AS nombre, l.apellido1 AS apellido1, l.apellido2 AS apellido2, "
+	@Query(value="SELECT l.idEmpleado AS idEmpleado, l.nif AS nif, l.nombre AS nombre, l.apellido1 AS apellido1, l.apellido2 AS apellido2, "
 			+ "CASE WHEN l.idEmpleado IN (SELECT id_empleado FROM pr_empleados_proyecto WHERE id_proyecto = :idPro) THEN 'true' "
 			+ "WHEN l.idEmpleado  NOT IN (SELECT id_empleado FROM pr_empleados_proyecto WHERE id_proyecto = :idPro) THEN 'false' END AS asignado "
 			+ "FROM em_empleados l WHERE l.fechaBaja IS NULL", nativeQuery = true)

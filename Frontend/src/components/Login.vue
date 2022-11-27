@@ -6,9 +6,9 @@
         <h2 >LOGIN</h2>
 
           <v-form ref="form" class="pa-8 mt-15">
-            <v-card-text v-if="error" class="red--text" style="color:red ; font-weight: bold">
-              <h3>La contraseña o el usuario no son correctos</h3>
-              </v-card-text>
+              <v-alert type="error" v-if="error" class="mb-7" style="font-weight: bold">
+                La contraseña o usuario incorrecto
+              </v-alert>
               <v-text-field
                 v-model="username"
                 label="Nombre de usuario"

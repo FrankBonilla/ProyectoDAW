@@ -21,6 +21,8 @@
                 :search="search"
                 :hide-default-footer="projects.length < 10 ? true : false"
                 :footer-props="{itemsPerPageText: 'Filas por página'}"
+                no-data-text="No hay datos que mostrar" 
+                no-results-text="No hay concidencias"
                 >
          <template v-slot:[`item.fechaInicio`]="{item}">
             {{ item.fechaInicio | formatedDate }}
@@ -86,14 +88,15 @@ export default {
             today: new Date(),
             //cabeceras de la tabla principal
             search: '',
-            headers: [{text: 'Descripción', align: 'start', filtrable: false, value: 'descripcion',sortable: false, class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Fecha Inicio', align: 'start', value: 'fechaInicio', sortable: false,class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Fecha Fin', align: 'start', value: 'fechaFin',sortable: false, class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Lugar', align: 'start', value: 'lugar', sortable: false, class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Observaciones', align: 'start', value: 'observaciones', sortable: false, class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Fecha Baja', align: 'start', value: 'fechaBaja',sortable: false, class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Tiempo Restante', align: 'start', value: 'tiempo',sortable: false, class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Estatus', align: 'center', value: 'status', sortable: false, class:"blue-grey darken-3 ; white--text"},],
+            headers: [{text: 'Código',value: 'id_proyecto', width: '5%', align: 'center', filtrable: false,sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Descripción', align: 'start', filtrable: false, value: 'descripcion',sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Fecha Inicio', align: 'start', value: 'fechaInicio',width:'5%', sortable: false,class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Fecha Fin', align: 'start', value: 'fechaFin',width:'5%',sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Lugar', align: 'start', value: 'lugar', sortable: false,width:'15%', class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Observaciones', align: 'start', value: 'observaciones', width:'20%', sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Fecha Baja', align: 'start', value: 'fechaBaja', width:'10%',sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Tiempo Restante', align: 'start', value: 'tiempo', width:'5%',sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Estatus', align: 'center', width:'5%', value: 'status', sortable: false, class:"blue-grey darken-3 ; white--text"},],
         }
     },
     methods: {

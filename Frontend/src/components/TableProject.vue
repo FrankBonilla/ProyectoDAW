@@ -2,11 +2,11 @@
     <v-main class="indigo lighten-5 fill-height pl-2 pr-2 pt-3">
       <v-card  >
         <v-card class="d-flex justify-space-around blue-grey lighten-2">
-          <v-btn class="my-4" color="amber accent-4" elevation="4" @click="addProject=true">Alta Proyecto
+          <v-btn class="my-4" color="amber accent-4" elevation="4" @click="addProject=true" title="Crear un nuevo proyecto">Alta Proyecto
             <v-icon right>mdi-cloud-upload</v-icon>
           </v-btn>
-          <v-btn class="my-4" color="amber accent-4" elevation="4" >Generar reporte 
-            <v-icon right> mdi-call-split</v-icon>
+          <v-btn class="my-4" color="amber accent-4" elevation="4" title="exportar a excel">Generar reporte 
+            <v-icon right> mdi-inbox-arrow-down</v-icon>
           </v-btn>
         </v-card>
         <!--tabla de proyectos -->
@@ -29,6 +29,8 @@
                 :search="search"
                 :hide-default-footer="projects.length < 10 ? true : false"
                 :footer-props="{itemsPerPageText: 'Filas por página'}"
+                no-data-text="No hay datos que mostrar" 
+                no-results-text="No hay concidencias"
                 >
          <template v-slot:[`item.fechaInicio`]="{item}">
             {{ item.fechaInicio | formatedDate }}
@@ -60,7 +62,7 @@
             class="ma-2"
             title="generar reporte"
             > 
-            mdi-arrow-up-bold-box-outline
+            mdi-arrow-down-bold-box-outline
         </v-icon>
 
         <v-icon
@@ -207,7 +209,7 @@
       <!-- Formulario para actualizar proyecto -->
       <v-dialog v-model="update" max-width="1000" persistent>
         <v-card >
-          <v-card-title class="white--text blue-grey darken-3">Proyecto a modificar</v-card-title>
+          <v-card-title class="white--text blue-grey darken-3">Modificación del proyecto: {{project.id_proyecto}} - {{project.descripcion}}</v-card-title>
           <v-tabs centered background-color="amber accent-4">
             
             <v-tab> Datos principales <v-icon right>mdi-folder</v-icon></v-tab>
@@ -298,6 +300,7 @@
             </v-form>
             <v-card-actions>
             <v-spacer></v-spacer>
+            <v-btn @click="cancelUpdate" color="white--text blue-grey darken-3">Cerrar</v-btn>
             <v-btn @click="cancelUpdate" color="amber accent-4">Cancelar</v-btn>
             <v-btn @click="updateProject" type="submit" color="green acent-2">Modificar</v-btn>
           </v-card-actions>
@@ -324,15 +327,10 @@
                          :search="search2"
                          item-key="idEmpleado" 
                          :footer-props="{itemsPerPageText: 'Filas por página'}"
-                         :hide-default-footer="empleados.length > 10 ? false : true">
-                  
-                  <!-- alerta si no hay datos 
-                  <template v-slot:no-data>
-                    <v-alert :value="true" color="warning" icon="mdi-cloud-alert" shaped outlined>
-                      <b>Seleccione un proyecto</b>
-                    </v-alert>
-                  </template>
-                  -->
+                         :hide-default-footer="empleados.length > 10 ? false : true"
+                         no-data-text="No hay datos que mostrar" 
+                         no-results-text="No hay concidencias">
+                 
                   <template v-slot:[`item.asignado`]="{item}" >
                     <v-simple-checkbox v-model="item.asignado" 
                                       :ripple="false" 
@@ -352,11 +350,11 @@
       <v-dialog v-model="seeEmployees" max-width="50%" persistent>
       <v-card>
       <asigned-employees
-              :project="projectToShow.descripcion"
+              :project="projectToShow"
               :employees="projectEmployees"/>
       <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn @click="seeEmployees = false" color="success">OK</v-btn>
+            <v-btn @click="seeEmployees = false" color="white--text blue-grey darken-3">OK</v-btn>
           </v-card-actions>
       </v-card>
       </v-dialog>
@@ -416,18 +414,20 @@ export default {
             singleSelect: false,
             //cabeceras de la tabla principal
             search: '',
-            headers: [{text: 'Descripción', align: 'start', filtrable: false,sortable: false, value: 'descripcion', class:"blue-grey darken-3 ; white--text"},
+            headers: [{text: 'Código',value: 'id_proyecto', width: '5%', align: 'center', filtrable: false,sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Descripción', align: 'start', filtrable: false,sortable: false, value: 'descripcion', class:"blue-grey darken-3 ; white--text"},
                       {text: 'Fecha Inicio', align: 'start', value: 'fechaInicio',sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Fecha Fin', align: 'start', value: 'fechaFin', sortable: false,class:"blue-grey darken-3 ; white--text"},
                       {text: 'Lugar', align: 'start', value: 'lugar',sortable: false, class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Observaciones', align: 'start', value: 'observaciones', sortable: false, class:"blue-grey darken-3 ; white--text"},
+                      {text: 'Observaciones', align: 'start',width: '30%',  value: 'observaciones', sortable: false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Acciones', align: 'center', value: 'actions', sortable: false, class:"blue-grey darken-3 ; white--text"},],
             //cabeceras de la tabla de selección de empleados
             search2: '',
-            headers2: [{text: 'Nombre', align: 'start', sortable: false,value: 'nombre', class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Primer apellido', align: 'start', sortable: false,value: 'apellido1', class:"blue-grey darken-3 ; white--text"},
-                      {text: 'Segundo apellido', align: 'start', sortable: false,value: 'apellido2', class:"blue-grey darken-3 ; white--text"},
-                      { text: 'Asignado',  align: 'center',value: 'asignado',sortable: false, class:"blue-grey darken-3 ; white--text" }],
+            headers2: [{text: 'NIF', align: 'start', value: 'nif', filtrable: false, sortable:false, class:"blue-grey darken-3 ; white--text"},
+                       {text: 'Nombre', align: 'start', sortable: false,value: 'nombre', class:"blue-grey darken-3 ; white--text"},
+                       {text: 'Primer apellido', align: 'start', sortable: false,value: 'apellido1', class:"blue-grey darken-3 ; white--text"},
+                       {text: 'Segundo apellido', align: 'start', sortable: false,value: 'apellido2', class:"blue-grey darken-3 ; white--text"},
+                       {text: 'Asignado',  align: 'center',value: 'asignado',sortable: false, class:"blue-grey darken-3 ; white--text" }],
             idProject: '',
             selected: [],
              //datos de verificación de projectos asignados a empleado

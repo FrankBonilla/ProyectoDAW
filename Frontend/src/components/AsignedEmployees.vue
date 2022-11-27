@@ -1,6 +1,6 @@
 <template>
 <v-card>
-<v-card-title class="amber accent-4">{{project}}
+<v-card-title class="amber accent-4">{{ project.id_proyecto }} - {{project.descripcion}}
     <v-spacer></v-spacer>
         <v-text-field
           v-model="search"
