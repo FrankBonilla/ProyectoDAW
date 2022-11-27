@@ -5,7 +5,7 @@
           <v-btn class="my-4" color="amber accent-4" elevation="4" @click="addProject=true" title="Crear un nuevo proyecto">Alta Proyecto
             <v-icon right>mdi-cloud-upload</v-icon>
           </v-btn>
-          <v-btn class="my-4" color="amber accent-4" elevation="4" title="exportar a excel">Generar reporte 
+          <v-btn class="my-4" color="amber accent-4" elevation="4" title="exportar a excel" @click="confirmReport= true">Generar reporte 
             <v-icon right> mdi-inbox-arrow-down</v-icon>
           </v-btn>
         </v-card>
@@ -359,6 +359,35 @@
       </v-card>
       </v-dialog>
 
+      <!-- Confirmación de generar reporte  -->
+        <v-dialog v-model="confirmReport"
+                  persistent
+                  max-width="300">
+        <v-card>
+        <v-card-title class="text-h5">
+         Confirme operación
+        </v-card-title>
+        <v-card-text>Se descargará un archivo excel con los datos de esta tabla</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+              color="amber accent-4"
+              text
+              @click="confirmReport = false"
+            >
+            Cancelar
+          </v-btn>
+          <v-btn
+              color="green darken-1"
+              text
+              @click="exportar"
+           >
+            Confirmar
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    
     </v-main>
 </template>
 
@@ -439,6 +468,8 @@ export default {
             projectToShow: {},
             //tabs
             tab:null,
+            //confirmacion de generar reporte
+            confirmReport: false,
       
         }
     },
@@ -619,6 +650,10 @@ export default {
           this.projectToShow = project
           this.projectEmployees = project.employees
           this.seeEmployees = true
+       },
+       async exportar(){
+        this.confirmReport = false
+        await projectService.exportToExcell()
        }
     },
     created(){

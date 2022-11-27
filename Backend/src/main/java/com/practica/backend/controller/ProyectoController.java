@@ -1,8 +1,14 @@
 package com.practica.backend.controller;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.lowagie.text.DocumentException;
+import com.practica.backend.reports.ProyectoReportExcel;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,6 +24,8 @@ import com.practica.backend.entities.Proyecto;
 import com.practica.backend.service.EmpleadoService;
 import com.practica.backend.service.ProyectoService;
 
+import javax.servlet.http.HttpServletResponse;
+
 @CrossOrigin(origins = {"http://localhost:8081"})
 @RestController
 @RequestMapping(path="api/")
@@ -30,7 +38,8 @@ public class ProyectoController {
 	ProyectoService proyectoService;
 	@Autowired
 	EmpleadoService empleadoService;
-	
+
+	/**Obtenemos todos los proyectos**/
 	@GetMapping(path="proyectos/lista")
 	public ResponseEntity<List<Proyecto>> getAllProjects(){
 		LOGGER.info(">>>> Entrando al método: getAllProjects");
@@ -54,8 +63,8 @@ public class ProyectoController {
 		LOGGER.info("Consulta de proyectos finalizada [{}] resultados",result.size());
 		return new ResponseEntity<>(result,httpStatus.OK);
 	}
-	
-	//listar solo dados de alta
+
+	/**Obtenemos todos los proyectos activos de la empresa**/
 	@GetMapping(path="proyectos/activos")
 	public ResponseEntity<List<Proyecto>> getActiveProjects(){
 		LOGGER.info(">>>> Entrando al método: getActiveProjects");
@@ -80,8 +89,8 @@ public class ProyectoController {
 		return new ResponseEntity<>(result,httpStatus.OK);
 
 	}
-	
-	//mostrar solo dados de baja
+
+	/**Obtenemos los proyectos ya dados de baja**/
 	@GetMapping(path="proyectos/inactivos")
 	public ResponseEntity<List<Proyecto>> getInactiveProjects(){
 		LOGGER.info(">>>> Entrando al método: getInactiveProjects");
@@ -105,7 +114,8 @@ public class ProyectoController {
 		LOGGER.info("Consulta de proyectos de baja finalizada [{}] resultados",result.size());
 		return new ResponseEntity<>(result,httpStatus.OK);
 	}
-	
+
+	/**Creamos un nuevo proyecto**/
 	@PostMapping(path="proyectos/guardar")
 	@ResponseBody
 	public ResponseEntity<Proyecto> saveProject(@RequestBody Proyecto proyecto) {
@@ -130,7 +140,8 @@ public class ProyectoController {
 		}
 		
 	}
-	
+
+	/**Método para borrar proyectos**/
 	@DeleteMapping(path="proyectos/borrar")
 	public void deleteProject(@RequestParam int idProyecto) {
 		LOGGER.info(">>>> Entrando al método: deleteProject");
@@ -145,8 +156,8 @@ public class ProyectoController {
 		}
 		LOGGER.info("Se ha borrado el projecto con ID: [{}]", idProyecto);
 	}
-	
-	//Asiganmos los empleados al proyecto 
+
+	/**Método para asignar empleados a un proyecto**/
 	@PostMapping(path="proyectos/asignarEmpleado")
 	public ResponseEntity<Boolean> addEmp(@RequestParam int idProyecto, @RequestParam int idEmpleado) {
 		LOGGER.info(">>>> Entrando al método: addEmp");
@@ -172,8 +183,8 @@ public class ProyectoController {
 		}
 
 	}
-	/** mejorar **/
-	//Eliminamos el empleado del proyecto
+
+	/**Método para remover un empleado de un proyecto**/
 	@PostMapping(path="proyectos/removeEmployee")
 	public ResponseEntity<Boolean> removeEmp(@RequestParam int idProyecto, @RequestParam int idEmpleado) {
 		LOGGER.info(">>>> Entrando al método: removeEmp");
@@ -204,8 +215,8 @@ public class ProyectoController {
 		}
 		
 	}
-	
-	//Verificamos los proyectos asignados un empleado
+
+	/**Verificamos si un empleado tiene asignaciones a un proyecto**/
 	@GetMapping(path="proyectos/verificar")
 	public ResponseEntity<List<String>> searchProjectsOfEmple(@RequestParam int idEmpleado){
 		LOGGER.info(">>>> Entrando al método: searchProjectsOfEmple");
@@ -231,7 +242,7 @@ public class ProyectoController {
 
 	}
 
-	//metodo para verificar si el proyecto tiene empleados asignados antes de darle de baja
+	/**metodo para verificar si el proyecto tiene empleados asignados antes de darle de baja**/
 	@GetMapping(path="proyectos/verificarPro")
 	public ResponseEntity<List<Empleado>> checkProyect(@RequestParam int idProyecto){
 		LOGGER.info(">>>> Entrando al método: checkProyect");
@@ -257,7 +268,7 @@ public class ProyectoController {
 
 	}
 	
-	//metodo para dar de baja al proyecto
+	/**metodo para dar de baja al proyecto**/
 	@PostMapping(path="proyectos/baja")
 	public ResponseEntity<Boolean> bajaProyecto(@RequestParam int idProyecto) {
 		LOGGER.info(">>>> Entrando al método: bajaProyecto");
@@ -283,7 +294,8 @@ public class ProyectoController {
 		}
 
 	}
-	
+
+	/**Método para actualizar un proyecto**/
 	@PostMapping(path="proyectos/update")
 	@ResponseBody
 	public ResponseEntity<Boolean> updateProject(@RequestBody Proyecto proyecto) {
@@ -309,6 +321,23 @@ public class ProyectoController {
 			return new ResponseEntity<>(resultOK,httpStatus.OK);
 		}
 
+	}
+
+	/**Exportación a excell de proyectos**/
+	@GetMapping(path = "proyectos/exportar/excel")
+	public void exportReportExcel(HttpServletResponse response) throws DocumentException, IOException {
+		response.setContentType("application/octect-stream");
+
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		String today = dateFormat.format(new Date());
+
+		String cabecera = "Content-Disposition";
+		String valor = "attachment; filename=Proyectos_"+today+".xlsx";
+
+		List<Proyecto> proyectoList = proyectoService.mostrarActivos();
+
+		ProyectoReportExcel reportExcel = new ProyectoReportExcel(proyectoList);
+		reportExcel.export(response);
 	}
 	
 }

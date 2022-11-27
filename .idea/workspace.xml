@@ -4,9 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35f7239b-8efa-4ade-b038-2f0ed8a216cd" name="Changes" comment="[FRONTEND]- inclusión del token en las cabcerceras de las peticiones de proyectos, mejoras en las tablas, nuevo componente de empleados de de un proyecto">
+    <list default="true" id="35f7239b-8efa-4ade-b038-2f0ed8a216cd" name="Changes" comment="[FRONTEND]- mejoras en las tablas, se agrega el código de proyecto y texto de no resultados">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/reports/ProyectoReportExcel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/controller/ProyectoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/practica/backend/controller/ProyectoController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/components/TableProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/TableProject.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/services/projectService.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/services/projectService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,14 +43,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;1.8&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "jdk.selected.JAVA_MODULE": "1.8",
+    "settings.editor.selected.configurable": "vcs.Git"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Maven.DawMultimodulo">
     <configuration name="DEBUG" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.practica.backend.BackEndApplication" />
@@ -274,7 +280,28 @@
       <option name="project" value="LOCAL" />
       <updated>1669496377852</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="[FRONTEND]- mejoras en las tablas, botones">
+      <created>1669497417397</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1669497417397</updated>
+    </task>
+    <task id="LOCAL-00027" summary="[FRONTEND]- asignación de empleados nueva">
+      <created>1669504762717</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1669504762717</updated>
+    </task>
+    <task id="LOCAL-00028" summary="[FRONTEND]- mejoras en las tablas, se agrega el código de proyecto y texto de no resultados">
+      <created>1669550791570</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1669550791577</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -289,8 +316,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="primer commit para proyecto DAW de dos módulos" />
-    <MESSAGE value="segundo commit para agregar el módulo frontend" />
     <MESSAGE value=" #2 [Proyectos] - Backend/Frontend: modificaciones para remover empleados de proyectos" />
     <MESSAGE value=" #2 [Proyectos] - Backend: implantación de responseEntity para remover empleados de proyectos" />
     <MESSAGE value=" #2 [Proyectos] - Backend: se mueve el método verificar las asignaciones de un proyecto" />
@@ -313,7 +338,10 @@
     <MESSAGE value="[FRONTEND]- mejoras en las tablas de empleados, filtros, columnas etc." />
     <MESSAGE value="[FRONTEND]- inclusión del token en las cabcerceras de las peticiones, mejoras en los estilos de login, enrutamiento." />
     <MESSAGE value="[FRONTEND]- inclusión del token en las cabcerceras de las peticiones de proyectos, mejoras en las tablas, nuevo componente de empleados de de un proyecto" />
-    <option name="LAST_COMMIT_MESSAGE" value="[FRONTEND]- inclusión del token en las cabcerceras de las peticiones de proyectos, mejoras en las tablas, nuevo componente de empleados de de un proyecto" />
+    <MESSAGE value="[FRONTEND]- mejoras en las tablas, botones" />
+    <MESSAGE value="[FRONTEND]- asignación de empleados nueva" />
+    <MESSAGE value="[FRONTEND]- mejoras en las tablas, se agrega el código de proyecto y texto de no resultados" />
+    <option name="LAST_COMMIT_MESSAGE" value="[FRONTEND]- mejoras en las tablas, se agrega el código de proyecto y texto de no resultados" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

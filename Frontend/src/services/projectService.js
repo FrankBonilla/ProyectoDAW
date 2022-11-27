@@ -12,7 +12,8 @@ export const projectService = {
     updateProject,
     unsuscribeProyect,
     getAll,
-    deleteProject
+    deleteProject,
+    exportToExcell
     
 }
 
@@ -191,4 +192,28 @@ function unsuscribeProyect(){
             console.log(e)
         })
     
+}
+
+function exportToExcell(){
+    return axios({
+        method: 'get',
+        url: `${URL}api/proyectos/exportar/excel`,
+        headers: {
+            'Authorization': 'Bearer '+localStorage.getItem('token')
+        },
+        responseType: 'blob'
+    })
+    .then(response => {
+        const today = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)
+        console.log(response.data)
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download',`Proyectos de activos ${today.split("-").join("_")}.xlsx`)
+        document.body.appendChild(link)
+        link.click()
+    })
+    .catch(e => {
+        console.log(e)
+    })
 }
