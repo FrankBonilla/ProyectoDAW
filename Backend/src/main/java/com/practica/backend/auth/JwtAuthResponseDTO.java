@@ -8,7 +8,7 @@ import lombok.Setter;
 public class JwtAuthResponseDTO {
 
     private String tokenAcceso;
-    private String tipoToken = "Barer";
+    private String tipoToken = "Bearer";
 
     /**Constructores**/
     public JwtAuthResponseDTO(String tokenAcceso, String tipoToken) {

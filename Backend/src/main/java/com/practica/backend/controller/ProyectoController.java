@@ -10,6 +10,7 @@ import com.lowagie.text.DocumentException;
 import com.practica.backend.reports.ActivesProjectsReportExcel;
 import com.practica.backend.reports.ProjectReportExcell;
 import com.practica.backend.reports.UnsuscribedProjectsReportExcel;
+import com.practica.backend.repositories.ProyectoRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -217,9 +218,9 @@ public class ProyectoController {
 
 	/**Verificamos si un empleado tiene asignaciones a un proyecto**/
 	@GetMapping(path="proyectos/verificar")
-	public ResponseEntity<List<String>> searchProjectsOfEmple(@RequestParam int idEmpleado){
+	public ResponseEntity<List<ProyectoRepository.ProyectosAsignados>> searchProjectsOfEmple(@RequestParam int idEmpleado){
 		LOGGER.info(">>>> Entrando al método: searchProjectsOfEmple");
-		List<String> result = null;
+		List<ProyectoRepository.ProyectosAsignados> result = null;
 
 		try{
 			LOGGER.info("verificando asignaciones a proyectos del empleado: [{}]", idEmpleado);

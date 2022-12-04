@@ -12,10 +12,10 @@ import java.util.Map;
 import com.lowagie.text.DocumentException;
 import com.practica.backend.entities.Proyecto;
 import com.practica.backend.reports.ActivesEmployeesReportExcel;
-import com.practica.backend.reports.ActivesProjectsReportExcel;
+import com.practica.backend.reports.EmpAndProjectsReportExcel;
 import com.practica.backend.reports.UnsuscribeEmployyesReportExcel;
-import com.practica.backend.reports.UnsuscribedProjectsReportExcel;
 import com.practica.backend.repositories.EmpleadoRepository;
+import com.practica.backend.repositories.ProyectoRepository;
 import com.practica.backend.service.ProyectoService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,11 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import com.practica.backend.entities.Empleado;
@@ -44,6 +39,8 @@ public class EmpleadoController {
 	//inyectamos el servicio
 	@Autowired
 	EmpleadoService empleadoService;
+	@Autowired
+	ProyectoRepository proyectoRepository;
 	HttpStatus  httpStatus;
 
 	/**
@@ -154,7 +151,7 @@ public class EmpleadoController {
 		return new ResponseEntity<>(empleado,httpStatus.OK);
 	}
 
-
+//cambiar a un response entity
 	@DeleteMapping(path="empleados/borrar")
 	public void borrar(@RequestParam int idEmpleado) {
 		LOGGER.info("Borrando al empleado con ID: [{}]", idEmpleado);
@@ -175,9 +172,9 @@ public class EmpleadoController {
 	 * **/
 
 	@GetMapping(path="empleados/status")
-	public ResponseEntity<List<EmpleadoRepository.Asignaciones>> getAsignaciones(@RequestParam int idProyecto) {
+	public ResponseEntity<List<EmpleadoRepository.EmpleadosAsignaciones>> getAsignaciones(@RequestParam int idProyecto) {
 		LOGGER.info(">>>> Entrando al método: getAsignaciones");
-		List<EmpleadoRepository.Asignaciones> result = null;
+		List<EmpleadoRepository.EmpleadosAsignaciones> result = null;
 
 		try{
 			LOGGER.info("Consultando el estado de asignacion de los empleados al proyecto [{}]", idProyecto);
@@ -286,5 +283,25 @@ public class EmpleadoController {
 
 		UnsuscribeEmployyesReportExcel unsuscribeEmployyesReportExcel = new UnsuscribeEmployyesReportExcel(empleadoList);
 		unsuscribeEmployyesReportExcel.export(response);
+	}
+
+	/**Exportación a excell de un empleado y los proyectos donde está asignado**/
+	@GetMapping(path = "empleados/exportar/excel/listaProyectos")
+	public void exportEmployeeAndProjects(HttpServletResponse response,
+										  @RequestParam int idEmpleado) throws DocumentException, IOException {
+		response.setContentType("application/octect-stream");
+
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		String today = dateFormat.format(new Date());
+
+		String cabecera = "Content-Disposition";
+		String valor = "attachment; filename=Informe-Empleado_" + today + ".xlsx";
+
+		Empleado empleado = empleadoService.listarId(idEmpleado);
+		List<Proyecto> projectoList = proyectoRepository.getProjectsOfEmployee(idEmpleado);
+
+		EmpAndProjectsReportExcel empAndProjectsReportExcel = new EmpAndProjectsReportExcel(empleado,projectoList);
+		empAndProjectsReportExcel.export(response);
+
 	}
 }

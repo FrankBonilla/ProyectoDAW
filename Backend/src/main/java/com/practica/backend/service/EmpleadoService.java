@@ -86,10 +86,10 @@ public class EmpleadoService {
 		}
 		
 		//metodo 2 que define la consulta de empleados y muestra su asignación
-		public List<EmpleadoRepository.Asignaciones>  showStatus(int idProyecto){
+		public List<EmpleadoRepository.EmpleadosAsignaciones>  showStatus(int idProyecto){
 
-			List<EmpleadoRepository.Asignaciones> asignacionesList = repo.showStatus(idProyecto);
-			return asignacionesList;
+			List<EmpleadoRepository.EmpleadosAsignaciones> empleadosAsignacionesList = repo.showStatus(idProyecto);
+			return empleadosAsignacionesList;
 		}
 		//metodo 3 creado en el repositorio
 		public List<?> searchEmployeesProject(int id) {

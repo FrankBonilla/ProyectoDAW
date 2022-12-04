@@ -163,21 +163,43 @@
                   persistent
                   max-width="700">
         <v-card>
-        <v-card-title class="text-h5 pb-5">
-         El empleado tiene asignaciones
+        <v-card-title class="text-h5 pb-5 white--text amber accent-4">
+          <v-icon left>mdi-shield-lock-outline</v-icon>
+            El empleado tiene asignaciones
         </v-card-title>
-        <v-card-text><b>{{this.msgAsigned}}</b></v-card-text>
-        <v-card-actions class="justify-center">
-          <v-btn
-              color="green darken-1 white--text"
-              @click="msgAsignedProject=false"
-           >
-            <b>OK</b>
+        <v-card-text class="pt-7"><b>{{this.msgAsigned}}</b></v-card-text>
+
+        <v-list nav dense>
+                  <v-list-item v-for="(item,i) in this.projetList" :key="i">
+                     <v-list-item-icon>
+                    <v-icon> mdi-folder</v-icon>
+                  </v-list-item-icon>
+
+                  <v-list-item-content class="text-left">
+                    <v-list-item-title>{{item.idProyecto}} - {{item.descripcion}}</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>       
+        </v-list>
+
+        <v-card-actions class="justify-space-around">
+          <v-btn class="my-4" color="amber accent-4" 
+                 elevation="4" title="exportar a excel"
+                 @click="exportEmployeeToExcell" 
+                 >Generar reporte 
+            <v-icon right> mdi-inbox-arrow-down</v-icon>
           </v-btn>
+          <router-link to=/proyectos/alta>
+                  <v-btn color="blue-grey darken-3  white--text">Ir a gestión de proyectos</v-btn>
+            </router-link>
+          <v-btn
+              color="blue-grey darken-3  white--text"
+              @click="msgAsignedProject=false">
+            <b>Cerrar</b>
+          </v-btn>  
         </v-card-actions>
       </v-card>
     </v-dialog>
-        <!-- Formulario para actualizar empleado -->
+      <!-- Formulario para actualizar empleado -->
       <v-dialog v-model="update" max-width="500" persistent>
         <v-card color="dark">
           <v-card-title class="white--text blue-grey darken-3">Modificación de empleado</v-card-title>
@@ -355,6 +377,8 @@ export default {
             msgAsignedProject: false,
             //confirmacion de excel
             confirmReport: false,
+            projetList: [],
+            idEmpleadoToExportExcel: '',
             //cabeceras de la tabla
             headers: [{text: 'NIF', align: 'center', value: 'nif', filtrable: false, sortable:false, class:"blue-grey darken-3 ; white--text"},
                       {text: 'Nombre', align: 'start', value: 'nombre', sortable: false, class:"blue-grey darken-3 ; white--text"},
@@ -420,10 +444,11 @@ export default {
           let lista = await employeeService.searchProjectOfEmp(employee.idEmpleado)
           if(lista != null && lista.length != 0){
 
-            let name = employee.nombre+" "+employee.apellido1+" "+employee.apellido2
+            let name = employee.nombre+" "+employee.apellido1+" "+employee.apellido2 ?? ''
             //asignamos la lista de projectos 
-            this.msgAsigned = "No se puede dar de baja al empleado: "+name.toUpperCase()+" porque está asignado a el/los proyecto/s: "
-                              +lista.join(", ").toUpperCase();
+            this.msgAsigned = name.toUpperCase()+" no se puede ser dado de baja porque está asignado a el/los proyecto/s: "
+            this.projetList = lista
+            this.idEmpleadoToExportExcel = employee.idEmpleado
             //activamos el msj que mostrará que el empleado tiene projectos asignados
             this.msgAsignedProject = true
             //console.log(lista.length)
@@ -534,6 +559,10 @@ export default {
         async exportar(){
           this.confirmReport = false
           await employeeService.exportToExcell()
+        },
+        async exportEmployeeToExcell(){
+          this.msgAsignedProject=false
+          await employeeService.exportEmployeeAndProjectsToExcell(this.idEmpleadoToExportExcel)
         }
         
     },

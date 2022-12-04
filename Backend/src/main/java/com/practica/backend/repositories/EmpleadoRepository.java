@@ -17,11 +17,9 @@ public interface EmpleadoRepository extends JpaRepository <Empleado,Integer> {
 	//creamos una consulta donde devolve´ra los empleados que no esten de baja
 	@Query(value="SELECT l FROM Empleado l WHERE l.fechaBaja IS NULL")
 	List<Empleado> empleadosActivos();
-	
-	//hacemos una query nativa para listar a los empleados que nos devolverá una columna con true
-	//si estan asiganos al proyecto o de lo contrario false segun el id del proyecto
+
 	/** Creamos una interface para solo recoger los valores que deseamos de la consulta **/
-	interface Asignaciones{
+	interface EmpleadosAsignaciones {
 		Integer getIdEmpleado();
 		String getNif();
 		String getNombre();
@@ -29,11 +27,14 @@ public interface EmpleadoRepository extends JpaRepository <Empleado,Integer> {
 		String getApellido2();
 		Boolean getAsignado();
 	}
+
+	//hacemos una query nativa para listar a los empleados que nos devolverá una columna con true
+	//si estan asiganos al proyecto o de lo contrario false segun el id del proyecto
 	@Query(value="SELECT l.idEmpleado AS idEmpleado, l.nif AS nif, l.nombre AS nombre, l.apellido1 AS apellido1, l.apellido2 AS apellido2, "
 			+ "CASE WHEN l.idEmpleado IN (SELECT id_empleado FROM pr_empleados_proyecto WHERE id_proyecto = :idPro) THEN 'true' "
 			+ "WHEN l.idEmpleado  NOT IN (SELECT id_empleado FROM pr_empleados_proyecto WHERE id_proyecto = :idPro) THEN 'false' END AS asignado "
 			+ "FROM em_empleados l WHERE l.fechaBaja IS NULL", nativeQuery = true)
-	List<Asignaciones> showStatus(@Param("idPro") int id);
+	List<EmpleadosAsignaciones> showStatus(@Param("idPro") int id);
 	
 	//definimos los empleados asignados al proyecto segun id
 	@Query(value="select nombre from em_empleados a join "

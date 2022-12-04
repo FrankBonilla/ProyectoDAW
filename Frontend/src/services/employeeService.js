@@ -14,7 +14,8 @@ export const employeeService = {
     getAll,
     backEmployee,
     exportToExcell,
-    exportUnsuscribeEmployeesToExcell
+    exportUnsuscribeEmployeesToExcell,
+    exportEmployeeAndProjectsToExcell
 
 }
 
@@ -235,6 +236,33 @@ function exportUnsuscribeEmployeesToExcell(){
         const link = document.createElement('a')
         link.href = url
         link.setAttribute('download',`Informe de empleados dados de baja ${today.split("-").join("_")}.xlsx`)
+        document.body.appendChild(link)
+        link.click()
+    })
+    .catch(e => {
+        console.log(e)
+    })
+}
+
+function exportEmployeeAndProjectsToExcell(idEmpleado){
+    return axios({
+        method: 'get',
+        url: `${URL}api/empleados/exportar/excel/listaProyectos`,
+        params: {
+            idEmpleado: idEmpleado
+        },
+        headers: {
+            'Authorization': 'Bearer '+localStorage.getItem('token')
+        },
+        responseType: 'blob'
+    })
+    .then(response => {
+        const today = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)
+        console.log(response.data)
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download',`Informe de empleado y sus proyectos ${today.split("-").join("_")}.xlsx`)
         document.body.appendChild(link)
         link.click()
     })
