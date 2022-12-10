@@ -39,12 +39,11 @@
 
       <template v-slot:[`item.status`]="{item}">
         <td v-if="item.fechaBaja"
-            style="color:red ; font-weight: bold"
-          >INACTIVO
+          ><v-icon color="red" title="Inactivo">mdi-thumb-down</v-icon>
         </td>
         <td v-else
             style="color:green ; font-weight: bold"
-            >ACTIVO
+            ><v-icon color="green" title="Activo">mdi-thumb-up</v-icon>
         </td>
       </template>
 
