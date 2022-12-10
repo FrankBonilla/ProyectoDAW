@@ -67,13 +67,15 @@
 
   </v-data-table>
       <!--Formulario para agregar empleado -->
-      <v-dialog v-model="addEmployee" max-width="500" persistent>
+      <v-dialog v-model="addEmployee" max-width="600" persistent>
         <v-card color="dark">
           <v-card-title class="white--text blue-grey darken-3">Nuevo Empleado</v-card-title>
           <v-card-text>
             <v-form ref="form">
               <v-container>
-                  <v-card-text class="red--text"><b>{{errorForm? 'Es obligatorio introducir todos los datos para dar de alta un nuevo empleado' : ''}}</b></v-card-text>
+                <v-alert type="error" v-if="errorForm" class="mb-7" style="font-weight: bold">
+                  Es obligatorio introducir todos los datos para dar de alta un nuevo empleado
+                </v-alert>
                   <v-row>
                     <v-col>
                       <v-text-field v-model="employee.nif"  :rules="nifRules" label="NIF" maxlength="9" required ></v-text-field>
@@ -137,6 +139,37 @@
                     ></v-date-picker>
                   </v-menu>
                   </v-col>
+                  <!-- Date picker para la fecha de alta-->
+                  <v-col>
+                    <v-menu
+                      ref="menu3"
+                      v-model="menu3"
+                      transition="scale-transition"
+                      offset-y
+                      min-width="auto"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                          :rules="generalRules"
+                          :value="date3 | formatedDate"
+                          label="Fecha alta"
+                          prepend-icon="mdi-calendar"
+                          readonly
+                          v-bind="attrs"
+                          v-on="on"
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker
+                        v-model="date3"
+                        :active-picker.sync="activePicker3"
+                        :min="today"
+                        @change="save3"
+                        color="blue-grey darken-3"
+                        first-day-of-week="1"
+                        locale="es"
+                      ></v-date-picker>
+                    </v-menu>
+                  </v-col>
                 </v-row>
                 <v-row>
                   <v-col>
@@ -150,8 +183,8 @@
             </v-form>
             <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn @click="cancelar" color="amber accent-4">Cancelar</v-btn>
-            <v-btn @click="addNew" type="submit" color="green acent-2">Aceptar</v-btn>
+            <v-btn @click="cancelar" color="amber accent-4" >Cancelar</v-btn>
+            <v-btn @click="addNew" type="submit" color="green acent-2" >Aceptar</v-btn>
           </v-card-actions>
           </v-card-text>
           
@@ -200,13 +233,15 @@
       </v-card>
     </v-dialog>
       <!-- Formulario para actualizar empleado -->
-      <v-dialog v-model="update" max-width="500" persistent>
+      <v-dialog v-model="update" max-width="600" persistent>
         <v-card color="dark">
           <v-card-title class="white--text blue-grey darken-3">Modificación de empleado</v-card-title>
           <v-card-text>
             <v-form ref="form2">
               <v-container>
-                  <v-card-text class="red--text"><b>{{errorForm? 'No puede haber campos vacios' : ''}}</b></v-card-text>
+                <v-alert type="error" v-if="errorForm" class="mb-7" style="font-weight: bold">
+                  No puede haber campos vacios
+                </v-alert>
                   <v-row>
                     <v-col>
                       <v-text-field v-model="employee.nif"  :rules="nifRules" label="NIF" maxlength="9" required ></v-text-field>
@@ -261,6 +296,39 @@
                     <v-date-picker
                       v-model="date2"
                       :active-picker.sync="activePicker2"
+                      :max="today"
+                      min="1950-01-01"
+                      @change="save2"
+                      color="blue-grey darken-3"
+                      first-day-of-week="1"
+                      locale="es"
+                    ></v-date-picker>
+                  </v-menu>
+                  </v-col>
+                  <!-- Date picker para modificar fecha de alta -->
+                  <v-col>
+                     <v-menu
+                      ref="menu4"
+                      v-model="menu4"
+                      transition="scale-transition"
+                      offset-y
+                      min-width="auto"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        :rules="generalRules"
+                        :value="date4 | formatedDate"
+                        label="Fecha alta"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                        clearable
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker
+                      v-model="date4"
+                      :active-picker.sync="activePicker4"
                       :max="today"
                       min="1950-01-01"
                       @change="save2"
@@ -332,7 +400,7 @@ export default {
     name: 'TableEmployee',
     data(){
         return {
-            title: 'Empleados activos en la empresa',
+            title: 'Empleados activos',
             today: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
             employees: [],
             search: '',
@@ -363,6 +431,14 @@ export default {
             activePicker2: null,
             date2: null,
             menu2: false,
+            //datos del calendario para la fecha alta
+            activePicker3: null,
+            date3: null,
+            menu3: false,
+            //datos del calendario para la fecha alta EDITAR 
+            activePicker4: null,
+            date4: null,
+            menu4: false,
             //datos de verificación de campos del formulario
             errorForm: false,
             emailRules: [ v => !!v || 'el campo email es obligatorio',
@@ -421,7 +497,7 @@ export default {
               telefono1: this.employee.telefono1,
               telefono2: this.employee.telefono2,
               email: this.employee.email,
-              fechaAlta: new Date().toISOString(),
+              fechaAlta: this.date3 ? this.date3 : new Date().toISOString(),
               edoCivil: this.employee.edoCivil,
               serMilitar: this.employee.serMilitar
             }//hacemos la inserción del nuevo empleado en la base de datos
@@ -446,7 +522,7 @@ export default {
 
             let name = employee.nombre+" "+employee.apellido1+" "+employee.apellido2 ?? ''
             //asignamos la lista de projectos 
-            this.msgAsigned = name.toUpperCase()+" no se puede ser dado de baja porque está asignado a el/los proyecto/s: "
+            this.msgAsigned = name.toUpperCase()+" no puede ser dado de baja porque está asignado a el/los proyecto/s: "
             this.projetList = lista
             this.idEmpleadoToExportExcel = employee.idEmpleado
             //activamos el msj que mostrará que el empleado tiene projectos asignados
@@ -488,6 +564,13 @@ export default {
         },// metodo del calendario a actualizar
         save2(date2){
           this.$refs.menu2.save(date2)
+        },// metodo del calendario de fecha alta
+        save3(date3){
+          this.$refs.menu3.save(date3)
+        },
+        // metodo del calendario de fecha alta EDITAR
+        save4(date4){
+          this.$refs.menu4.save(date4)
         },
         cancelar(){
           this.$refs.form.reset()
@@ -511,6 +594,7 @@ export default {
                 //establecemos el valor por default la fecha de nacimiento
                 this.date = emple.nacimiento
                 this.date2 = this.date
+                this.date4 = emple.fechaAlta
                 
           
         },
@@ -527,7 +611,7 @@ export default {
               telefono1: this.employee.telefono1,
               telefono2: this.employee.telefono2,
               email: this.employee.email,
-              fechaAlta: this.employee.fechaAlta,
+              fechaAlta: this.date4,
               edoCivil: this.employee.edoCivil,
               serMilitar: this.employee.serMilitar,
               nif: this.employee.nif.toUpperCase()

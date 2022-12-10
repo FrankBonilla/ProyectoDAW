@@ -104,7 +104,9 @@
           <v-card-text>
             <v-form ref="form">
               <v-container>
-                  <v-card-text class="red--text"><b>{{errorForm? 'Debe completar todos los campos obligatorios del proyecto' : ''}}</b></v-card-text>
+                <v-alert type="error" v-if="errorForm" class="mb-7" style="font-weight: bold">
+                  Debe completar todos los campos obligatorios del proyecto
+                </v-alert>
                   <v-row>
                     <v-col>
                       <v-text-field v-model="project.descripcion"  :rules="generalRules" label="Descripción" maxlength="125" required></v-text-field>
@@ -219,7 +221,9 @@
                 <v-card-text>
             <v-form ref="form2">
               <v-container>
-                  <v-card-text class="red--text"><b>{{errorForm? 'Debe introducir todos los campos obligatorios' : ''}}</b></v-card-text>
+                <v-alert type="error" v-if="errorForm" class="mb-7" style="font-weight: bold">
+                  Debe introducir todos los campos obligatorios
+                </v-alert>
                   <v-row>
                     <v-col>
                       <v-text-field v-model="project.descripcion"  :rules="generalRules" label="Descripción" maxlength="125" required></v-text-field>
