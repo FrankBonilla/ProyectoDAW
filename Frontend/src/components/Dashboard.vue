@@ -50,7 +50,7 @@
         <!-- Confirmación de cierre de sesión  -->
         <v-dialog v-model="confirmLogOut"
                   persistent
-                  max-width="300">
+                  max-width="400">
         <v-card>
         <v-card-title class="text-h5">
          ¿ Desea cerrar sesión ?
