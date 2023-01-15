@@ -624,6 +624,7 @@ export default {
             this.errorForm = false
             this.date = null
             this.date2 = null
+            this.date4 = null
             this.listar()
             this.update = false
           }else{
@@ -635,6 +636,7 @@ export default {
         cancelUpdate(){
           this.date = null
           this.date2 = null
+          this.date4 = null
           this.errorForm = false
           //this.$refs.form.reset()
           this.$refs.form2.reset()

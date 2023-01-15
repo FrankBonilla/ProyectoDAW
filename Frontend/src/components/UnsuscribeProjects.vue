@@ -140,8 +140,8 @@ export default {
                 text: `${proyect.descripcion} será eliminado`,
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3399ff',
-                cancelButtonColor: '#ff3346',
+                confirmButtonColor: '#37474F',
+                cancelButtonColor: '#FFAB00',
                 confirmButtonText: 'Si, continuar!',
                 cancelButtonText: 'Cancelar'
               }).then((result) => {

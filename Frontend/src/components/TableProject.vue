@@ -197,19 +197,22 @@
         </v-card>
       </v-dialog>
       
-      <!-- Mensaje de alerta de projecto con empleados asignados-->
-          <v-dialog v-model="msgAsignedEmp" max-width="700">
-              <v-alert prominent type="warning">
-                <v-row align="center">
-                   <v-col class="grow">
-                      {{this.msgAsigned}}
-                   </v-col>
-              <v-col class="shrink">
-              <v-btn @click="msgAsignedEmp=false"><b>OK</b></v-btn>
-              </v-col>
-            </v-row>
-           </v-alert>
-          </v-dialog>
+      <!-- Mensaje de alerta de projecto con empleados asignados -->
+      <v-dialog v-model="msgAsignedEmp"
+                persistent
+                max-width="600">
+          <v-card>
+            <v-card-title class="text-h5 pb-5 white--text amber accent-4">
+               <v-icon left>mdi-shield-lock-outline</v-icon>
+                  El proyecto tiene empleados asignados
+            </v-card-title>
+            <v-card-text class="pt-7"><b>{{this.msgAsigned}}</b></v-card-text>
+            <v-card-actions class="justify-space-around">
+                <v-btn @click="msgAsignedEmp=false" class="blue-grey darken-3 white--text"><b>OK</b></v-btn>
+            </v-card-actions>
+          </v-card>
+      </v-dialog>
+      
       <!-- Formulario para actualizar proyecto -->
       <v-dialog v-model="update" max-width="1000" persistent>
         <v-card >
@@ -523,7 +526,8 @@ export default {
           console.log(lista)
           if(lista && lista.length > 0){
             //asignamos la lista de projectos 
-            this.msgAsigned = "No se puede dar de baja al proyecto: "+proyect.descripcion.toUpperCase()+" porque está asignado al menos un recurso";
+            this.msgAsigned = "No se puede dar de baja al proyecto: "+proyect.descripcion.toUpperCase()+
+            " porque tiene asignado al menos un recurso. Puede ir a la opción modificar y gestionar la asignación de empleados";
             //activamos el msj que mostrará que el empleado tiene projectos asignados
             this.msgAsignedEmp = true
             //console.log(lista.length)

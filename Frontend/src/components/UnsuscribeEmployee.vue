@@ -66,25 +66,30 @@
   </v-data-table>
      
 </v-card>
+      <!-- Mensaje de regresar alta 2 -->
+       <v-dialog v-model="msgAlta"
+                  persistent
+                  max-width="500">
+          <v-card>
+            <v-card-title class="text-h5 pb-5 white--text amber accent-4">
+              <v-icon left>mdi-alert-octagon</v-icon>
+                Restauración de alta.
+            </v-card-title>
+            <v-card-text class="pt-7"><b>{{this.msgAsigned}}</b></v-card-text>
 
-       <v-dialog v-model="msgAlta" max-width="700">
-              <v-alert prominent type="warning">
-                <v-row align="center">
-                   <v-col class="grow">
-                      {{this.msgAsigned}}
-                   </v-col>
-              <v-col class="shrink">
-              <v-btn @click="msgAlta=false">OK</v-btn>
-              </v-col>
-              <v-col>
-                <router-link to=/empleados/suscribe-employee>
-                  <v-btn>Ir a empleados de alta</v-btn>
-                </router-link>
-              </v-col>
-            </v-row>
-           </v-alert>
-        </v-dialog>
-         <!-- Confirmación de generar reporte de todos los proyectos -->
+            <v-card-actions class="justify-space-around pb-5">
+              <v-btn color="blue-grey darken-3  white--text" 
+                     @click="msgAlta=false"
+                     >OK     
+              </v-btn>
+              <router-link to=/empleados/suscribe-employee>
+                  <v-btn color="blue-grey darken-3  white--text">Ir a empleados de alta</v-btn>
+              </router-link>
+            </v-card-actions>
+          </v-card>
+       </v-dialog>
+      
+        <!-- Confirmación de generar reporte de todos los proyectos -->
         <v-dialog v-model="confirmReport"
                   persistent
                   max-width="500">
@@ -157,8 +162,8 @@ export default {
                 text: `${employee.nombre} ${employee.apellido1} ${employee.apellido2} será borrado de la base de datos`,
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3399ff',
-                cancelButtonColor: '#ff3346',
+                confirmButtonColor: '#37474F',
+                cancelButtonColor: '#FFAB00',
                 confirmButtonText: 'Si, continuar!',
                 cancelButtonText: 'Cancelar'
               }).then((result) => {
